@@ -14,7 +14,6 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
 });
 
 router.get('/login', function (req, res, next) {
-    console.log(process.env);
     if (req.isAuthenticated()) {
         return res.redirect('/admin');
     } else {
