@@ -1,0 +1,164 @@
+doctype html
+html(lang='en')
+    head
+        title= title
+        // Metas
+        meta(charset='utf-8')
+        meta(name='description', content='')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(content='telephone=no', name='format-detection')
+        // Css
+        link(href='stylesheets/public/bootstrap.css', rel='stylesheet', type='text/css', media='all')
+        link(href='stylesheets/public/base.css', rel='stylesheet', type='text/css', media='all')
+        link(href='stylesheets/public/main.css', rel='stylesheet', type='text/css', media='all')
+        link(href='stylesheets/public/owl-carousel/owl.carousel.css', rel='stylesheet', media='all')
+        link(href='stylesheets/public/owl-carousel/owl.theme.css', rel='stylesheet', media='all')
+        link(href='stylesheets/public/magnific-popup.css', type='text/css', rel='stylesheet', media='all')
+        link(href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,300,600%7CRoboto+Slab:400,300,700', rel='stylesheet', type='text/css')
+        link(href='stylesheets/public/fontello.css', rel='stylesheet', type='text/css', media='all')
+    body
+        .loader
+            .loader-inner
+                .spinner
+                    .dot1
+                    .dot2
+        #wrapper.mt-150.mb-150
+            .container
+                .row
+                    .col-md-2.left-content.pd-r0
+                        header#header
+                            .main-header
+                                .img-profile
+                                    img(src='images/public/profile.jpg', alt='')
+                                    .name-profile.t-center
+                                        h5.uppercase Carlose smith
+                                nav#main-nav.main-nav.clearfix.t-center.uppercase.tabbed
+                                    ul.clearfix
+                                        li
+                                            a(href='#about')
+                                                i.icon-user
+                                                | About me
+                                                span ho am i
+                                        li
+                                            a(href='#resume')
+                                                i.icon-briefcase
+                                                | Resume
+                                                span curriculum vita
+                                        li
+                                            a(href='#portfolio')
+                                                i.icon-camera
+                                                | Portfolio
+                                                span my works
+                                        li
+                                            a(href='#blog')
+                                                i.icon-chat
+                                                | Blog
+                                                span My toughts
+                                        li
+                                            a(href='#contact')
+                                                i.icon-phone
+                                                | Contact
+                                                span Say hello
+                    .col-md-9.right-content.pd-r0.pd-l0
+                        block sections
+
+                    footer.footer
+                        .col-md-1.pd-l0
+                            ul.social
+                                li
+                                    a(href='#')
+                                        i.icon-facebook
+                                li
+                                    a(href='#')
+                                        i.icon-twitter
+                                li
+                                    a(href='#')
+                                        i.icon-gplus
+                                li
+                                    a(href='#')
+                                        i.icon-linkedin
+                            .copyright
+                                p © 2016 Mutationthemes.
+        script(src='javascripts/public/jquery-1.11.3.min.js', type='text/javascript')
+        script(src='javascripts/public/owl.carousel.js', type='text/javascript')
+        script(src='javascripts/public/jquery.magnific-popup.js', type='text/javascript')
+        script(src='javascripts/public/jquery.easytabs.min.js', type='text/javascript')
+        script(src='javascripts/public/instafeed.min.js', type='text/javascript')
+        script(src='javascripts/public/placeholders.min.js', type='text/javascript')
+        script(src='javascripts/public/script.js', type='text/javascript')
+        script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
+        script.
+            (function ($) {
+                "use strict";
+                // Easytab setup
+                $('#wrapper').easytabs({
+                    animate: true,
+                    updateHash: false,
+                    transitionIn: 'fadeIn',
+                    transitionOut: 'fadeOut',
+                    animationSpeed: 100,
+                    tabActiveClass: 'active',
+                    tabs: ' #main-nav.tabbed > ul > li ',
+                    transitionInEasing: 'linear',
+                    transitionOutEasing: 'linear'
+                });
+                // Instagram feed setup
+                var instaFeed = new Instafeed({
+                    get: 'user',
+                    userId: '305801553',
+                    accessToken: '305801553.1677ed0.3d872300c10c4ff687868875ee8abc5d',
+                    limit: 5,
+                    template: '<li><a href="{{link}}"><img src="{{image}}"/></a></li>'
+                });
+                instaFeed.run();
+                // Google map location
+                $('#wrapper').bind('easytabs:after', function () {
+                    var styles = [
+                            {
+                                stylers: [
+                                    {saturation: -100}
+                                ]
+                            }, {
+                                featureType: 'road',
+                                elementType: 'geometry',
+                                stylers: [
+                                    {hue: "#74b7b0"},
+                                    {visibility: 'simplified'}
+                                ]
+                            }, {
+                                featureType: 'road',
+                                elementType: 'labels',
+                                stylers: [
+                                    {visibility: 'on'}
+                                ]
+                            }
+                        ],
+                        lat = -33.867487,
+                        lng = 151.20699,
+                        customMap = new google.maps.StyledMapType(styles,
+                            {name: 'Styled Map'}),
+                        mapOptions = {
+                            zoom: 14,
+                            scrollwheel: false,
+                            disableDefaultUI: true,
+                            center: new google.maps.LatLng(lat, lng),
+                            mapTypeControlOptions: {
+                                mapTypeIds: [google.maps.MapTypeId.ROADMAP]
+                            }
+                        },
+                        map = new google.maps.Map(document.getElementById('map'), mapOptions),
+                        myLatlng = new google.maps.LatLng(lat, lng),
+                        marker = new google.maps.Marker({
+                            position: myLatlng,
+                            map: map,
+                            icon: {
+                                url: 'images/public/marker.png',
+                                scaledSize: new google.maps.Size(35, 45)
+                            }
+                        });
+                    map.mapTypes.set('map_style', customMap);
+                    map.setMapTypeId('map_style');
+                });
+            })(jQuery);
+        // Google analytics
+        // End google analytics

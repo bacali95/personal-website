@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+    head
+        title= title
+        //Meta
+        meta(charset='utf-8')
+        meta(name='description', content='')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        //Link
+        link(href='/stylesheets/admin/dashboard/bootstrap.min.css', rel='stylesheet')
+        link(href='/stylesheets/admin/dashboard/starter-template.css', rel='stylesheet')
+    body
+        nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+            a.navbar-brand(href='/admin') Index
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            div#navbarsExampleDefault.collapse.navbar-collapse
+                ul.navbar-nav.mr-auto
+                    li.nav-item.dropdown
+                        a#dropdownUsers.nav-link.dropdown-toggle(data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') Users
+                        div.dropdown-menu(aria-labelledby='dropdownUsers')
+                            a.dropdown-item(href='/admin/user') List
+                            a.dropdown-item(href='/admin/user/add') Add
+                ul.navbar-nav.navbar-right
+                    li.right.nav-item
+                        a.nav-link(href='/admin/logout') Logout
+        main.container(role='main')
+            div.starter-template
+                block sub-content
+        != messages()
+        script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+        script.
+            window.jQuery || document.write('<script src="/javascripts/admin/dashboard/jquery-slim.min.js"><\/script>')
+        script(src='/javascripts/admin/dashboard/popper.min.js')
+        script(src='/javascripts/admin/dashboard/bootstrap.min.js')

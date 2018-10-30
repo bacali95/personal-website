@@ -1,0 +1,40 @@
+body {
+    padding-top: 5rem;
+}
+
+.starter-template {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+ul.success li, ul.info li, ul.error li {
+    margin: 10px 0 10px 0;
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    list-style: none;
+}
+
+ul.success, ul.info, ul.error {
+    padding: 0;
+    width: fit-content;
+    margin: auto;
+}
+
+ul.success li {
+    color: #3c763d;
+    background: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+ul.error li {
+    color: #760509;
+    background: #f0d5ce;
+    border-color: #e9c2bf;
+}
+
+ul.info li {
+    color: #766b10;
+    background: #f0eea8;
+    border-color: #e9e688;
+}

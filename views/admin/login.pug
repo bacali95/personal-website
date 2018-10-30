@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    head
+        title= title
+        //Meta
+        meta(charset='utf-8')
+        meta(name='description', content='')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        //Link
+        link(href='/stylesheets/admin/login/bootstrap.min.css', rel='stylesheet')
+        link(href='/stylesheets/admin/login/signin.css', rel='stylesheet')
+    body.text-center
+        form.form-signin(method='post', action='/admin/login', enctype='multipart/form-data')
+            img.mb-4(src='../images/admin/icon.png', alt='', width='72', height='72')
+            h1.h3.mb-3.font-weight-normal Please sign in
+            label.sr-only(for='inputUsername') Username
+            input#inputUsername.form-control(type='text', name='username', placeholder='Username', required, autofocus)
+            label.sr-only(for='inputPassword') Password
+            input#inputPassword.form-control(type='password', name='password', placeholder='Password', required)
+            input.btn.btn-lg.btn-primary.btn-block(name='submit', type='submit', value='Sign in')
+            != messages()
+            p.mt-5.mt-3.text-muted &copy; 2018-2019
+
+

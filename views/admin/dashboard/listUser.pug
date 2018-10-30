@@ -1,0 +1,26 @@
+extends dashboardLayout
+
+block sub-content
+    h1.pb-md-5 List Users
+    div.row
+        if errors
+            ul.error
+                each error, i in errors
+                    li #{error.msg}
+    div.table-responsive
+        table.table.table-striped.table-hover
+            thead
+                tr
+                    th(scope='col') #
+                    th(scope='col') Username
+                    th(scope='col')
+                    th(scope='col')
+            tbody
+                each user, i in users
+                    tr
+                        th.align-middle(scope='row') #{i + 1}
+                        td.align-middle #{user.username}
+                        td.align-middle
+                            a.text-white.btn.btn-success(href='/admin/user/edit/' + user._id) Edit
+                        td.align-middle
+                            a.text-white.btn.btn-danger(href='/admin/user/delete/' + user._id) Remove
