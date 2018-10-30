@@ -1,5 +1,3 @@
-var specs = require('./tools/specs');
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -23,7 +21,6 @@ var usersRouter = require('./routes/admin/users');
 var app = express();
 
 
-console.log(specs.DB_URL);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
