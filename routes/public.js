@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 router.get('/en', function (req, res, next) {
     req.session.lan = 'en';
     return res.render('public/sections', {
-        title: 'Public',
+        title: 'Nasreddine Bac Ali',
         layout: 'layout'
     });
 });
