@@ -1,0 +1,77 @@
+extends ../dashboardLayout
+
+block sub-content
+    h1.pb-md-4 Show Project
+    div.pt-sm-2
+        div.row
+            div.col-md-6
+                div.col-md-12
+                    div.row
+                        div.col-md-0
+                        div.col-md-auto
+                            h5 French Content :
+                    div.pt-sm-3
+                        div.row
+                            div.col-md-4
+                                p.float-left Title :
+                            div.col-md-auto
+                                p=project.fr.title
+                        div.row
+                            div.col-md-4
+                                p.float-left Description :
+                            div.col-md-8
+                                p.float-left #{project.fr.description}
+                        div.row
+                            div.col-md-4
+                                p.float-left Type :
+                            div.col-md-auto
+                                p=project.fr.type
+                div.col-md-12
+                    div.row
+                        div.col-md-0
+                        div.col-md-auto
+                            h5 English Content :
+                    div.pt-sm-3
+                        div.row
+                            div.col-md-4
+                                p.float-left Title :
+                            div.col-md-auto
+                                p=project.en.title
+                        div.row
+                            div.col-md-4
+                                p.float-left Description :
+                            div.col-md-8
+                                p.float-left=project.en.description
+                        div.row
+                            div.col-md-4
+                                p.float-left Type :
+                            div.col-md-auto
+                                p=project.en.type
+                div.col-md-12
+                    div.row
+                        div.col-md-0
+                        div.col-md-auto
+                            h5 Informations :
+                    div.pt-sm-3
+                        div.row
+                            div.col-md-4
+                                p.float-left Categories :
+                            div.col-md-8
+                                p.float-left=project.category
+                        div.row
+                            div.col-md-4
+                                p.float-left Start Work at :
+                            div.col-md-8
+                                p=project.period.start
+                        div.row
+                            div.col-md-4
+                                p.float-left Finish Work at :
+                            div.col-md-8
+                                p=project.period.finish
+
+                        div.row
+                            div.col-md-12
+                                a.text-white.btn.btn-success.btn-lg.mr-2(href='/admin/project/edit/' + project._id) Edit
+                                a.text-white.btn.btn-danger.btn-lg(href='/admin/project/delete/' + project._id) Remove
+            div.col-md-6
+                img(src="/images/uploads/" + project.image, width="100%")
