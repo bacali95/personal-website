@@ -9,7 +9,6 @@ var favicon = require('serve-favicon');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var helmet = require('helmet');
-var multer = require('multer');
 var flash = require('connect-flash');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
@@ -18,15 +17,15 @@ var db = mongoose.connection;
 var publicRouter = require('./routes/public');
 var adminRouter = require('./routes/admin/index');
 var usersRouter = require('./routes/admin/users');
+var projectsRouter = require('./routes/admin/projects');
+var categoriesRouter = require('./routes/admin/categories');
 var app = express();
 
+app.locals.moment = require('moment');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
-//Handle file uploads
-app.use(multer({destination: path.join(__dirname, 'public', 'images', 'uploads')}).any());
 
 //Helmet
 app.use(helmet());
@@ -78,6 +77,8 @@ app.use(function (req, res, next) {
 app.use('/', publicRouter);
 app.use('/admin', adminRouter);
 app.use('/admin/user', usersRouter);
+app.use('/admin/project', projectsRouter);
+app.use('/admin/category', categoriesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

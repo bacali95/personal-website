@@ -41,7 +41,6 @@ passport.use('local', new LocalStrategy(function (username, password, done) {
             console.log('Unknown user!');
             return done(null, false, {message: 'Unknown user!'});
         }
-
         User.comparePassword(password, user.password, function (err, isMatch) {
             if (err) throw err;
             if (isMatch) {
@@ -58,8 +57,8 @@ router.post('/login', passport.authenticate('local', {
     failureRedirect: '/admin/login',
     failureFlash: 'Invalid username or password!'
 }, null), function (req, res) {
-    console.log('Good');
-    req.flash('success', 'logged in successfully!');
+    console.log('Logged in successfully');
+    req.flash('success', 'Logged in successfully!');
     return res.redirect('/admin');
 });
 
@@ -72,7 +71,9 @@ router.get('/logout', function (req, res, next) {
 });
 
 router.get('/*', function (req, res, next) {
-    if (!String(req.url).startsWith('/user')){
+    if (!String(req.url).startsWith('/user')
+        && !String(req.url).startsWith('/project')
+        && !String(req.url).startsWith('/category')){
         return res.redirect('/admin');
     }
     return next();

@@ -16,14 +16,15 @@ block content
             button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
                 span.navbar-toggler-icon
             div#navbarsExampleDefault.collapse.navbar-collapse
-                ul.navbar-nav.mr-auto
-                    li.nav-item.dropdown
-                        a#dropdownUsers.nav-link.dropdown-toggle(data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') Users
-                        div.dropdown-menu(aria-labelledby='dropdownUsers')
-                            a.dropdown-item(href='/admin/user') List
-                            a.dropdown-item(href='/admin/user/add') Add
+                ul.navbar-nav.mr-auto.navbar-right
                 ul.navbar-nav.navbar-right
-                    li.right.nav-item
+                    li.nav-item.active
+                        a.nav-link(href='/admin/user') Users
+                    li.nav-item.active
+                        a.nav-link(href='/admin/project') Projects
+                    li.nav-item.active
+                        a.nav-link(href='/admin/category') Categories
+                    li.nav-item
                         a.nav-link(href='/admin/logout') Logout
         main.container(role='main')
             div.starter-template
