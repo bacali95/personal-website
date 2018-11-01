@@ -203,7 +203,7 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
             }
             if (image) {
                 newProject.image = image.filename;
-                unlinkAsync(image.path.toString().replace(image.filename,project.image));
+                unlinkAsync(image.path.toString().replace(image.filename, project.image));
             } else {
                 newProject.image = project.image;
             }
@@ -224,6 +224,7 @@ router.get('/delete/:id', ensureAuthenticated, function (req, res, next) {
         }
         Project.remove({_id: project._id}, function (err) {
             if (err) throw err;
+            unlinkAsync('public/images/uploads/' + project.image);
             req.flash('success', 'Project deleted successfully');
             return res.redirect('/admin/project');
         })
