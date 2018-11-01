@@ -1,0 +1,62 @@
+extends ../dashboardLayout
+
+block sub-content
+    h1.pb-md-4 Add Project
+    div.row
+        if errors
+            ul.error
+                li #{errors[0].msg}
+    div.pt-sm-2
+        form.col-md-12.offset-md-0(method='post', action='/admin/project/add', enctype='multipart/form-data')
+            div.row
+                div.col-md-6
+                    div.float-left.ml-1
+                        label French Content :
+                    div.justify-content-center
+                        .form-group
+                            input.form-control(name='titleFR', type='text', placeholder='Enter Title', value=project.fr.title, required)
+                        .form-group
+                            textarea.form-control(name='descriptionFR', rows='3', placeholder='Enter Description', required) #{project.fr.description}
+                        .form-group
+                            input.form-control(name='typeFR', type='text', placeholder='Enter Type', value=project.fr.type, required)
+                div.col-md-6
+                    div.float-left.ml-1
+                        label English Content :
+                    div.justify-content-center
+                        .form-group
+                            input.form-control(name='titleEN', type='text', placeholder='Enter Title', value=project.en.title, required)
+                        .form-group
+                            textarea.form-control(name='descriptionEN', rows='3', placeholder='Enter Description', required) #{project.en.description}
+                        .form-group
+                            input.form-control(name='typeEN', type='text', placeholder='Enter Type', value=project.en.type, required)
+            div.row
+                div.col-md-6
+                    div.float-left.ml-1
+                        label Category :
+                    .form-group
+                        select.form-control.dropdown(name='category', multiple, required)
+                            option(selected disabled hidden) Choose Category
+                            each category, i in categories
+                                if project.category && project.category.toString().includes(category.name)
+                                    option(selected) #{category.name}
+                                else
+                                    option #{category.name}
+                div.col-md-6
+                    div.row
+                        div.col-md-6
+                            div.float-left.ml-1
+                                label Start Date :
+                            .form-group
+                                input.form-control(name='startDate', type='month', value=moment(project.period.start).format("YYYY-MM"), required)
+                        div.col-md-6
+                            div.float-left.ml-1
+                                label Finish Date :
+                            .form-group
+                                input.form-control(name='finishDate', type='month', value=moment(project.period.finish).format("YYYY-MM"), required)
+                    .form-group
+                        input.form-control-file(name='image', type='file', required)
+            div.row.justify-content-center
+                .form-group.mr-2
+                    input.btn.btn-default(name='submit', type='submit', value='Submit')
+                .form-group
+                    a.btn.btn-danger(name='cancel', href='/admin/project') Cancel
