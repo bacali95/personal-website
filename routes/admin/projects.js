@@ -55,6 +55,21 @@ router.get('/add', ensureAuthenticated, function (req, res, next) {
     });
 });
 
+router.get('/show/:id', ensureAuthenticated, function (req, res, next) {
+    Project.getProjectById(req.params.id, function (err, project) {
+        if (err) throw err;
+        if (!project) {
+            return res.redirect('/admin/project');
+        }
+        return res.render(baseDIR + 'showProject', {
+            title: 'Show Project',
+            layout: 'dashboardLayout',
+            project: project
+        });
+    });
+
+});
+
 router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
         let titleFR = req.body.titleFR;
         let descriptionFR = req.body.descriptionFR;
@@ -73,7 +88,7 @@ router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
 
         category = category || [];
 
-        if (Array.isArray(category)){
+        if (Array.isArray(category)) {
             category = category.join(' ');
         }
 
@@ -161,7 +176,7 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
 
     category = category || [];
 
-    if (Array.isArray(category)){
+    if (Array.isArray(category)) {
         category = category.join(' ');
     }
 

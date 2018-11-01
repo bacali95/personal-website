@@ -16,8 +16,10 @@ block content
             button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
                 span.navbar-toggler-icon
             div#navbarsExampleDefault.collapse.navbar-collapse
-                ul.navbar-nav.mr-auto.navbar-right
+                ul.navbar-nav.mr-auto.navbar-left
                 ul.navbar-nav.navbar-right
+                    li.nav-item.active
+                        a.nav-link(href='/') Public
                     li.nav-item.active
                         a.nav-link(href='/admin/user') Users
                     li.nav-item.active

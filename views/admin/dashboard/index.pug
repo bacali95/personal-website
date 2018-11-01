@@ -1,4 +1,22 @@
 extends dashboardLayout
 
 block sub-content
-    h1 This is dashboard heheey
+    div.col-md-8.offset-md-2
+        div.row
+            div.col-md-6
+                a(href='/')
+                    img(src='/images/admin/home.png', width='50%')
+                p.mt-md-3 Public
+            div.col-md-6
+                a(href='/admin/user/')
+                    img(src='/images/admin/users.png', width='50%')
+                p.mt-md-3 Users
+        div.row.mt-md-3
+            div.col-md-6
+                a(href='/admin/project/')
+                    img(src='/images/admin/projects.png', width='50%')
+                p.mt-md-3 Projects
+            div.col-md-6
+                a(href='/admin/category/')
+                    img(src='/images/admin/categories.png', width='50%')
+                p.mt-md-3 Categories

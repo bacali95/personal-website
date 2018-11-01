@@ -21,12 +21,12 @@ block sub-content
                         th(scope='col')
                 tbody
                     each project, i in projects
-                        tr
+                        tr(onclick="window.location.assign('/admin/project/show/"+project._id+"')")
                             th.align-middle(scope='row') #{i + 1}
                             td.align-middle #{project.en.title}
                             td.align-middle #{project.category}
-                            td.align-middle #{moment(project.period.start).format(MM-YYYY)}
-                            td.align-middle #{moment(project.period.finish).format(MM/YYYY)}
+                            td.align-middle #{project.period.start}
+                            td.align-middle #{project.period.finish}
                             td.align-middle
                                 a.text-white.btn.btn-success(href='/admin/project/edit/' + project._id) Edit
                             td.align-middle
