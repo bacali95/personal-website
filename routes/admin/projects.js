@@ -71,7 +71,11 @@ router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
 
         let errors = req.validationErrors();
 
-        category = (category || []).join(' ');
+        category = category || [];
+
+        if (Array.isArray(category)){
+            category = category.join(' ');
+        }
 
         let newProject = new Project({
             fr: {
@@ -155,7 +159,11 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
 
     req.checkBody('category', errorMessage).notEmpty();
 
-    category = (category || []).join(' ');
+    category = category || [];
+
+    if (Array.isArray(category)){
+        category = category.join(' ');
+    }
 
     let newProject = new Project({
         _id: req.params.id,
