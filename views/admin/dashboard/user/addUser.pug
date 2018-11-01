@@ -1,0 +1,23 @@
+extends ../dashboardLayout
+
+block sub-content
+    h1.pb-md-4 Add User
+    div.row
+        if errors
+            ul.error
+                each error, i in errors
+                    li #{error.msg}
+    div.pt-sm-2
+        form.col-md-6.offset-md-3(method='post', action='/admin/user/add')
+            div.justify-content-center
+                .form-group
+                    input.form-control(name='username', type='text', placeholder='Enter Username', value=user.username)
+                .form-group
+                    input.form-control(name='password', type='password', placeholder='Enter Password')
+                .form-group
+                    input.form-control(name='password2', type='password', placeholder='Confirm Password')
+                div.row.justify-content-center
+                    .form-group.mr-2
+                        input.btn.btn-default(name='submit', type='submit', value='Submit')
+                    .form-group
+                        a.btn.btn-danger(name='cancel', href='/admin/user') Cancel

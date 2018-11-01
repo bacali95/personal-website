@@ -1,6 +1,7 @@
 var ensureAuthenticated = require('../../tools/tools').ensureAuthenticated;
 var express = require('express');
 var router = express.Router();
+var baseDIR = 'admin/dashboard/user/';
 
 var User = require('../../models/user');
 
@@ -8,14 +9,10 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
     User.getAllUsers(function (err, users) {
         if (err) throw err;
         if (!users) {
-            return res.render('admin/dashboard/listUser', {
-                title: 'Dashboard',
-                layout: 'dashboardLayout',
-                users: []
-            });
+            users = [];
         }
-        return res.render('admin/dashboard/listUser', {
-            title: 'Dashboard',
+        return res.render(baseDIR + 'listUser', {
+            title: 'Users',
             layout: 'dashboardLayout',
             users: users
         });
@@ -23,9 +20,10 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
 });
 
 router.get('/add', ensureAuthenticated, function (req, res, next) {
-    return res.render('admin/dashboard/addUser', {
+    return res.render(baseDIR + 'addUser', {
         title: 'Add User',
-        layout: 'dashboardLayout'
+        layout: 'dashboardLayout',
+        user: new User()
     });
 });
 
@@ -38,20 +36,21 @@ router.post('/add', ensureAuthenticated, function (req, res, next) {
     req.checkBody('password', 'Password is required!').notEmpty();
     req.checkBody('password2', 'Passwords do not match!').equals(password);
 
+    var newUser = new User({
+        username: username || '',
+        password: password
+    });
+
     var errors = req.validationErrors();
 
     if (errors) {
-        return res.render('admin/dashboard/addUser', {
+        return res.render(baseDIR + 'addUser', {
+            title: 'Add User',
+            layout: 'dashboardLayout',
             errors: errors,
-            username: username,
-            password: password
+            user: newUser
         });
     } else {
-        var newUser = new User({
-            username: username,
-            password: password
-        });
-
         User.createUser(newUser, function (err, user) {
             if (err) throw err;
             req.flash('success', 'User added successfully');
@@ -67,7 +66,7 @@ router.get('/edit/:id', ensureAuthenticated, function (req, res, next) {
         if (!user) {
             return res.redirect('/admin/user');
         }
-        return res.render('admin/dashboard/editUser', {
+        return res.render(baseDIR + 'editUser', {
             title: 'Edit User',
             layout: 'dashboardLayout',
             user: user
@@ -76,17 +75,20 @@ router.get('/edit/:id', ensureAuthenticated, function (req, res, next) {
 });
 
 router.post('/edit/:id', ensureAuthenticated, function (req, res, next) {
-    var newUser = new User({
-        _id: req.params.id,
-        password: req.body.password
-    });
+    var password = req.body.password;
     var password2 = req.body.password2;
 
-    req.checkBody('password2', 'Passwords do not match!').equals(req.body.password);
+    req.checkBody('password2', 'Passwords do not match!').equals(password);
+
+    var newUser = new User({
+        _id: req.params.id,
+        password: password || ''
+    });
 
     var errors = req.validationErrors();
+
     if (errors) {
-        return res.render('admin/dashboard/editUser', {
+        return res.render(baseDIR + 'editUser', {
             errors: errors,
             user: newUser
         });

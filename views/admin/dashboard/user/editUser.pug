@@ -1,20 +1,20 @@
-extends dashboardLayout
+extends ../dashboardLayout
 
 block sub-content
-    h1.pb-sm-0 Add User
+    h1.pb-md-4 Edit User
     div.row
         if errors
             ul.error
                 each error, i in errors
                     li #{error.msg}
     div.pt-sm-2
-        form.col-md-6.offset-md-3(method='post', action='/admin/user/add', enctype='multipart/form-data')
+        form.col-md-6.offset-md-3(method='post', action='/admin/user/edit/' + user._id)
             div.justify-content-center
                 .form-group
-                    input.form-control(name='username', type='text', placeholder='Enter Username')
+                    input.form-control(name='username', type='text', placeholder='Enter Username', value=user.username, disabled)
                 .form-group
                     input.form-control(name='password', type='password', placeholder='Enter Password')
                 .form-group
                     input.form-control(name='password2', type='password', placeholder='Confirm Password')
                 .form-group
-                    input.btn.btn-default(name='submit', type='submit', value='Add User')
+                    input.btn.btn-default(name='submit', type='submit', value='Submit')
