@@ -1,0 +1,28 @@
+extends ../dashboardLayout
+
+block sub-content
+    h1.pb-md-4 Categories List
+    div.row
+        if errors
+            ul.error
+                each error, i in errors
+                    li #{error.msg}
+    div.pt-sm-2
+        div.table-responsive
+            table.table.table-striped.table-hover
+                thead
+                    tr
+                        th(scope='col') #
+                        th(scope='col') Name
+                        th(scope='col')
+                        th(scope='col')
+                tbody
+                    each category, i in categories
+                        tr
+                            th.align-middle(scope='row') #{i + 1}
+                            td.align-middle #{category.name}
+                            td.align-middle
+                                a.text-white.btn.btn-success(href='/admin/category/edit/' + category._id) Edit
+                            td.align-middle
+                                a.text-white.btn.btn-danger(href='/admin/category/delete/' + category._id) Remove
+        a.btn.btn-success(href='/admin/category/add') Add Category

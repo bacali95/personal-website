@@ -1,0 +1,16 @@
+extends ../dashboardLayout
+
+block sub-content
+    h1.pb-md-4 Edit Category
+    div.row
+        if errors
+            ul.error
+                each error, i in errors
+                    li #{error.msg}
+    div.pt-sm-2
+        form.col-md-6.offset-md-3(method='post', action='/admin/category/edit/' + category._id)
+            div.justify-content-center
+                .form-group
+                    input.form-control(name='name', type='text', placeholder='Enter Category Name', value=category.name)
+                .form-group
+                    input.btn.btn-default(name='submit', type='submit', value='Submit')
