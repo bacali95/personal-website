@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/en', function (req, res, next) {
     req.session.lan = 'en';
-    return res.render('public/sections', {
+    return res.render('public/en/sections', {
         title: 'Nasreddine Bac Ali',
         layout: 'layout'
     });
@@ -20,7 +20,7 @@ router.get('/en', function (req, res, next) {
 
 router.get('/fr', function (req, res, next) {
     req.session.lan = 'fr';
-    return res.render('public/sections', {
+    return res.render('public/fr/sections', {
         title: 'Public',
         layout: 'layout'
     });
