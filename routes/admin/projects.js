@@ -28,8 +28,7 @@ const Category = require('../../models/category');
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     Project.getAllProjects(function (err, projects) {
-        if (err) throw err;
-        if (!projects) {
+        if (err || !projects) {
             projects = [];
         }
         return res.render(baseDIR + 'listProject', {
@@ -42,8 +41,7 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
 
 router.get('/add', ensureAuthenticated, function (req, res, next) {
     Category.getAllCategories(function (err, categories) {
-        if (err) throw err;
-        if (!categories) {
+        if (err || !categories) {
             categories = [];
         }
         return res.render(baseDIR + 'addProject', {
@@ -56,15 +54,19 @@ router.get('/add', ensureAuthenticated, function (req, res, next) {
 });
 
 router.get('/show/:id', ensureAuthenticated, function (req, res, next) {
+    var index = req.query.index;
+    if (!index || isNaN(index)){
+        index = 0;
+    }
     Project.getProjectById(req.params.id, function (err, project) {
-        if (err) throw err;
-        if (!project) {
+        if (err || !project) {
             return res.redirect('/admin/project');
         }
         return res.render(baseDIR + 'showProject', {
             title: 'Show Project',
             layout: 'dashboardLayout',
-            project: project
+            project: project,
+            index: index
         });
     });
 
@@ -81,6 +83,7 @@ router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
         let category = req.body.category;
         let startDate = req.body.startDate;
         let finishDate = req.body.finishDate;
+        let repoGithub = req.body.repoGithub;
         let images = req.files;
 
         let imageNames = [];
@@ -115,6 +118,7 @@ router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
                 start: startDate || '',
                 finish: finishDate || ''
             },
+            repoGithub: repoGithub,
             creationDate: Date.now(),
             images: imageNames
         });
@@ -124,8 +128,7 @@ router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
                 unlinkAsync(f.path);
             });
             Category.getAllCategories(function (err, categories) {
-                if (err) throw err;
-                if (!categories) {
+                if (err || !categories) {
                     categories = [];
                 }
                 return res.render(baseDIR + 'addProject', {
@@ -138,9 +141,12 @@ router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
             });
         } else {
             Project.createProject(newProject, function (err, project) {
-                if (err) throw err;
+                if (err) {
+                    req.flash('error', 'Adding project failed!');
+                    return res.redirect('/admin/project');
+                }
                 req.flash('success', 'Project added successfully');
-                return res.redirect('/admin/project');
+                return res.redirect('/admin/project/show/'+project._id);
             });
         }
     }
@@ -148,13 +154,11 @@ router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
 
 router.get('/edit/:id', ensureAuthenticated, function (req, res, next) {
     Project.findById(req.params.id, function (err, project) {
-        if (err) throw err;
-        if (!project) {
+        if (err || !project) {
             return res.redirect('/admin/project');
         }
         Category.getAllCategories(function (err, categories) {
-            if (err) throw err;
-            if (!categories) {
+            if (err || !categories) {
                 categories = [];
             }
             return res.render(baseDIR + 'editProject', {
@@ -177,6 +181,7 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
     let category = req.body.category;
     let startDate = req.body.startDate;
     let finishDate = req.body.finishDate;
+    let repoGithub = req.body.repoGithub;
     let images = req.files;
 
     let errorMessage = 'Fill all the fields please!';
@@ -212,6 +217,7 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
             start: startDate || '',
             finish: finishDate || ''
         },
+        repoGithub: repoGithub,
         creationDate: Date.now()
     });
 
@@ -222,8 +228,7 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
             unlinkAsync(f.path);
         });
         Category.getAllCategories(function (err, categories) {
-            if (err) throw err;
-            if (!categories) {
+            if (err || !categories) {
                 categories = [];
             }
             return res.render(baseDIR + 'addProject', {
@@ -236,8 +241,7 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
         });
     } else {
         Project.getProjectById(newProject._id, function (err, project) {
-            if (err) throw err;
-            if (!project) {
+            if (err || !project) {
                 req.flash('error', 'Updating project failed!');
                 return res.redirect('/admin/project');
             }
@@ -250,9 +254,12 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
                 newProject.images = project.images;
             }
             Project.updateProject(project._id, newProject, function (err) {
-                if (err) throw err;
+                if (err) {
+                    req.flash('error', 'Updating project failed!');
+                    return res.redirect('/admin/project');
+                }
                 req.flash('success', 'Project updated successfully');
-                return res.redirect('/admin/project');
+                return res.redirect('/admin/project/show/'+project._id);
             });
         });
     }
@@ -260,12 +267,14 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
 
 router.get('/delete/:id', ensureAuthenticated, function (req, res, next) {
     Project.findById(req.params.id, function (err, project) {
-        if (err) throw err;
-        if (!project) {
+        if (err || !project) {
             return res.redirect('/admin/project');
         }
         Project.remove({_id: project._id}, function (err) {
-            if (err) throw err;
+            if (err) {
+                req.flash('error', 'Deleting project failed!');
+                return res.redirect('/admin/project');
+            }
             project.images.forEach(function (name) {
                 unlinkAsync('public/images/uploads/' + name);
             });

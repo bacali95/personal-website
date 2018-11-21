@@ -7,8 +7,7 @@ var Category = require('../../models/category');
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     Category.getAllCategories(function (err, categories) {
-        if (err) throw err;
-        if (!categories) {
+        if (err || !categories) {
             categories = [];
         }
         return res.render(baseDIR + 'listCategory', {
@@ -48,7 +47,10 @@ router.post('/add', ensureAuthenticated, function (req, res, next) {
     } else {
 
         Category.createCategory(newCategory, function (err, category) {
-            if (err) throw err;
+            if (err) {
+                req.flash('error', 'Adding Category failed!');
+                return res.redirect('/admin/category');
+            }
             req.flash('success', 'Category added successfully');
             return res.redirect('/admin/category');
         });
@@ -58,8 +60,7 @@ router.post('/add', ensureAuthenticated, function (req, res, next) {
 
 router.get('/edit/:id', ensureAuthenticated, function (req, res, next) {
     Category.findById(req.params.id, function (err, category) {
-        if (err) throw err;
-        if (!category) {
+        if (err || !category) {
             return res.redirect('/admin/category');
         }
         return res.render(baseDIR + 'editCategory', {
@@ -89,14 +90,15 @@ router.post('/edit/:id', ensureAuthenticated, function (req, res, next) {
         });
     } else {
         Category.getCategoryById(newCategory._id, function (err, category) {
-            if (err) throw err;
-            if (!category) {
+            if (err || !category) {
                 req.flash('error', 'Updating category failed!');
                 return res.redirect('/admin/category');
             }
             Category.updateCategory(category._id, newCategory, function (err) {
-                if (err) throw err;
-                req.flash('success', 'Category updated successfully');
+                if (err) {
+                    req.flash('error', 'Updating Category failed!');
+                    return res.redirect('/admin/category');
+                }                req.flash('success', 'Category updated successfully');
                 return res.redirect('/admin/category');
             });
         });
@@ -105,13 +107,14 @@ router.post('/edit/:id', ensureAuthenticated, function (req, res, next) {
 
 router.get('/delete/:id', ensureAuthenticated, function (req, res, next) {
     Category.findById(req.params.id, function (err, category) {
-        if (err) throw err;
-        if (!category) {
+        if (err || !category) {
             return res.redirect('/admin/category');
         }
         Category.remove({_id: category._id}, function (err) {
-            if (err) throw err;
-            req.flash('success', 'Category deleted successfully');
+            if (err) {
+                req.flash('error', 'Deleting Category failed!');
+                return res.redirect('/admin/category');
+            }            req.flash('success', 'Category deleted successfully');
             return res.redirect('/admin/category');
         })
     });

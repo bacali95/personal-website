@@ -60,6 +60,11 @@ block sub-content
                                 p.float-left=project.category
                         div.row
                             div.col-md-4
+                                p.float-left Github Link :
+                            div.col-md-8
+                                p.float-left=project.repoGithub
+                        div.row
+                            div.col-md-4
                                 p.float-left Start Work at :
                             div.col-md-8
                                 p.float-left=project.period.start
@@ -71,7 +76,8 @@ block sub-content
 
                         div.row
                             div.col-md-12
-                                a.text-white.btn.btn-success.btn-lg.mr-2(href='/admin/project/edit/' + project._id) Edit
+                                a.text-white.btn.btn-success.btn-lg.mr-2(href='/project/' + project._id + '?index=' + index) Show in public
+                                a.text-white.btn.btn-info.btn-lg.mr-2(href='/admin/project/edit/' + project._id) Edit
                                 a.text-white.btn.btn-danger.btn-lg(href='/admin/project/delete/' + project._id) Remove
             div.col-md-6
                 each image, i in project.images

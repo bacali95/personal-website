@@ -7,8 +7,7 @@ var User = require('../../models/user');
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     User.getAllUsers(function (err, users) {
-        if (err) throw err;
-        if (!users) {
+        if (err || !users) {
             users = [];
         }
         return res.render(baseDIR + 'listUser', {
@@ -52,7 +51,10 @@ router.post('/add', ensureAuthenticated, function (req, res, next) {
         });
     } else {
         User.createUser(newUser, function (err, user) {
-            if (err) throw err;
+            if (err) {
+                req.flash('error', 'Adding User failed!');
+                return res.redirect('/admin/user');
+            }
             req.flash('success', 'User added successfully');
             return res.redirect('/admin/user');
         });
@@ -62,8 +64,7 @@ router.post('/add', ensureAuthenticated, function (req, res, next) {
 
 router.get('/edit/:id', ensureAuthenticated, function (req, res, next) {
     User.findById(req.params.id, function (err, user) {
-        if (err) throw err;
-        if (!user) {
+        if (err || !user) {
             return res.redirect('/admin/user');
         }
         return res.render(baseDIR + 'editUser', {
@@ -95,13 +96,15 @@ router.post('/edit/:id', ensureAuthenticated, function (req, res, next) {
     } else {
         console.log(newUser);
         User.getUserById(newUser._id, function (err, user) {
-            if (err) throw err;
-            if (!user) {
+            if (err || !user) {
                 req.flash('error', 'Updating user failed!');
                 return res.redirect('/admin/user');
             }
             User.updateUser(user._id, newUser, function (err) {
-                if (err) throw err;
+                if (err) {
+                    req.flash('error', 'Updating User failed!');
+                    return res.redirect('/admin/user');
+                }
                 req.flash('success', 'User updated successfully');
                 return res.redirect('/admin/user');
             });
@@ -111,13 +114,14 @@ router.post('/edit/:id', ensureAuthenticated, function (req, res, next) {
 
 router.get('/delete/:id', ensureAuthenticated, function (req, res, next) {
     User.findById(req.params.id, function (err, user) {
-        if (err) throw err;
-        if (!user) {
+        if (err || !user) {
             return res.redirect('/admin/user');
         }
         User.remove({_id: user._id}, function (err) {
-            if (err) throw err;
-            req.flash('success', 'User deleted successfully');
+            if (err) {
+                req.flash('error', 'Deleting User failed!');
+                return res.redirect('/admin/user');
+            }            req.flash('success', 'User deleted successfully');
             return res.redirect('/admin/user');
         })
     });

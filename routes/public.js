@@ -8,13 +8,11 @@ var Project = require('../models/project');
 function languageManager(req, res, next) {
     req.session.lan = req.url;
     Category.getAllCategories(function (err, categories) {
-        if (err) throw err;
-        if (!categories) {
+        if (err || !categories) {
             categories = [];
         }
         Project.getAllProjects(function (err, projects) {
-            if (err) throw err;
-            if (!projects) {
+            if (err || !projects) {
                 projects = [];
             }
             return res.render('public' + req.session.lan + '/sections', {
@@ -42,10 +40,10 @@ router.get('/project/:id', function (req, res, next) {
     if (!req.session.lan) {
         req.session.lan = '/en';
     }
+    var index = req.params.index;
     Project.getProjectById(req.params.id, function (err, project) {
-        if (err) throw err;
-        if (!project) {
-            return res.redirect('/');
+        if (err || !project) {
+            return res.redirect('/#portfolio');
         }
         return res.render('public' + req.session.lan + '/showProject', {
             title: project[req.session.lan.replace('/', '')].title,
@@ -58,9 +56,11 @@ router.get('/project/:id', function (req, res, next) {
 
 router.get('/next/:index', function (req, res, next) {
     var index = req.params.index;
+    if (!index || isNaN(index)) {
+        index = 0;
+    }
     Project.getAllProjects(function (err, projects) {
-        if (err) throw err;
-        if (!projects) {
+        if (err || !projects) {
             projects = [];
         }
         index = projects.length + Number(index);

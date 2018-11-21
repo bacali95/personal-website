@@ -21,7 +21,7 @@ block sub-content
                         th(scope='col')
                 tbody
                     each project, i in projects
-                        tr(onclick="window.location.assign('/admin/project/show/"+project._id+"')")
+                        tr(onclick="window.location.assign('/admin/project/show/" + project._id + "?index="+i+"')")
                             th.align-middle(scope='row') #{i + 1}
                             td.align-middle #{project.en.title}
                             td.align-middle #{project.category}

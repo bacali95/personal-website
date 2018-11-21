@@ -39,6 +39,9 @@ var ProjectSchema = mongoose.Schema({
             type: String
         }
     },
+    repoGithub :{
+        type: String
+    },
     creationDate: {
         type: Date
     },

@@ -54,6 +54,10 @@ block sub-content
                             .form-group
                                 input.form-control(name='finishDate', type='month', value=moment(project.period.finish).format("YYYY-MM"), required)
                     .form-group
+                        input.form-control(name='repoGithub', type='text', placeholder='Enter Github repository link', value=project.repoGithub, required)
+            .row
+                .col-md-12
+                    .form-group
                         a#fileSelect.btn.btn-info(style='color: white') Select Images
                         input#files.form-control-file(name='image', type='file', multiple = 'multiple', hidden='true', required)
             div#selectedFiles.row
@@ -62,7 +66,7 @@ block sub-content
                 .form-group.mr-2
                     input.btn.btn-default(name='submit', type='submit', value='Submit')
                 .form-group
-                    a#cancel.btn.btn-danger(href='/admin') Cancel
+                    a#cancel.btn.btn-danger(href='javascript:history.back()') Cancel
 
     script(src='/javascripts/admin/dashboard/jquery-3.3.1.min.js')
     script.
