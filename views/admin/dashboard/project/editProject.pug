@@ -54,9 +54,65 @@ block sub-content
                             .form-group
                                 input.form-control(name='finishDate', type='month', value=moment(project.period.finish).format("YYYY-MM"), required)
                     .form-group
-                        input.form-control-file(name='image', type='file')
+                        a#fileSelect.btn.btn-info(style='color: white') Select Images
+                        input#files.form-control-file(name='image', type='file', multiple = 'multiple', hidden='true', required)
+            div#selectedFiles.row
+
             div.row.justify-content-center
                 .form-group.mr-2
                     input.btn.btn-default(name='submit', type='submit', value='Submit')
                 .form-group
                     a.btn.btn-danger(name='cancel', href='/admin/project') Cancel
+
+    script(src='/javascripts/admin/dashboard/jquery-3.3.1.min.js')
+    script.
+        (function ($) {
+            "use strict";
+
+            document.addEventListener("DOMContentLoaded", init, false);
+
+            function init() {
+                document.querySelector('#files').addEventListener('change', handleFileSelect, false);
+            }
+
+            function handleFileSelect(e) {
+                if (!e.target.files || !window.FileReader) return;
+
+                var files = Array.prototype.slice.call(e.target.files);
+
+                $('#selectedFiles').html('');
+
+                files.forEach(function (f) {
+                    if (!f.type.match("image.*")) {
+                        return;
+                    }
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#selectedFiles').append('' +
+                            '<div class="col-md-4"> ' +
+                            '   <div class="card form-group" >' +
+                            '      <img class="card-img-top" src="' + e.target.result + '"/>' +
+                            '      <div class="card-body">' +
+                            '           <p>' + f.name + '<br>(' + f.type + ')</p>' +
+                            '           <p>' + (f.size > 1048576 ?
+                                (Number(f.size / (1048576)).toFixed(1) + ' Mbytes') :
+                                (Number(f.size / 1024).toFixed(1) + ' KBytes')) + ' - ' +
+                            '           ' + (f.lastModifiedDate ? f.lastModifiedDate.toLocaleTimeString() +
+                                ' ' + f.lastModifiedDate.toLocaleDateString() : 'n/a') + '</p>' +
+                            '       </div>' +
+                            '   </div>' +
+                            '</div>');
+                    };
+
+                    reader.readAsDataURL(f);
+                });
+
+            }
+
+            $(document).on('click', '#fileSelect', function (e) {
+                $('#files').click();
+                e.preventDefault();
+                return false;
+            });
+
+        })(jQuery);

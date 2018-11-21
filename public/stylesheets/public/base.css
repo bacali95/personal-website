@@ -1,15 +1,3 @@
-/* Table of Content
-==================================================
-	#Reset & Basics
-	#Basic Styles
-	#Typography
-	#Links
-	#Browser Fix
-	#Misc
-
-
-/* #Reset & Basics (Inspired by E. Meyers)
-================================================== */
 
 *, *:before, *:after {
     -moz-box-sizing: border-box;

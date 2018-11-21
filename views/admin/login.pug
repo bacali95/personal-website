@@ -11,7 +11,7 @@ block content
         link(href='/stylesheets/admin/login/bootstrap.min.css', rel='stylesheet')
         link(href='/stylesheets/admin/login/signin.css', rel='stylesheet')
     body.text-center
-        form.form-signin(method='post', action='/admin/login')
+        form.form-signin(method='post', action='/admin/login?fromURL='+fromURL)
             img.mb-4(src='../images/admin/icon.png', alt='', width='100')
             h1.h3.mb-3.font-weight-normal Sign in
             label.sr-only(for='inputUsername') Username
@@ -21,6 +21,6 @@ block content
             input.btn.btn-lg.btn-primary.btn-block(name='submit', type='submit', value='Sign in', width='100%')
             a.btn.btn-lg.btn-info.btn-block.text-white(name='return', href='/') Public Page
             != messages()
-            p.mt-5.mt-3.text-muted &copy; Nasreddine Bac Ali - 2018
+            p.mt-5.text-muted &copy; Nasreddine Bac Ali - 2018
 
 

@@ -17,9 +17,11 @@ router.get('/login', function (req, res, next) {
     if (req.isAuthenticated()) {
         return res.redirect('/admin');
     } else {
+        //res.setAttribute('from', req.query.fromURL);
         return res.render('admin/login', {
             title: 'Sign in',
-            layout: 'layout'
+            layout: 'layout',
+            fromURL: req.query.fromURL
         });
     }
 });
@@ -59,6 +61,9 @@ router.post('/login', passport.authenticate('local', {
 }, null), function (req, res) {
     console.log('Logged in successfully');
     req.flash('success', 'Logged in successfully!');
+    if (req.query.fromURL){
+        return res.redirect(req.query.fromURL);
+    }
     return res.redirect('/admin');
 });
 
@@ -73,7 +78,7 @@ router.get('/logout', function (req, res, next) {
 router.get('/*', function (req, res, next) {
     if (!String(req.url).startsWith('/user')
         && !String(req.url).startsWith('/project')
-        && !String(req.url).startsWith('/category')){
+        && !String(req.url).startsWith('/category')) {
         return res.redirect('/admin');
     }
     return next();

@@ -453,111 +453,21 @@ block sections
                                     ul#category.filter
                                         li
                                             a.active(href='#', data-filter='all') all
-                                        li
-                                            a(href='#', data-filter='web') Web design
-                                        li
-                                            a(href='#', data-filter='graphic') Graphic design
-                                        li
-                                            a(href='#', data-filter='motion') Motion Graphic
+                                        each category, i in categories
+                                            li
+                                                a(href='#', data-filter=category.name) #{category.name}
                         .row
                             .col-md-12
                                 ul.work
-                                    li.col-sm-6
-                                        .item.web
-                                            a(href='project_single.html')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Web design
-                                                img(src='images/public/portfolio/1.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.web
-                                            a.popup(href='images/public/portfolio/2.jpg')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Web design
-                                                img(src='images/public/portfolio/2.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.graphic
-                                            a.popup(href='images/public/portfolio/3.jpg')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Graphic design
-                                                img(src='images/public/portfolio/3.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.web
-                                            a.popup(href='images/public/portfolio/4.jpg')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Web design
-                                                img(src='images/public/portfolio/4.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.graphic
-                                            a.popup(href='images/public/portfolio/5.jpg')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Graphic design
-                                                img(src='images/public/portfolio/5.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.web
-                                            a.popup(href='images/public/portfolio/6.jpg')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Web design
-                                                img(src='images/public/portfolio/6.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.motion
-                                            a.popup-vimeo(href='https://vimeo.com/67429593')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Motion graphic
-                                                img(src='images/public/portfolio/7.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.web
-                                            a(href='project_single.html')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Web design
-                                                img(src='images/public/portfolio/8.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.graphic
-                                            a.popup(href='images/public/portfolio/9.jpg')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Graphic design
-                                                img(src='images/public/portfolio/9.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.graphic
-                                            a(target='_blank', href='http://www.mutationmedia.net/')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Graphic design
-                                                img(src='images/public/portfolio/10.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.web
-                                            a.popup(href='images/public/portfolio/11.jpg')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Web design
-                                                img(src='images/public/portfolio/11.jpg', alt='')
-                                    li.col-sm-6
-                                        .item.motion
-                                            a.popup-youtube(href='https://www.youtube.com/watch?v=gTFljCRnGN4')
-                                                .desc
-                                                    h5.proj-desc
-                                                        | Project Name
-                                                        span Motion graphic
-                                                img(src='images/public/portfolio/12.jpg', alt='')
+                                    each project, i in projects
+                                        li.col-sm-6.mb-40
+                                            .item(class=project.category)
+                                                a(href='/project/' + project._id + '?index=' + i)
+                                                    .desc
+                                                        h5.proj-desc
+                                                            | #{project[language].title}
+                                                            span #{project.category}
+                                                    img(src='images/uploads/' + project.images[0], alt='')
                 .block-content
                     .row
                         .col-md-12

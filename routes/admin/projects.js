@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage
-}).single('image');
+}).any('image');
 
 const Project = require('../../models/project');
 const Category = require('../../models/category');
@@ -71,6 +71,7 @@ router.get('/show/:id', ensureAuthenticated, function (req, res, next) {
 });
 
 router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
+
         let titleFR = req.body.titleFR;
         let descriptionFR = req.body.descriptionFR;
         let typeFR = req.body.typeFR;
@@ -80,7 +81,13 @@ router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
         let category = req.body.category;
         let startDate = req.body.startDate;
         let finishDate = req.body.finishDate;
-        let image = req.file;
+        let images = req.files;
+
+        let imageNames = [];
+
+        images.forEach(function (f) {
+            imageNames.push(f.filename);
+        });
 
         req.checkBody('category', 'Select a Category').notEmpty();
 
@@ -109,11 +116,13 @@ router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
                 finish: finishDate || ''
             },
             creationDate: Date.now(),
-            image: image.filename || ''
+            images: imageNames
         });
 
         if (errors) {
-            unlinkAsync(image.path);
+            images.forEach(function (f) {
+                unlinkAsync(f.path);
+            });
             Category.getAllCategories(function (err, categories) {
                 if (err) throw err;
                 if (!categories) {
@@ -168,11 +177,17 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
     let category = req.body.category;
     let startDate = req.body.startDate;
     let finishDate = req.body.finishDate;
-    let image = req.file;
+    let images = req.files;
 
     let errorMessage = 'Fill all the fields please!';
 
     req.checkBody('category', errorMessage).notEmpty();
+
+    let imageNames = [];
+
+    images.forEach(function (f) {
+        imageNames.push(f.filename);
+    });
 
     category = category || [];
 
@@ -203,7 +218,9 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
     let errors = req.validationErrors();
 
     if (errors) {
-        unlinkAsync(image.path);
+        images.forEach(function (f) {
+            unlinkAsync(f.path);
+        });
         Category.getAllCategories(function (err, categories) {
             if (err) throw err;
             if (!categories) {
@@ -224,11 +241,13 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
                 req.flash('error', 'Updating project failed!');
                 return res.redirect('/admin/project');
             }
-            if (image) {
-                newProject.image = image.filename;
-                unlinkAsync(image.path.toString().replace(image.filename, project.image));
+            if (images) {
+                newProject.images = imageNames;
+                project.images.forEach(function (name) {
+                    unlinkAsync('public/images/uploads/' + name);
+                });
             } else {
-                newProject.image = project.image;
+                newProject.images = project.images;
             }
             Project.updateProject(project._id, newProject, function (err) {
                 if (err) throw err;
@@ -247,7 +266,9 @@ router.get('/delete/:id', ensureAuthenticated, function (req, res, next) {
         }
         Project.remove({_id: project._id}, function (err) {
             if (err) throw err;
-            unlinkAsync('public/images/uploads/' + project.image);
+            project.images.forEach(function (name) {
+                unlinkAsync('public/images/uploads/' + name);
+            });
             req.flash('success', 'Project deleted successfully');
             return res.redirect('/admin/project');
         })

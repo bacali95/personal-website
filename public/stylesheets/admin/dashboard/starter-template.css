@@ -38,3 +38,13 @@ ul.info li {
     background: #f0eea8;
     border-color: #e9e688;
 }
+
+.entry:not(:first-of-type)
+{
+    margin-top: 10px;
+}
+
+.glyphicon
+{
+    font-size: 12px;
+}

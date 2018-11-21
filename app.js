@@ -75,6 +75,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', publicRouter);
+app.use('/project', publicRouter);
 app.use('/admin', adminRouter);
 app.use('/admin/user', usersRouter);
 app.use('/admin/project', projectsRouter);

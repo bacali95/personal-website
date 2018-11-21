@@ -3,6 +3,7 @@ module.exports = {
         if (req.isAuthenticated()) {
             return next();
         }
-        return res.redirect('/admin/login');
+        return res.redirect('/admin/login?fromURL='+req.originalUrl);
     }
 };
+

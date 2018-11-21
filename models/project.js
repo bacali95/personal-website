@@ -42,9 +42,9 @@ var ProjectSchema = mongoose.Schema({
     creationDate: {
         type: Date
     },
-    image: {
+    images: [{
         type: String
-    }
+    }]
 });
 
 var Project = module.exports = mongoose.model('Project', ProjectSchema);
