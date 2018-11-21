@@ -241,7 +241,7 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
                 req.flash('error', 'Updating project failed!');
                 return res.redirect('/admin/project');
             }
-            if (images) {
+            if (images && images.length > 0) {
                 newProject.images = imageNames;
                 project.images.forEach(function (name) {
                     unlinkAsync('public/images/uploads/' + name);
