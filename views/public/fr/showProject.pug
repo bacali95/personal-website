@@ -35,14 +35,14 @@ html
                                                 a(href='/next/' + Number(Number(index) - 1))
                                                     span
                                                         span.left-arr ←
-                                                        | Previous Project
+                                                        | Project Précédant
                                             li
                                                 a(href='/')
-                                                    span Return
+                                                    span Retourner
                                             li
                                                 a(href='/next/' + Number(Number(index) + 1))
                                                     span
-                                                        | Next Project
+                                                        | Project Suivant
                                                         span.right-arr →
                             .row
                                 .col-md-12
@@ -61,15 +61,15 @@ html
                                             h5.mb-10 Type
                                             p= project[language].type
                                         .col-sm-5
-                                            h5.mb-10 Duration
+                                            h5.mb-10 Durée
                                             .row
                                                 .col-sm-3
-                                                    p From
+                                                    p De
                                                 .col-sm-6
                                                     p= project.period.start
                                             .row
                                                 .col-sm-3
-                                                    p To
+                                                    p À
                                                 .col-sm-6
                                                     p= project.period.finish
 
@@ -84,16 +84,16 @@ html
                                     .block-share.mb-30.t-center.clearfix
                                         .col-md-12
                                             hr
-                                            h5.mt-20 Share this project
+                                            h5.mt-20 Partager ce project
                                             ul.social.mt-20
                                                 li
-                                                    a(href='https://www.facebook.com/sharer/sharer.php?u=http://www.nasreddinebacali.info', target='_blank')
+                                                    a(href='https://www.facebook.com/sharer/sharer.php?u=http://www.nasreddinebacali.info/project/' + project._id, target='_blank')
                                                         i.icon-facebook
                                                 li
-                                                    a(href='https://twitter.com/intent/tweet?text=http://www.nasreddinebacali.info', target='_blank')
+                                                    a(href='https://twitter.com/intent/tweet?text=http://www.nasreddinebacali.info/project/' + project._id, target='_blank')
                                                         i.icon-twitter
                                                 li
-                                                    a(href='https://www.linkedin.com/shareArticle?url=http://nasreddinebacali.info&title=' + project[language].title, target='_blank')
+                                                    a(href='https://www.linkedin.com/shareArticle?url=http://www.nasreddinebacali.info/project/' + project._id + '&title=' + project[language].title, target='_blank')
                                                         i.icon-linkedin
 
         script(src='../javascripts/public/jquery-1.11.3.min.js', type='text/javascript')
@@ -102,5 +102,12 @@ html
         script(src='../javascripts/public/jquery.easytabs.min.js', type='text/javascript')
         script(src='../javascripts/public/placeholders.min.js', type='text/javascript')
         script(src='../javascripts/public/script.js', type='text/javascript')
-        // Google analytics
-        // End google analytics
+        script(async, src="https://www.googletagmanager.com/gtag/js?id=UA-128575469-1")
+        script.
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-128575469-1');
