@@ -59,7 +59,7 @@ block sections
                                     .listing-event
                                         ul.data.left
                                             li
-                                                span.emph-1 Adress
+                                                span.emph-1 Address
                                                 |  :
                                                 br
                                                 |                                                             St. Sidi Abdallah, Qt. °17
@@ -459,6 +459,8 @@ block sections
                         .row
                             .col-md-12
                                 ul.work
+                                    if projects.length === 0
+                                        p.mb-200 Comming Soon
                                     each project, i in projects
                                         li.col-sm-6.mb-40
                                             .item(class=project.category)
@@ -523,7 +525,7 @@ block sections
                                         i.icon-paper-plane-3
                                     h5.mb-20 Let's connect
                                     p
-                                        | Email:
+                                        | Email :
                                         a(href='mailto:nasreddine.bacali95@gmail.com') nasreddine.bacali95@gmail.com
                                         br
                                         |  Facebook :
