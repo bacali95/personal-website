@@ -48,7 +48,7 @@ router.get('/project/:id', function (req, res, next) {
             return res.redirect('/');
         }
         return res.render('public' + req.session.lan + '/showProject', {
-            title: 'Show Project',
+            title: project[req.session.lan.replace('/', '')].title,
             language: req.session.lan.replace('/', ''),
             project: project,
             index: req.query.index
