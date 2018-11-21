@@ -55,7 +55,7 @@ block sub-content
                                 input.form-control(name='finishDate', type='month', value=moment(project.period.finish).format("YYYY-MM"), required)
                     .form-group
                         a#fileSelect.btn.btn-info(style='color: white') Select Images
-                        input#files.form-control-file(name='image', type='file', multiple = 'multiple', hidden='true', required)
+                        input#files.form-control-file(name='image', type='file', multiple = 'multiple', hidden='true')
             div#selectedFiles.row
 
             div.row.justify-content-center
