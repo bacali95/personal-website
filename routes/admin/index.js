@@ -17,7 +17,6 @@ router.get('/login', function (req, res, next) {
     if (req.isAuthenticated()) {
         return res.redirect('/admin');
     } else {
-        //res.setAttribute('from', req.query.fromURL);
         return res.render('admin/login', {
             title: 'Sign in',
             layout: 'layout',
@@ -62,7 +61,6 @@ router.post('/login', passport.authenticate('local', {
     failureFlash: 'Invalid username or password!'
 }, null), function (req, res) {
     console.log('Logged in successfully');
-    req.flash('success', 'Logged in successfully!');
     if (req.query.fromURL){
         return res.redirect(req.query.fromURL);
     }
@@ -72,7 +70,6 @@ router.post('/login', passport.authenticate('local', {
 router.get('/logout', function (req, res, next) {
     if (req.isAuthenticated()) {
         req.logout();
-        req.flash('success', 'Logged out successfully!');
     }
     return res.redirect('/admin/login');
 });

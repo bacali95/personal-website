@@ -1,6 +1,7 @@
 (function ($) {
     "use strict";
 
+    var uploadedfilescount = 0;
     var files = [];
     var filesNames = [];
 
@@ -10,6 +11,19 @@
         var files_input = document.querySelector('#files');
         if (files_input) {
             files_input.addEventListener('change', handleFileSelect, false);
+            $('#selectedFiles').children('.col-md-4').each(function () {
+                var ID = Math.random().toString(36).substr(2, 9);
+                let child = $(this).children('div.card');
+                child.prop('id', ID);
+                let filename = child.children('img.card-img-top').prop('src');
+                let file = {
+                    ID: ID,
+                    name: filename,
+                    fromServer: true
+                };
+                files.push(file);
+                filesNames.push(filename.substr(filename.lastIndexOf('/') + 1));
+            })
         }
     }
 
@@ -33,6 +47,7 @@
                 return;
             }
             f.ID = ID();
+            f.fromServer = false;
             var reader = new FileReader();
             reader.onload = function (e) {
                 $('#selectedFiles').append('' +
@@ -40,7 +55,7 @@
                     '   <div id="' + f.ID + '" class="card text-center form-group border-secondary" >' +
                     '       <img class="card-img-top" src="' + e.target.result + '"/>' +
                     '       <div class="card-footer">' +
-                    '           <a id="delete" class="btn btn-danger btn-sm mt-2" style="color: white">Delete</a>' +
+                    '           <a id="delete" class="btn btn-danger btn-sm" style="color: white">Delete</a>' +
                     '       </div>' +
                     '   </div>' +
                     '</div>');
@@ -52,7 +67,7 @@
         });
     }
 
-    $('#addProjectForm').validate({
+    $('#projectForm').validate({
         rules: {
             titleFR: 'required',
             descriptionFR: 'required',
@@ -72,33 +87,36 @@
                 message.appendTo($('body')).fadeIn(300).delay(2000).fadeOut(500);
                 return;
             }
+            uploadedfilescount = 0;
+            var inprogress = 0;
             for (let i = 0; i < files.length; i++) {
-                postImage(files[i]);
+                if (!files[i].fromServer) {
+                    inprogress++;
+                    $('#' + files[i].ID).children('.card-footer').html('' +
+                        '<div class="progress">' +
+                        '   <div class="progress-bar bg-success" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"/>' +
+                        '</div>');
+                    postImage(files[i]);
+                } else {
+                    $('#' + files[i].ID).children('.card-footer').html('' +
+                        '<div class="progress">' +
+                        '   <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"/>' +
+                        '</div>');
+                }
             }
             $('#images').val(filesNames.join(','));
-            form.submit();
+            console.log('uploading...');
+            waitFor(() => uploadedfilescount === inprogress, () => form.submit());
         }
     });
 
-    $('#editProjectForm').validate({
-        rules: {
-            titleFR: 'required',
-            descriptionFR: 'required',
-            typeFR: 'required',
-            titleEN: 'required',
-            descriptionEN: 'required',
-            typeEN: 'required',
-            category: 'required',
-            repoGithub: 'required',
-        },
-        submitHandler: function (form) {
-            for (let i = 0; i < files.length; i++) {
-                postImage(files[i]);
-            }
-            $('#images').val(filesNames.join(','));
-            form.submit();
+    const waitFor = function (condition, callback) {
+        if (!condition()) {
+            window.setTimeout(waitFor.bind(null, condition, callback), 1000);
+        } else {
+            callback();
         }
-    });
+    };
 
     $(document).on('click', '#fileSelect', function (e) {
         $('#files').click();
@@ -129,24 +147,51 @@
 
     var postImage = function (file_data) {
         var form_data = new FormData();
+        form_data.append('ID', file_data.ID);
         form_data.append('image', file_data);
         $.ajax({
             url: '/admin/project/postimage',
-            dataType: 'text',
             cache: false,
             contentType: false,
             processData: false,
             data: form_data,
             type: 'post',
-            success: function (response) {
-                console.log(response);
-                // $('#msg').html(response); // display success response from the server
+            success: function (res) {
+                uploadedfilescount++;
+                let progressbar = $('#' + res.ID + ' .card-footer .progress .progress-bar');
+                progressbar.css('width', '100%');
             },
-            error: function (response) {
-                console.log(response);
-                // $('#msg').html(response); // display error response from the server
+            error: function (res) {
             }
         });
     };
+
+    // Users
+    $('#userForm').validate({
+        rules: {
+            username: 'required',
+            password: {
+                required: true,
+                minlength: 8,
+            },
+            password2: {
+                required: true,
+                equalTo: '#password',
+            },
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
+
+    // Categories
+    $('#categoryForm').validate({
+        rules: {
+            name: 'required',
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
 
 })(jQuery);

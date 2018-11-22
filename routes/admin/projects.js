@@ -79,7 +79,10 @@ router.get('/show/:id', ensureAuthenticated, function (req, res, next) {
 });
 
 router.post('/postimage', upload, ensureAuthenticated, function (req, res, next) {
-    console.log('Image ' + req.file.filename + ' uploaded successfully');
+    let ID = req.body.ID;
+    let filename = req.file.filename;
+    console.log('Image ' + filename + ' uploaded successfully');
+    res.send({ID: ID});
 });
 
 router.post('/add', ensureAuthenticated, function (req, res, next) {
@@ -94,6 +97,8 @@ router.post('/add', ensureAuthenticated, function (req, res, next) {
     let finishDate = req.body.finishDate;
     let repoGithub = req.body.repoGithub;
     let images = req.body.images.split(',');
+
+    console.log(images);
 
     for (var i = 0; i < images.length; i++) {
         images[i] = renameFile(i, images[i]);
@@ -131,7 +136,6 @@ router.post('/add', ensureAuthenticated, function (req, res, next) {
             req.flash('error', 'Adding project failed!');
             return res.redirect('/admin/project');
         }
-        req.flash('success', 'Project added successfully');
         return res.redirect('/admin/project/show/' + project._id);
     });
 
@@ -157,7 +161,6 @@ router.get('/edit/:id', ensureAuthenticated, function (req, res, next) {
 });
 
 router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) {
-    console.log('hh');
     let titleFR = req.body.titleFR;
     let descriptionFR = req.body.descriptionFR;
     let typeFR = req.body.typeFR;
@@ -169,7 +172,6 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
     let finishDate = req.body.finishDate;
     let repoGithub = req.body.repoGithub;
     let images = req.body.images.split(',');
-
 
     category = category || [];
 
@@ -203,23 +205,20 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
             req.flash('error', 'Updating project failed!');
             return res.redirect('/admin/project');
         }
-        if (images && images.length > 0 && images[0] !== '') {
-            for (var i = 0; i < images.length; i++) {
-                images[i] = renameFile(i, images[i]);
-            }
-            newProject.images = images;
-            project.images.forEach(function (name) {
+        project.images.forEach(function (name) {
+            if (!images.includes(name)) {
                 unlinkAsync('public/images/uploads/' + name);
-            });
-        } else {
-            newProject.images = project.images;
+            }
+        });
+        for (var i = 0; i < images.length; i++) {
+            images[i] = renameFile(i, images[i]);
         }
+        newProject.images = images;
         Project.updateProject(project._id, newProject, function (err) {
             if (err) {
                 req.flash('error', 'Updating project failed!');
                 return res.redirect('/admin/project');
             }
-            req.flash('success', 'Project updated successfully');
             return res.redirect('/admin/project/show/' + project._id);
         });
     });
@@ -230,7 +229,7 @@ router.get('/delete/:id', ensureAuthenticated, function (req, res, next) {
         if (err || !project) {
             return res.redirect('/admin/project');
         }
-        Project.remove({_id: project._id}, function (err) {
+        Project.deleteOne({_id: project._id}, function (err) {
             if (err) {
                 req.flash('error', 'Deleting project failed!');
                 return res.redirect('/admin/project');
@@ -238,7 +237,6 @@ router.get('/delete/:id', ensureAuthenticated, function (req, res, next) {
             project.images.forEach(function (name) {
                 unlinkAsync('public/images/uploads/' + name);
             });
-            req.flash('success', 'Project deleted successfully');
             return res.redirect('/admin/project');
         })
     });

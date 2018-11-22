@@ -7,7 +7,7 @@ block sub-content
             ul.error
                 li #{errors[0].msg}
     div.pt-sm-2
-        form#editProjectForm.col-md-12.offset-md-0(method='post', action='/admin/project/edit/' + project._id)
+        form#projectForm.col-md-12.offset-md-0(method='post', action='/admin/project/edit/' + project._id)
             div.row
                 div.col-md-6
                     div.float-left.ml-1
@@ -65,3 +65,9 @@ block sub-content
                 .form-group
                     a#cancel.btn.btn-danger(href='javascript:history.back()') Cancel
             div#selectedFiles.row
+                each image, i in project.images
+                    .col-md-4
+                        .card.text-center.form-group.border-secondary
+                            img.card-img-top(src='/images/uploads/' + image)
+                            .card-footer
+                                a#delete.btn.btn-danger.btn-sm(style='color: white') Delete
