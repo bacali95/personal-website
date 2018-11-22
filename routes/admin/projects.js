@@ -157,6 +157,7 @@ router.get('/edit/:id', ensureAuthenticated, function (req, res, next) {
 });
 
 router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) {
+    console.log('hh');
     let titleFR = req.body.titleFR;
     let descriptionFR = req.body.descriptionFR;
     let typeFR = req.body.typeFR;
@@ -169,9 +170,6 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
     let repoGithub = req.body.repoGithub;
     let images = req.body.images.split(',');
 
-    for (var i = 0; i < images.length; i++) {
-        images[i] = renameFile(i, images[i]);
-    }
 
     category = category || [];
 
@@ -206,6 +204,9 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
             return res.redirect('/admin/project');
         }
         if (images && images.length > 0 && images[0] !== '') {
+            for (var i = 0; i < images.length; i++) {
+                images[i] = renameFile(i, images[i]);
+            }
             newProject.images = images;
             project.images.forEach(function (name) {
                 unlinkAsync('public/images/uploads/' + name);

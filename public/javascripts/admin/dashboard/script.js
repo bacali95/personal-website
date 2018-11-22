@@ -7,8 +7,13 @@
     document.addEventListener("DOMContentLoaded", init, false);
 
     function init() {
-        document.querySelector('#files').addEventListener('change', handleFileSelect, false);
+        var files_input = document.querySelector('#files');
+        if (files_input) {
+            files_input.addEventListener('change', handleFileSelect, false);
+        }
     }
+
+    //Projects
 
     function handleFileSelect(e) {
         if (!e.target.files || !window.FileReader) return;
@@ -47,7 +52,7 @@
         });
     }
 
-    $('#form').validate({
+    $('#addProjectForm').validate({
         rules: {
             titleFR: 'required',
             descriptionFR: 'required',
@@ -62,13 +67,31 @@
             var message = $('<div class="alert" style="display: none;">');
             var close = $('<span class="closebtn" data-dismiss="alert">&times</span>');
             message.append(close);
-            if ($('#title').val() === 'Add Project'){
-                if (files.length === 0) {
-                    message.append('Select images');
-                    message.appendTo($('body')).fadeIn(300).delay(2000).fadeOut(500);
-                    return;
-                }
+            if (files.length === 0) {
+                message.append('Select images');
+                message.appendTo($('body')).fadeIn(300).delay(2000).fadeOut(500);
+                return;
             }
+            for (let i = 0; i < files.length; i++) {
+                postImage(files[i]);
+            }
+            $('#images').val(filesNames.join(','));
+            form.submit();
+        }
+    });
+
+    $('#editProjectForm').validate({
+        rules: {
+            titleFR: 'required',
+            descriptionFR: 'required',
+            typeFR: 'required',
+            titleEN: 'required',
+            descriptionEN: 'required',
+            typeEN: 'required',
+            category: 'required',
+            repoGithub: 'required',
+        },
+        submitHandler: function (form) {
             for (let i = 0; i < files.length; i++) {
                 postImage(files[i]);
             }
