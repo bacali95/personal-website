@@ -8,20 +8,26 @@ const fs = require('fs');
 const {promisify} = require('util');
 const unlinkAsync = promisify(fs.unlink);
 
-
 const baseDIR = 'admin/dashboard/project/';
 
-//Handle file uploads
 const storage = multer.diskStorage({
     destination: './public/images/uploads',
     filename: function (req, file, callback) {
-        callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        callback(null, file.originalname);
     }
 });
 
+const renameFile = function (index, oldName) {
+    var newName = 'image-' + index + '-' + Date.now() + path.extname(oldName);
+    fs.rename('public/images/uploads/' + oldName, 'public/images/uploads/' + newName, function (err) {
+        if (err) console.log('ERROR: ' + err);
+    });
+    return newName;
+};
+
 const upload = multer({
     storage: storage
-}).any('image');
+}).single('image');
 
 const Project = require('../../models/project');
 const Category = require('../../models/category');
@@ -55,7 +61,7 @@ router.get('/add', ensureAuthenticated, function (req, res, next) {
 
 router.get('/show/:id', ensureAuthenticated, function (req, res, next) {
     var index = req.query.index;
-    if (!index || isNaN(index)){
+    if (!index || isNaN(index)) {
         index = 0;
     }
     Project.getProjectById(req.params.id, function (err, project) {
@@ -72,85 +78,64 @@ router.get('/show/:id', ensureAuthenticated, function (req, res, next) {
 
 });
 
-router.post('/add', upload, ensureAuthenticated, function (req, res, next) {
+router.post('/postimage', upload, ensureAuthenticated, function (req, res, next) {
+    console.log('Image ' + req.file.filename + ' uploaded successfully');
+});
 
-        let titleFR = req.body.titleFR;
-        let descriptionFR = req.body.descriptionFR;
-        let typeFR = req.body.typeFR;
-        let titleEN = req.body.titleEN;
-        let descriptionEN = req.body.descriptionEN;
-        let typeEN = req.body.typeEN;
-        let category = req.body.category;
-        let startDate = req.body.startDate;
-        let finishDate = req.body.finishDate;
-        let repoGithub = req.body.repoGithub;
-        let images = req.files;
+router.post('/add', ensureAuthenticated, function (req, res, next) {
+    let titleFR = req.body.titleFR;
+    let descriptionFR = req.body.descriptionFR;
+    let typeFR = req.body.typeFR;
+    let titleEN = req.body.titleEN;
+    let descriptionEN = req.body.descriptionEN;
+    let typeEN = req.body.typeEN;
+    let category = req.body.category;
+    let startDate = req.body.startDate;
+    let finishDate = req.body.finishDate;
+    let repoGithub = req.body.repoGithub;
+    let images = req.body.images.split(',');
 
-        let imageNames = [];
-
-        images.forEach(function (f) {
-            imageNames.push(f.filename);
-        });
-
-        req.checkBody('category', 'Select a Category').notEmpty();
-
-        let errors = req.validationErrors();
-
-        category = category || [];
-
-        if (Array.isArray(category)) {
-            category = category.join(' ');
-        }
-
-        let newProject = new Project({
-            fr: {
-                title: titleFR || '',
-                description: descriptionFR || '',
-                type: typeFR || ''
-            },
-            en: {
-                title: titleEN || '',
-                description: descriptionEN || '',
-                type: typeEN || ''
-            },
-            category: category || '',
-            period: {
-                start: startDate || '',
-                finish: finishDate || ''
-            },
-            repoGithub: repoGithub,
-            creationDate: Date.now(),
-            images: imageNames
-        });
-
-        if (errors) {
-            images.forEach(function (f) {
-                unlinkAsync(f.path);
-            });
-            Category.getAllCategories(function (err, categories) {
-                if (err || !categories) {
-                    categories = [];
-                }
-                return res.render(baseDIR + 'addProject', {
-                    title: 'Add Project',
-                    layout: 'dashboardLayout',
-                    errors: errors,
-                    categories: categories,
-                    project: newProject
-                });
-            });
-        } else {
-            Project.createProject(newProject, function (err, project) {
-                if (err) {
-                    req.flash('error', 'Adding project failed!');
-                    return res.redirect('/admin/project');
-                }
-                req.flash('success', 'Project added successfully');
-                return res.redirect('/admin/project/show/'+project._id);
-            });
-        }
+    for (var i = 0; i < images.length; i++) {
+        images[i] = renameFile(i, images[i]);
     }
-);
+
+    category = category || [];
+
+    if (Array.isArray(category)) {
+        category = category.join(' ');
+    }
+
+    let newProject = new Project({
+        fr: {
+            title: titleFR || '',
+            description: descriptionFR || '',
+            type: typeFR || ''
+        },
+        en: {
+            title: titleEN || '',
+            description: descriptionEN || '',
+            type: typeEN || ''
+        },
+        category: category || '',
+        period: {
+            start: startDate || '',
+            finish: finishDate || ''
+        },
+        repoGithub: repoGithub,
+        creationDate: Date.now(),
+        images: images
+    });
+
+    Project.createProject(newProject, function (err, project) {
+        if (err) {
+            req.flash('error', 'Adding project failed!');
+            return res.redirect('/admin/project');
+        }
+        req.flash('success', 'Project added successfully');
+        return res.redirect('/admin/project/show/' + project._id);
+    });
+
+});
 
 router.get('/edit/:id', ensureAuthenticated, function (req, res, next) {
     Project.findById(req.params.id, function (err, project) {
@@ -182,17 +167,11 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
     let startDate = req.body.startDate;
     let finishDate = req.body.finishDate;
     let repoGithub = req.body.repoGithub;
-    let images = req.files;
+    let images = req.body.images.split(',');
 
-    let errorMessage = 'Fill all the fields please!';
-
-    req.checkBody('category', errorMessage).notEmpty();
-
-    let imageNames = [];
-
-    images.forEach(function (f) {
-        imageNames.push(f.filename);
-    });
+    for (var i = 0; i < images.length; i++) {
+        images[i] = renameFile(i, images[i]);
+    }
 
     category = category || [];
 
@@ -221,48 +200,28 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
         creationDate: Date.now()
     });
 
-    let errors = req.validationErrors();
-
-    if (errors) {
-        images.forEach(function (f) {
-            unlinkAsync(f.path);
-        });
-        Category.getAllCategories(function (err, categories) {
-            if (err || !categories) {
-                categories = [];
-            }
-            return res.render(baseDIR + 'addProject', {
-                title: 'Add Project',
-                layout: 'dashboardLayout',
-                errors: errors,
-                categories: categories,
-                project: newProject
+    Project.getProjectById(newProject._id, function (err, project) {
+        if (err || !project) {
+            req.flash('error', 'Updating project failed!');
+            return res.redirect('/admin/project');
+        }
+        if (images && images.length > 0 && images[0] !== '') {
+            newProject.images = images;
+            project.images.forEach(function (name) {
+                unlinkAsync('public/images/uploads/' + name);
             });
-        });
-    } else {
-        Project.getProjectById(newProject._id, function (err, project) {
-            if (err || !project) {
+        } else {
+            newProject.images = project.images;
+        }
+        Project.updateProject(project._id, newProject, function (err) {
+            if (err) {
                 req.flash('error', 'Updating project failed!');
                 return res.redirect('/admin/project');
             }
-            if (images && images.length > 0) {
-                newProject.images = imageNames;
-                project.images.forEach(function (name) {
-                    unlinkAsync('public/images/uploads/' + name);
-                });
-            } else {
-                newProject.images = project.images;
-            }
-            Project.updateProject(project._id, newProject, function (err) {
-                if (err) {
-                    req.flash('error', 'Updating project failed!');
-                    return res.redirect('/admin/project');
-                }
-                req.flash('success', 'Project updated successfully');
-                return res.redirect('/admin/project/show/'+project._id);
-            });
+            req.flash('success', 'Project updated successfully');
+            return res.redirect('/admin/project/show/' + project._id);
         });
-    }
+    });
 });
 
 router.get('/delete/:id', ensureAuthenticated, function (req, res, next) {
