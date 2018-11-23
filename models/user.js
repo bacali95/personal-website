@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt');
 var specs = require('../tools/specs');
 
 initAdmin = function () {
+    console.log('MongoDB is ready!');
     User.getUserByUsername('bacali', function (err, user) {
         if (err) throw err;
         if (!user) {
@@ -15,8 +16,6 @@ initAdmin = function () {
                 if (err) throw err;
             });
             console.log('admin created!');
-        } else {
-            console.log('admin already here!!');
         }
     });
 };

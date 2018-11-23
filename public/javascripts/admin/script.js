@@ -94,13 +94,13 @@
                     inprogress++;
                     $('#' + files[i].ID).children('.card-footer').html('' +
                         '<div class="progress">' +
-                        '   <div class="progress-bar bg-success" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"/>' +
+                        '   <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Compressing...</div>' +
                         '</div>');
                     postImage(files[i]);
                 } else {
                     $('#' + files[i].ID).children('.card-footer').html('' +
                         '<div class="progress">' +
-                        '   <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"/>' +
+                        '   <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Done</div>' +
                         '</div>');
                 }
             }
@@ -158,8 +158,8 @@
             type: 'post',
             success: function (res) {
                 uploadedfilescount++;
-                let progressbar = $('#' + res.ID + ' .card-footer .progress .progress-bar');
-                progressbar.css('width', '100%');
+                let progressbar = $('#' + res.ID + ' .card-footer .progress');
+                progressbar.html('<div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Done</div>');
             },
             error: function (res) {
             }

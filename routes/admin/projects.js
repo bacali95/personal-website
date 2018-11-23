@@ -1,4 +1,5 @@
 const ensureAuthenticated = require('../../tools/tools').ensureAuthenticated;
+const CompressTool = require('../../tools/compress');
 const express = require('express');
 const router = express.Router();
 const path = require('path');
@@ -10,8 +11,10 @@ const unlinkAsync = promisify(fs.unlink);
 
 const baseDIR = 'admin/dashboard/project/';
 
+const compress = CompressTool();
+
 const storage = multer.diskStorage({
-    destination: './public/images/uploads',
+    destination: './public/images/forcompress',
     filename: function (req, file, callback) {
         callback(null, file.originalname);
     }
@@ -82,7 +85,11 @@ router.post('/postimage', upload, ensureAuthenticated, function (req, res, next)
     let ID = req.body.ID;
     let filename = req.file.filename;
     console.log('Image ' + filename + ' uploaded successfully');
-    res.send({ID: ID});
+    compress.begin(filename, function (error, message) {
+        if (error) console.log(error);
+        console.log(message);
+        res.send({ID: ID});
+    });
 });
 
 router.post('/add', ensureAuthenticated, function (req, res, next) {
@@ -97,8 +104,6 @@ router.post('/add', ensureAuthenticated, function (req, res, next) {
     let finishDate = req.body.finishDate;
     let repoGithub = req.body.repoGithub;
     let images = req.body.images.split(',');
-
-    console.log(images);
 
     for (var i = 0; i < images.length; i++) {
         images[i] = renameFile(i, images[i]);
