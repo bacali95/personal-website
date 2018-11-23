@@ -435,11 +435,11 @@ img.signature {
 }
 
 .listing a.btn-1 {
-    left: 3px;
+    left: -5px;
 }
 
 .listing a.btn-2 {
-    right: 26.8%
+    right: 32%
 }
 
 .insta-Feed li, .insta-Feed li a {
@@ -759,11 +759,11 @@ ul.hb-list li h6 {
 }
 
 .listing-large a.btn-1 {
-    left: 26.3%;
+    left: 25%;
 }
 
 .listing-large a.btn-2 {
-    right: 26.3%;
+    right: 29%;
 }
 
 .services {
@@ -1589,11 +1589,11 @@ ul.hb-list li h6 {
     }
 
     .listing a.btn-2 {
-        right: 14.7%;
+        right: 20%;
     }
 
     .listing a.btn-1 {
-        left: -11.51%;
+        left: -14%;
     }
 
     .timeline .timeline-inner .detail {
@@ -1627,11 +1627,11 @@ ul.hb-list li h6 {
     }
 
     .listing-large a.btn-2 {
-        right: 18.5%;
+        right: 22%;
     }
 
     .listing-large a.btn-1 {
-        left: 19.4%;
+        left: 17%;
     }
 
     .rating span {
@@ -1785,11 +1785,11 @@ ul.hb-list li h6 {
     }
 
     .listing a.btn-2 {
-        right: 14%;
+        right: 19%;
     }
 
     .listing a.btn-1 {
-        left: -12.2%;
+        left: -16%;
     }
 
     .listing-large .listing-event .data.right {
@@ -1807,11 +1807,11 @@ ul.hb-list li h6 {
     }
 
     .listing-large a.btn-2 {
-        right: 17.9%;
+        right: 22%;
     }
 
     .listing-large a.btn-1 {
-        left: 18.9%;
+        left: 17%;
     }
 
     .rating span {
@@ -2019,7 +2019,17 @@ ul.hb-list li h6 {
         transform: none;
     }
 
-    .listing a.btn-2, .listing a.btn-1, .listing-large a.btn-2, .listing-large a.btn-1 {
+    .listing-large a.btn-1{
+        margin-bottom: -20px;
+        text-align: center;
+    }
+
+    .listing a.btn-1 {
+        margin-bottom: -20px;
+        left: 27%;
+    }
+
+    .listing a.btn-2, .listing-large a.btn-2 {
         display: none;
     }
 
@@ -2289,9 +2299,9 @@ ul.hb-list li h6 {
         right: 0px;
     }
 
-    .footer .social {
-        display: none;
-    }
+    /*.footer .social {*/
+        /*display: none;*/
+    /*}*/
 
     .footer .copyright {
         float: left;
