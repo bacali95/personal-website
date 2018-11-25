@@ -457,19 +457,24 @@ block sections
                                             li
                                                 a(href='#', data-filter=category.name) #{category.name}
                         .row
-                            .col-md-12
-                                ul.work
-                                    if projects.length === 0
-                                        p.mb-200 Comming Soon
-                                    each project, i in projects
-                                        li.col-sm-6.mb-40
-                                            .item(class=project.category)
-                                                a(href='/project/' + project._id + '?index=' + i, target='_blank')
-                                                    .desc
-                                                        h5.proj-desc
-                                                            | #{project[language].title}
-                                                            span #{project.category}
-                                                    img(src='images/uploads/' + project.images[0], alt='')
+                            if projects.length === 0
+                                p.mb-200 Comming Soon
+                            - var i = 0
+                            while i < projects.length
+                                - var j = i;
+                                - i+=2;
+                                .col-md-12
+                                    ul.work.mb-20
+                                        while  j < Math.min(i, projects.length)
+                                            - console.log(j);
+                                            li.col-sm-6
+                                                div.item(class=projects[j].category)
+                                                    a(href='/project/' + projects[j]._id + '?index=' + i, target='_blank')
+                                                        .desc
+                                                            h5.proj-desc
+                                                                | #{projects[j][language].title}
+                                                                span #{projects[j].category}
+                                                        img(src='images/uploads/' + projects[j++].images[0], alt='')
                 .block-content
                     .row
                         .col-md-12

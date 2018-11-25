@@ -913,10 +913,6 @@ ul.hb-list li h6 {
 
 }
 
-.work li:nth-last-child(-n+2) .item {
-    margin-bottom: 0;
-}
-
 .work .item {
     position: relative;
     margin-bottom: 30px;
@@ -2054,10 +2050,6 @@ ul.hb-list li h6 {
         margin-right: 0;
     }
 
-    .work li:nth-last-child(-n+2) .item {
-        margin-bottom: 30px;
-    }
-
     .work li:last-child .item {
         margin-bottom: 0;
     }
@@ -2337,10 +2329,6 @@ ul.hb-list li h6 {
     .filter li {
         display: block;
         margin-right: 0;
-    }
-
-    .work li:nth-last-child(-n+2) .item {
-        margin-bottom: 30px;
     }
 
     .work li:last-child .item {

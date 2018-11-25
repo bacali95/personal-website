@@ -20,7 +20,7 @@ function languageManager(req, res, next) {
                 layout: 'layout',
                 language: req.session.lan.replace('/', ''),
                 categories: categories,
-                projects: projects
+                projects: projects.reverse()
             });
         });
     });
