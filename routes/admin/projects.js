@@ -56,8 +56,7 @@ router.get('/add', ensureAuthenticated, function (req, res, next) {
         return res.render(baseDIR + 'addProject', {
             title: 'Add Project',
             layout: 'dashboardLayout',
-            categories: categories,
-            project: new Project()
+            categories: categories
         });
     });
 });
