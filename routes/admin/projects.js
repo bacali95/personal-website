@@ -128,8 +128,8 @@ router.post('/add', ensureAuthenticated, function (req, res, next) {
         },
         category: category || '',
         period: {
-            start: startDate || '',
-            finish: finishDate || ''
+            start: startDate.split('-').reverse().join('-') || '',
+            finish: finishDate.split('-').reverse().join('-') || ''
         },
         repoGithub: repoGithub,
         creationDate: Date.now(),
@@ -198,8 +198,8 @@ router.post('/edit/:id', upload, ensureAuthenticated, function (req, res, next) 
         },
         category: category || '',
         period: {
-            start: startDate || '',
-            finish: finishDate || ''
+            start: startDate.split('-').reverse().join('-') || '',
+            finish: finishDate.split('-').reverse().join('-') || ''
         },
         repoGithub: repoGithub,
         creationDate: Date.now()

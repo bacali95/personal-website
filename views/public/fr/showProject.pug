@@ -55,14 +55,14 @@ html
                                     .block-single.mt-80.mb-20.clearfix
                                         .col-sm-10.col-md-offset-1.col-sm-offset-1
                                             h5.mb-10 Description
-                                            p= project[language].description
+                                            p!= project[language].description
                                 .row
                                     .block-single.mt-10.mb-80.clearfix
                                         .col-sm-5.col-md-offset-1.col-sm-offset-1
                                             h5.mb-10 Type
-                                            p.mb-10= project[language].type
+                                            p.mb-15= project[language].type
                                             a(href=project.repoGithub, target='_blank')
-                                                h5 Repo Github
+                                                h5 Code
                                                     i.icon-whatsapp(style='font-size:3px; visibility: hidden')
                                                     i.fa.fa-external-link(style='font-size:13px')
                                         .col-sm-5

@@ -47,12 +47,12 @@ block sub-content
                             div.float-left.ml-1
                                 label Start Date :
                             .form-group
-                                input.form-control(name='startDate', type='month', value=moment(project.period.start).format("YYYY-MM"), required)
+                                input.form-control(name='startDate', type='month', value=moment(project.period.start.split('-').reverse().join('-')).format("YYYY-MM"), required)
                         div.col-md-6
                             div.float-left.ml-1
                                 label Finish Date :
                             .form-group
-                                input.form-control(name='finishDate', type='month', value=moment(project.period.finish).format("YYYY-MM"), required)
+                                input.form-control(name='finishDate', type='month', value=moment(project.period.finish.split('-').reverse().join('-')).format("YYYY-MM"), required)
                     .form-group
                         input.form-control(name='repoGithub', type='text', placeholder='Enter Github repository link', value=project.repoGithub, required)
             div.row.justify-content-center
