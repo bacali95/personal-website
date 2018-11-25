@@ -464,7 +464,7 @@ block sections
                                     each project, i in projects
                                         li.col-sm-6.mb-40
                                             .item(class=project.category)
-                                                a(href='/project/' + project._id + '?index=' + i)
+                                                a(href='/project/' + project._id + '?index=' + i, target='_blank')
                                                     .desc
                                                         h5.proj-desc
                                                             | #{project[language].title}

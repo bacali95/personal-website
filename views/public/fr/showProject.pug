@@ -61,10 +61,11 @@ html
                                         .col-sm-5.col-md-offset-1.col-sm-offset-1
                                             h5.mb-10 Type
                                             p.mb-15= project[language].type
-                                            a(href=project.repoGithub, target='_blank')
-                                                h5 Code
-                                                    i.icon-whatsapp(style='font-size:3px; visibility: hidden')
-                                                    i.fa.fa-external-link(style='font-size:13px')
+                                            if project.repoGithub!=="#"
+                                                a(href=project.repoGithub, target='_blank')
+                                                    h5 Code
+                                                        i.icon-whatsapp(style='font-size:3px; visibility: hidden')
+                                                        i.fa.fa-external-link(style='font-size:13px')
                                         .col-sm-5
                                             h5.mb-10 Durée
                                             .row
