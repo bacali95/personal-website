@@ -38,7 +38,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(session({
     secret: 'bacalisecret',
     saveUninitialized: true,
-    resave: true
+    resave: true,
+    cookie: {maxAge: 20000}
 }));
 
 //Passport
