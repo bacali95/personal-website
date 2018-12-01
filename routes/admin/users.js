@@ -1,9 +1,9 @@
-var ensureAuthenticated = require('../../tools/tools').ensureAuthenticated;
-var express = require('express');
-var router = express.Router();
-var baseDIR = 'admin/dashboard/user/';
+const ensureAuthenticated = require('../../tools/ensureAuthenticated');
+const express = require('express');
+const router = express.Router();
+const baseDIR = 'admin/dashboard/user/';
 
-var User = require('../../models/user');
+const User = require('../../models/user');
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     User.getAllUsers(function (err, users) {

@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var Category = require('../models/category');
-var Project = require('../models/project');
+const Category = require('../models/category');
+const Project = require('../models/project');
 
 /* GET home page. */
 function languageManager(req, res, next) {

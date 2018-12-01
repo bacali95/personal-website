@@ -9,7 +9,6 @@ tinify.validate(function (err) {
     console.log('Tinify is ready!');
 });
 
-
 function getDestination(callback) {
     callback(null, 'public/images/forcompress/', 'public/images/uploads/')
 }

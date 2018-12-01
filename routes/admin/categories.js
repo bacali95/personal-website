@@ -1,9 +1,9 @@
-var ensureAuthenticated = require('../../tools/tools').ensureAuthenticated;
-var express = require('express');
-var router = express.Router();
-var baseDIR = 'admin/dashboard/category/';
+const ensureAuthenticated = require('../../tools/ensureAuthenticated');
+const express = require('express');
+const router = express.Router();
+const baseDIR = 'admin/dashboard/category/';
 
-var Category = require('../../models/category');
+const Category = require('../../models/category');
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     Category.getAllCategories(function (err, categories) {

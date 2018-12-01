@@ -1,17 +1,13 @@
-var mongoose = require('mongoose');
-var specs = require('../tools/specs');
+const mongoose = require('mongoose');
+const specs = require('../tools/specs');
 
-mongoose.connect(specs.DB_URL, {useNewUrlParser: true});
-
-var db = mongoose.connection;
-
-var CategorySchema = mongoose.Schema({
+const CategorySchema = mongoose.Schema({
     name: {
         type: String
     }
 });
 
-var Category = module.exports = mongoose.model('Category', CategorySchema);
+const Category = module.exports = mongoose.model('Category', CategorySchema);
 
 module.exports.createCategory = function (newCategory, callback) {
     newCategory.save(callback);

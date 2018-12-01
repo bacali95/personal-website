@@ -1,11 +1,6 @@
-var mongoose = require('mongoose');
-var specs = require('../tools/specs');
+const mongoose = require('mongoose');
 
-mongoose.connect(specs.DB_URL, {useNewUrlParser: true});
-
-var db = mongoose.connection;
-
-var ProjectSchema = mongoose.Schema({
+const ProjectSchema = mongoose.Schema({
     fr: {
         title: {
             type: String
@@ -50,7 +45,7 @@ var ProjectSchema = mongoose.Schema({
     }]
 });
 
-var Project = module.exports = mongoose.model('Project', ProjectSchema);
+const Project = module.exports = mongoose.model('Project', ProjectSchema);
 
 module.exports.createProject = function (newProject, callback) {
     newProject.save(callback);
@@ -61,7 +56,7 @@ module.exports.getAllProjects = function (callback) {
 };
 
 module.exports.getProjectByCategory = function (category, callback) {
-    var query = {category: category};
+    let query = {category: category};
     Project.findOne(query, callback);
 };
 

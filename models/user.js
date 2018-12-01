@@ -1,30 +1,7 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
-var specs = require('../tools/specs');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-initAdmin = function () {
-    console.log('MongoDB is ready!');
-    User.getUserByUsername('bacali', function (err, user) {
-        if (err) throw err;
-        if (!user) {
-            user = new User({
-                username: specs.ADMIN_USERNAME,
-                password: specs.ADMIN_PASSWORD
-            });
-
-            User.createUser(user, function (err, user) {
-                if (err) throw err;
-            });
-            console.log('admin created!');
-        }
-    });
-};
-
-mongoose.connect(specs.DB_URL, {useNewUrlParser: true}, initAdmin);
-
-var db = mongoose.connection;
-
-var UserSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
     username: {
         type: String,
         index: true
@@ -36,7 +13,7 @@ var UserSchema = mongoose.Schema({
     }
 });
 
-var User = module.exports = mongoose.model('User', UserSchema);
+const User = module.exports = mongoose.model('User', UserSchema);
 
 module.exports.createUser = function (newUser, callback) {
     bcrypt.hash(newUser.password, 10, function (err, hash) {

@@ -1,25 +1,33 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var expressValidator = require('express-validator');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var session = require('express-session');
-var favicon = require('serve-favicon');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var helmet = require('helmet');
-var flash = require('connect-flash');
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
-var db = mongoose.connection;
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const expressValidator = require('express-validator');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const session = require('express-session');
+const favicon = require('serve-favicon');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const helmet = require('helmet');
+const flash = require('connect-flash');
+const mongoose = require('mongoose');
+const initAdmin = require('./tools/initAdmin');
+const specs = require("./tools/specs");
 
-var publicRouter = require('./routes/public');
-var adminRouter = require('./routes/admin/index');
-var usersRouter = require('./routes/admin/users');
-var projectsRouter = require('./routes/admin/projects');
-var categoriesRouter = require('./routes/admin/categories');
-var app = express();
+require('./models/user');
+require('./models/category');
+require('./models/project');
+require('./services/passport');
+
+mongoose.Promise = global.Promise;
+mongoose.connect(specs.DB_URL, {useNewUrlParser: true}, initAdmin);
+
+const publicRouter = require('./routes/public');
+const authRouter = require('./routes/admin/auth');
+const usersRouter = require('./routes/admin/users');
+const projectsRouter = require('./routes/admin/projects');
+const categoriesRouter = require('./routes/admin/categories');
+const app = express();
 
 app.locals.moment = require('moment');
 
@@ -39,7 +47,7 @@ app.use(session({
     secret: 'bacalisecret',
     saveUninitialized: true,
     resave: true,
-    cookie: {maxAge: 20000}
+    cookie: {maxAge: 20 * 60 * 1000}
 }));
 
 //Passport
@@ -49,7 +57,7 @@ app.use(passport.session());
 //Validator
 app.use(expressValidator({
     errorFormatter: function (param, msg, value) {
-        var namespace = param.split('.')
+        let namespace = param.split('.')
             , root = namespace.shift()
             , formParam = root;
         while (namespace.length) {
@@ -77,7 +85,7 @@ app.use(function (req, res, next) {
 
 app.use('/', publicRouter);
 app.use('/project', publicRouter);
-app.use('/admin', adminRouter);
+app.use('/admin', authRouter);
 app.use('/admin/user', usersRouter);
 app.use('/admin/project', projectsRouter);
 app.use('/admin/category', categoriesRouter);

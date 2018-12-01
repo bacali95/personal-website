@@ -1,39 +1,20 @@
-const ensureAuthenticated = require('../../tools/tools').ensureAuthenticated;
-const CompressTool = require('../../tools/compress');
 const express = require('express');
 const router = express.Router();
-const path = require('path');
-const moment = require('moment');
-const multer = require('multer');
 const fs = require('fs');
 const {promisify} = require('util');
 const unlinkAsync = promisify(fs.unlink);
 
-const baseDIR = 'admin/dashboard/project/';
-
-const compress = CompressTool();
-
-const storage = multer.diskStorage({
-    destination: './public/images/forcompress',
-    filename: function (req, file, callback) {
-        callback(null, file.originalname);
-    }
-});
-
-const renameFile = function (index, oldName) {
-    var newName = 'image-' + index + '-' + Date.now() + path.extname(oldName);
-    fs.rename('public/images/uploads/' + oldName, 'public/images/uploads/' + newName, function (err) {
-        if (err) console.log('ERROR: ' + err);
-    });
-    return newName;
-};
-
-const upload = multer({
-    storage: storage
-}).single('image');
+const ensureAuthenticated = require('../../tools/ensureAuthenticated');
+const CompressTool = require('../../tools/compress');
+const renameFile = require('../../tools/utils').renameFile;
+const upload = require("../../tools/utils").upload;
 
 const Project = require('../../models/project');
 const Category = require('../../models/category');
+
+const baseDIR = 'admin/dashboard/project/';
+
+const compress = CompressTool();
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     Project.getAllProjects(function (err, projects) {
