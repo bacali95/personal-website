@@ -26,7 +26,7 @@
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
-    "pug": "2.0.0-beta11",
+    "pug": "2.0.0",
     "serve-favicon": "^2.5.0",
     "tinify": "^1.6.0-beta.2"
   }
