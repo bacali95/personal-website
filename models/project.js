@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const ProjectSchema = mongoose.Schema({
     fr: {
@@ -45,7 +45,7 @@ const ProjectSchema = mongoose.Schema({
     }]
 });
 
-const Project = module.exports = mongoose.model('Project', ProjectSchema);
+const Project = module.exports = mongoose.model("Project", ProjectSchema);
 
 module.exports.createProject = function (newProject, callback) {
     newProject.save(callback);

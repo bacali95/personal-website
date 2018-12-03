@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const specs = require('../tools/specs');
+const mongoose = require("mongoose");
+const specs = require("../tools/specs");
 
 const CategorySchema = mongoose.Schema({
     name: {
@@ -7,7 +7,7 @@ const CategorySchema = mongoose.Schema({
     }
 });
 
-const Category = module.exports = mongoose.model('Category', CategorySchema);
+const Category = module.exports = mongoose.model("Category", CategorySchema);
 
 module.exports.createCategory = function (newCategory, callback) {
     newCategory.save(callback);
