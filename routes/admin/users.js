@@ -32,8 +32,8 @@ router.post("/add", ensureAuthenticated, function (req, res, next) {
     var password2 = req.body.password2;
 
     var newUser = new User({
-        username: username || "",
-        password: password
+        username,
+        password
     });
     User.createUser(newUser, function (err, user) {
         if (err) {
@@ -63,7 +63,7 @@ router.post("/edit/:id", ensureAuthenticated, function (req, res, next) {
 
     var newUser = new User({
         _id: req.params.id,
-        password: password || ""
+        password
     });
 
     User.getUserById(newUser._id, function (err, user) {

@@ -20,7 +20,10 @@ require("./models/project");
 require("./services/passport");
 
 mongoose.Promise = global.Promise;
-mongoose.connect(specs.DB_URL, {useNewUrlParser: true}, initAdmin);
+mongoose.connect(specs.DB_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true
+}, initAdmin);
 
 const publicRouter = require("./routes/public");
 const authRouter = require("./routes/admin/auth");

@@ -30,7 +30,7 @@ router.post("/add", ensureAuthenticated, function (req, res, next) {
     let name = req.body.name;
 
     let newCategory = new Category({
-        name: name
+        name
     });
 
     Category.createCategory(newCategory, function (err, category) {
@@ -60,7 +60,7 @@ router.post("/edit/:id", ensureAuthenticated, function (req, res, next) {
 
     let newCategory = new Category({
         _id: req.params.id,
-        name: name
+        name
     });
 
     Category.getCategoryById(newCategory._id, function (err, category) {

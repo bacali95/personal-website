@@ -24,7 +24,7 @@ router.get("/", ensureAuthenticated, function (req, res, next) {
         return res.render(baseDIR + "listProject", {
             title: "Projects",
             layout: "dashboardLayout",
-            projects: projects
+            projects
         });
     });
 });
@@ -37,7 +37,7 @@ router.get("/add", ensureAuthenticated, function (req, res, next) {
         return res.render(baseDIR + "addProject", {
             title: "Add Project",
             layout: "dashboardLayout",
-            categories: categories
+            categories
         });
     });
 });
@@ -54,8 +54,8 @@ router.get("/show/:id", ensureAuthenticated, function (req, res, next) {
         return res.render(baseDIR + "showProject", {
             title: "Show Project",
             layout: "dashboardLayout",
-            project: project,
-            index: index
+            project,
+            index
         });
     });
 
@@ -64,10 +64,10 @@ router.get("/show/:id", ensureAuthenticated, function (req, res, next) {
 router.post("/postimage", upload, ensureAuthenticated, function (req, res, next) {
     let ID = req.body.ID;
     let filename = req.file.filename;
-    console.log("Image " + filename + " uploaded successfully");
     compress.begin(filename, function (error, message) {
-        if (error) console.log(error);
-        console.log(message);
+        if (error) {
+            throw error;
+        }
         res.send({ID: ID});
     });
 });
@@ -97,23 +97,23 @@ router.post("/add", ensureAuthenticated, function (req, res, next) {
 
     let newProject = new Project({
         fr: {
-            title: titleFR || "",
-            description: descriptionFR || "",
-            type: typeFR || ""
+            title: titleFR,
+            description: descriptionFR,
+            type: typeFR
         },
         en: {
-            title: titleEN || "",
-            description: descriptionEN || "",
-            type: typeEN || ""
+            title: titleEN,
+            description: descriptionEN,
+            type: typeEN
         },
-        category: category || "",
+        category,
         period: {
-            start: startDate.split("-").reverse().join("-") || "",
-            finish: finishDate.split("-").reverse().join("-") || ""
+            start: startDate.split("-").reverse().join("-"),
+            finish: finishDate.split("-").reverse().join("-")
         },
-        repoGithub: repoGithub,
+        repoGithub,
         creationDate: Date.now(),
-        images: images
+        images
     });
 
     Project.createProject(newProject, function (err, project) {
@@ -138,8 +138,8 @@ router.get("/edit/:id", ensureAuthenticated, function (req, res, next) {
             return res.render(baseDIR + "editProject", {
                 title: "Edit Project",
                 layout: "dashboardLayout",
-                categories: categories,
-                project: project
+                categories,
+                project
             });
         });
     });
@@ -167,21 +167,21 @@ router.post("/edit/:id", upload, ensureAuthenticated, function (req, res, next) 
     let newProject = new Project({
         _id: req.params.id,
         fr: {
-            title: titleFR || "",
-            description: descriptionFR || "",
-            type: typeFR || ""
+            title: titleFR,
+            description: descriptionFR,
+            type: typeFR
         },
         en: {
-            title: titleEN || "",
-            description: descriptionEN || "",
-            type: typeEN || ""
+            title: titleEN,
+            description: descriptionEN,
+            type: typeEN
         },
-        category: category || "",
+        category,
         period: {
-            start: startDate.split("-").reverse().join("-") || "",
-            finish: finishDate.split("-").reverse().join("-") || ""
+            start: startDate.split("-").reverse().join("-"),
+            finish: finishDate.split("-").reverse().join("-")
         },
-        repoGithub: repoGithub,
+        repoGithub,
         creationDate: Date.now()
     });
 
