@@ -1,14 +1,16 @@
 {
   "name": "personal-website",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
     "start": "node ./bin/www",
     "vps": "pm2 stop www && pm2 start bin/www"
   },
+  "keywords": ["CV", "RESUME"],
+  "author":"Nasreddine Bac Ali",
+  "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.2",
-    "body-parser": "latest",
+    "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "debug": "^2.6.9",
@@ -26,7 +28,7 @@
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
-    "pug": "2.0.0",
+    "pug": "^2.0.3",
     "serve-favicon": "^2.5.0",
     "tinify": "^1.6.0-beta.2"
   }
