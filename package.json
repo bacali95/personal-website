@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node ./bin/www",
-    "vps": "pm2 stop www && pm2 start bin/www"
+    "test": "mocha"
   },
-  "keywords": ["CV", "RESUME"],
-  "author":"Nasreddine Bac Ali",
+  "keywords": [
+    "CV",
+    "RESUME"
+  ],
+  "author": "Nasreddine Bac Ali",
+  "repository": {
+    "type": "GitHub",
+    "url": "https://github.com/bacali95/personal-website"
+  },
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.2",
@@ -31,5 +38,10 @@
     "pug": "^2.0.3",
     "serve-favicon": "^2.5.0",
     "tinify": "^1.6.0-beta.2"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0"
   }
 }
