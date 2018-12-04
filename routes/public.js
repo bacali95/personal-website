@@ -19,8 +19,8 @@ function languageManager(req, res, next) {
                 title: "Nasreddine Bac Ali",
                 layout: "layout",
                 language: req.session.lan.replace("/", ""),
-                categories: categories,
-                projects: projects.reverse()
+                projects: projects.reverse(),
+                categories
             });
         });
     });
@@ -40,7 +40,6 @@ router.get("/project/:id", function (req, res, next) {
     if (!req.session.lan) {
         req.session.lan = "/en";
     }
-    var index = req.params.index;
     Project.getProjectById(req.params.id, function (err, project) {
         if (err || !project) {
             return res.redirect("/#portfolio");
@@ -48,14 +47,14 @@ router.get("/project/:id", function (req, res, next) {
         return res.render("public" + req.session.lan + "/showProject", {
             title: project[req.session.lan.replace("/", "")].title,
             language: req.session.lan.replace("/", ""),
-            project: project,
-            index: req.query.index
+            index: req.query.index,
+            project
         });
     });
 });
 
 router.get("/next/:index", function (req, res, next) {
-    var index = req.params.index;
+    let index = req.params.index;
     if (!index || isNaN(index)) {
         index = 0;
     }
@@ -65,16 +64,14 @@ router.get("/next/:index", function (req, res, next) {
         }
         index = projects.length + Number(index);
         index %= projects.length;
-        return res.redirect("/project/" + projects[index]._id + "?index=" + index);
+        const _id = projects[index]._id;
+        return res.redirect("/project/" + _id + "?index=" + index);
     });
 });
 
 router.get("/*", function (req, res, next) {
-    if (req.url !== "/en"
-        && req.url !== "/fr"
-        && !String(req.url).startsWith("/next")
-        && !String(req.url).startsWith("/admin")
-        && !String(req.url).startsWith("/project")) {
+    const regex = /^((\/en)|(\/fr)|(\/next)|(\/admin)|(\/project))/g;
+    if (!String(req.url).match(regex)) {
         return res.redirect("/");
     }
     return next();

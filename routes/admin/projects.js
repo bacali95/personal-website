@@ -68,7 +68,7 @@ router.post("/postimage", upload, ensureAuthenticated, function (req, res, next)
         if (error) {
             throw error;
         }
-        res.send({ID: ID});
+        res.send({ID});
     });
 });
 
@@ -223,7 +223,7 @@ router.get("/delete/:id", ensureAuthenticated, function (req, res, next) {
                 unlinkAsync("public/images/uploads/" + name);
             });
             return res.redirect("/admin/project");
-        })
+        });
     });
 });
 

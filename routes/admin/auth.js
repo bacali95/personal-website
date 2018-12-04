@@ -27,7 +27,7 @@ router.post("/login", passport.authenticate("local", {
     failureRedirect: "/admin/login",
     failureFlash: "Invalid username or password!"
 }, null), function (req, res) {
-    if (req.query.fromURL){
+    if (req.query.fromURL) {
         return res.redirect(req.query.fromURL);
     }
     return res.redirect("/admin");
@@ -41,9 +41,9 @@ router.get("/logout", function (req, res, next) {
 });
 
 router.get("/*", function (req, res, next) {
-    if (!String(req.url).startsWith("/user")
-        && !String(req.url).startsWith("/project")
-        && !String(req.url).startsWith("/category")) {
+    const regex = /^((\/user)|(\/project)|(\/category))/g;
+    console.log(req.url);
+    if (!String(req.url).match(regex)) {
         return res.redirect("/admin");
     }
     return next();

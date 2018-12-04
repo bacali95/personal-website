@@ -59,7 +59,7 @@ app.use(passport.session());
 
 //Validator
 app.use(expressValidator({
-    errorFormatter: function (param, msg, value) {
+    errorFormatter(param, msg, value) {
         let namespace = param.split(".")
             , root = namespace.shift()
             , formParam = root;
@@ -68,9 +68,9 @@ app.use(expressValidator({
         }
         return {
             param: formParam,
-            msg: msg,
-            value: value
-        }
+            msg,
+            value
+        };
     }
 }));
 
