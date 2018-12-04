@@ -29,11 +29,7 @@ router.get("/add", ensureAuthenticated, function (req, res, next) {
 router.post("/add", ensureAuthenticated, function (req, res, next) {
     let name = req.body.name;
 
-    let newCategory = new Category({
-        name
-    });
-
-    Category.createCategory(newCategory, function (err, category) {
+    Category.createCategory(new Category({name}), function (err, category) {
         if (err) {
             req.flash("error", "Adding Category failed!");
             return res.redirect("/admin/category");
@@ -58,38 +54,21 @@ router.get("/edit/:id", ensureAuthenticated, function (req, res, next) {
 router.post("/edit/:id", ensureAuthenticated, function (req, res, next) {
     let name = req.body.name;
 
-    let newCategory = new Category({
-        _id: req.params.id,
-        name
-    });
-
-    Category.getCategoryById(newCategory._id, function (err, category) {
-        if (err || !category) {
-            req.flash("error", "Updating category failed!");
+    Category.updateCategory(req.params.id, name, function (err) {
+        if (err) {
+            req.flash("error", "Updating Category failed!");
             return res.redirect("/admin/category");
         }
-        Category.updateCategory(category._id, newCategory, function (err) {
-            if (err) {
-                req.flash("error", "Updating Category failed!");
-                return res.redirect("/admin/category");
-            }
-            return res.redirect("/admin/category");
-        });
+        return res.redirect("/admin/category");
     });
 });
 
 router.get("/delete/:id", ensureAuthenticated, function (req, res, next) {
-    Category.findById(req.params.id, function (err, category) {
-        if (err || !category) {
+    Category.remove({_id: req.params.id}, function (err) {
+        if (err) {
             return res.redirect("/admin/category");
         }
-        Category.remove({_id: category._id}, function (err) {
-            if (err) {
-                req.flash("error", "Deleting Category failed!");
-                return res.redirect("/admin/category");
-            }
-            return res.redirect("/admin/category");
-        })
+        return res.redirect("/admin/category");
     });
 });
 

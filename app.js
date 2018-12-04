@@ -7,17 +7,15 @@ const logger = require("morgan");
 const session = require("express-session");
 const favicon = require("serve-favicon");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
 const helmet = require("helmet");
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const initAdmin = require("./tools/initAdmin");
 const specs = require("./tools/specs");
 
-require("./models/user");
+User = require("./models/user");
 require("./models/category");
 require("./models/project");
-require("./services/passport");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(specs.DB_URL, {
@@ -92,6 +90,11 @@ app.use("/admin", authRouter);
 app.use("/admin/user", usersRouter);
 app.use("/admin/project", projectsRouter);
 app.use("/admin/category", categoriesRouter);
+
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

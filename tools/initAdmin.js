@@ -5,13 +5,10 @@ module.exports = () => {
     User.getUserByUsername(specs.ADMIN_USERNAME, function (err, user) {
         if (err) throw err;
         if (!user) {
-            user = new User({
-                username: specs.ADMIN_USERNAME,
-                password: specs.ADMIN_PASSWORD
-            });
-
-            User.createUser(user, function (err, user) {
-                if (err) throw err;
+            User.register(new User({username: specs.ADMIN_USERNAME}),specs.ADMIN_PASSWORD, function (err) {
+                if (err) {
+                    throw err;
+                }
             });
         }
     });

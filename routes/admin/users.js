@@ -27,15 +27,10 @@ router.get("/add", ensureAuthenticated, function (req, res, next) {
 });
 
 router.post("/add", ensureAuthenticated, function (req, res, next) {
-    var username = req.body.username;
-    var password = req.body.password;
-    var password2 = req.body.password2;
+    const username = req.body.username;
+    const password = req.body.password;
 
-    var newUser = new User({
-        username,
-        password
-    });
-    User.createUser(newUser, function (err, user) {
+    User.createUser(username, password, function (err) {
         if (err) {
             req.flash("error", "Adding User failed!");
             return res.redirect("/admin/user");
@@ -58,42 +53,25 @@ router.get("/edit/:id", ensureAuthenticated, function (req, res, next) {
 });
 
 router.post("/edit/:id", ensureAuthenticated, function (req, res, next) {
-    var password = req.body.password;
-    var password2 = req.body.password2;
+    const password = req.body.password;
 
-    var newUser = new User({
-        _id: req.params.id,
-        password
-    });
-
-    User.getUserById(newUser._id, function (err, user) {
-        if (err || !user) {
-            req.flash("error", "Updating user failed!");
+    User.updateUser(req.params.id, password, function (err) {
+        if (err) {
+            req.flash("error", "Updating User failed!");
             return res.redirect("/admin/user");
         }
-        User.updateUser(user._id, newUser, function (err) {
-            if (err) {
-                req.flash("error", "Updating User failed!");
-                return res.redirect("/admin/user");
-            }
-            return res.redirect("/admin/user");
-        });
+        return res.redirect("/admin/user");
     });
 });
 
 router.get("/delete/:id", ensureAuthenticated, function (req, res, next) {
-    User.findById(req.params.id, function (err, user) {
-        if (err || !user) {
+    User.deleteOne({_id: req.params.id}, function (err) {
+        if (err) {
+            req.flash("error", "Deleting User failed!");
             return res.redirect("/admin/user");
         }
-        User.remove({_id: user._id}, function (err) {
-            if (err) {
-                req.flash("error", "Deleting User failed!");
-                return res.redirect("/admin/user");
-            }
-            return res.redirect("/admin/user");
-        })
-    });
+        return res.redirect("/admin/user");
+    })
 });
 
 router.get("/*", function (req, res, next) {

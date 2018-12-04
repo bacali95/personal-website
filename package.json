@@ -11,12 +11,12 @@
   ],
   "author": "Nasreddine Bac Ali",
   "repository": {
-    "type": "GitHub",
-    "url": "https://github.com/bacali95/personal-website"
+    "type": "git",
+    "url": "git@github.com:bacali95/personal-website"
   },
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.2",
+    "passport-local-mongoose": "^5.0.1",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",

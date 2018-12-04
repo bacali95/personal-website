@@ -85,7 +85,7 @@ router.post("/add", ensureAuthenticated, function (req, res, next) {
     let repoGithub = req.body.repoGithub;
     let images = req.body.images.split(",");
 
-    for (var i = 0; i < images.length; i++) {
+    for (let i = 0; i < images.length; i++) {
         images[i] = renameFile(i, images[i]);
     }
 
@@ -95,7 +95,7 @@ router.post("/add", ensureAuthenticated, function (req, res, next) {
         category = category.join(" ");
     }
 
-    let newProject = new Project({
+    let project = new Project({
         fr: {
             title: titleFR,
             description: descriptionFR,
@@ -116,7 +116,7 @@ router.post("/add", ensureAuthenticated, function (req, res, next) {
         images
     });
 
-    Project.createProject(newProject, function (err, project) {
+    Project.createProject(project, function (err, project) {
         if (err) {
             req.flash("error", "Adding project failed!");
             return res.redirect("/admin/project");
@@ -195,7 +195,7 @@ router.post("/edit/:id", upload, ensureAuthenticated, function (req, res, next) 
                 unlinkAsync("public/images/uploads/" + name);
             }
         });
-        for (var i = 0; i < images.length; i++) {
+        for (let i = 0; i < images.length; i++) {
             images[i] = renameFile(i, images[i]);
         }
         newProject.images = images;
@@ -210,16 +210,16 @@ router.post("/edit/:id", upload, ensureAuthenticated, function (req, res, next) 
 });
 
 router.get("/delete/:id", ensureAuthenticated, function (req, res, next) {
-    Project.findById(req.params.id, function (err, project) {
-        if (err || !project) {
+    Project.findById(req.params.id, function (err, result) {
+        if (err || !result) {
             return res.redirect("/admin/project");
         }
-        Project.deleteOne({_id: project._id}, function (err) {
+        Project.deleteOne({_id: req.params.id}, function (err) {
             if (err) {
                 req.flash("error", "Deleting project failed!");
                 return res.redirect("/admin/project");
             }
-            project.images.forEach(function (name) {
+            result.images.forEach(function (name) {
                 unlinkAsync("public/images/uploads/" + name);
             });
             return res.redirect("/admin/project");

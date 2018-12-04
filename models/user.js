@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const UserSchema = mongoose.Schema({
     username: {
@@ -7,21 +7,22 @@ const UserSchema = mongoose.Schema({
         index: true
     },
     password: {
-        type: String,
-        required: true,
-        bcrypt: true
+        type: String
     }
+});
+
+UserSchema.plugin(passportLocalMongoose, {
+    usernameField: "username",
 });
 
 const User = module.exports = mongoose.model("User", UserSchema);
 
-module.exports.createUser = function (newUser, callback) {
-    bcrypt.hash(newUser.password, 10, function (err, hash) {
+module.exports.createUser = function (username, password, callback) {
+    User.register(new User({username}), password, function (err) {
         if (err) {
-            throw err;
+            callback(err);
         }
-        newUser.password = hash;
-        newUser.save(callback);
+        callback(null);
     });
 };
 
@@ -38,24 +39,19 @@ module.exports.getUserById = function (id, callback) {
     User.findById(id, callback);
 };
 
-module.exports.comparePassword = function (condPassword, hash, callback) {
-    bcrypt.compare(condPassword, hash, function (err, isMatch) {
-        if (err) {
+module.exports.updateUser = function (id, password, callback) {
+    User.findById(id, function (err, user) {
+        console.log(id + " " + user);
+        if (err || user === null) {
             callback(err);
         }
-        callback(null, isMatch);
-    });
-};
-
-module.exports.updateUser = function (id, newUser, callback) {
-    if (newUser.password !== "") {
-        bcrypt.hash(newUser.password, 10, function (err, hash) {
-            if (err) throw err;
-            newUser.password = hash;
-            User.findByIdAndUpdate(id, newUser, callback);
+        user.setPassword(password, function (err) {
+            if (err || !user) {
+                callback(err);
+            }
+            user.save();
+            callback(null);
         });
-    } else {
-        callback(null);
-    }
+    });
 };
 

@@ -9,8 +9,8 @@ const CategorySchema = mongoose.Schema({
 
 const Category = module.exports = mongoose.model("Category", CategorySchema);
 
-module.exports.createCategory = function (newCategory, callback) {
-    newCategory.save(callback);
+module.exports.createCategory = function (category, callback) {
+    category.save(callback);
 };
 
 module.exports.getAllCategories = function (callback) {
@@ -26,6 +26,6 @@ module.exports.getCategoryById = function (id, callback) {
     Category.findById(id, callback);
 };
 
-module.exports.updateCategory = function (id, newCategory, callback) {
-    Category.findByIdAndUpdate(id, newCategory, callback);
+module.exports.updateCategory = function (id, name, callback) {
+    Category.findByIdAndUpdate(id, {name}, callback);
 };

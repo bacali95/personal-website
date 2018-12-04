@@ -34,7 +34,7 @@ const ProjectSchema = mongoose.Schema({
             type: String
         }
     },
-    repoGithub :{
+    repoGithub: {
         type: String
     },
     creationDate: {
@@ -47,8 +47,8 @@ const ProjectSchema = mongoose.Schema({
 
 const Project = module.exports = mongoose.model("Project", ProjectSchema);
 
-module.exports.createProject = function (newProject, callback) {
-    newProject.save(callback);
+module.exports.createProject = function (project, callback) {
+    project.save(callback);
 };
 
 module.exports.getAllProjects = function (callback) {
@@ -64,7 +64,7 @@ module.exports.getProjectById = function (id, callback) {
     Project.findById(id, callback);
 };
 
-module.exports.updateProject = function (id, newProject, callback) {
-    Project.findByIdAndUpdate(id, newProject, callback);
+module.exports.updateProject = function (id, project, callback) {
+    Project.findByIdAndUpdate(id, project, callback);
 };
 
