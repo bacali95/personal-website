@@ -11,7 +11,7 @@ const server = require('../app');
 describe('Index Page', function () {
     it("renders successfully", function (done) {
         chai.request(server)
-            .get('/book')
+            .get('/')
             .end((err, res) => {
                 res.should.have.status(200);
                 done();
