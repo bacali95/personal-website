@@ -46,7 +46,7 @@ router.get("/logout", function (req, res, next) {
 });
 
 router.get("/*", function (req, res, next) {
-    const regex = /^((\/user)|(\/project)|(\/category))/g;
+    const regex = /^((\/user)|(\/project)|(\/category)|(\/certificate))/g;
     if (!String(req.url).match(regex)) {
         return res.redirect("/admin");
     }

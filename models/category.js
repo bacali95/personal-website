@@ -9,23 +9,23 @@ const CategorySchema = mongoose.Schema({
 
 const Category = module.exports = mongoose.model("Category", CategorySchema);
 
-module.exports.createCategory = function (category, callback) {
+module.exports.create = function (category, callback) {
     category.save(callback);
 };
 
-module.exports.getAllCategories = function (callback) {
+module.exports.getAll = function (callback) {
     Category.find(callback);
 };
 
-module.exports.getCategoryByName = function (name, callback) {
+module.exports.getByName = function (name, callback) {
     var query = {name: name};
     Category.findOne(query, callback);
 };
 
-module.exports.getCategoryById = function (id, callback) {
+module.exports.getById = function (id, callback) {
     Category.findById(id, callback);
 };
 
-module.exports.updateCategory = function (id, name, callback) {
+module.exports.update = function (id, name, callback) {
     Category.findByIdAndUpdate(id, {name}, callback);
 };

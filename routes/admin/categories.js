@@ -6,7 +6,7 @@ const baseDIR = "admin/dashboard/category/";
 const Category = require("../../models/category");
 
 router.get("/", ensureAuthenticated, function (req, res, next) {
-    Category.getAllCategories(function (err, categories) {
+    Category.getAll(function (err, categories) {
         if (err || !categories) {
             categories = [];
         }
@@ -29,7 +29,7 @@ router.get("/add", ensureAuthenticated, function (req, res, next) {
 router.post("/add", ensureAuthenticated, function (req, res, next) {
     let name = req.body.name;
 
-    Category.createCategory(new Category({name}), function (err, category) {
+    Category.create(new Category({name}), function (err, category) {
         if (err) {
             req.flash("error", "Adding Category failed!");
             return res.redirect("/admin/category");
@@ -54,7 +54,7 @@ router.get("/edit/:id", ensureAuthenticated, function (req, res, next) {
 router.post("/edit/:id", ensureAuthenticated, function (req, res, next) {
     let name = req.body.name;
 
-    Category.updateCategory(req.params.id, name, function (err) {
+    Category.update(req.params.id, name, function (err) {
         if (err) {
             req.flash("error", "Updating Category failed!");
             return res.redirect("/admin/category");

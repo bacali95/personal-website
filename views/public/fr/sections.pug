@@ -83,7 +83,7 @@ block sections
                 .block-content
                     .row
                         .col-md-12
-                            span.page-number.emph-1 - 1/4 -
+                            span.page-number.emph-1 - 1/5 -
     //Resume
     section#resume.bg-white.t-center
         .resume
@@ -434,7 +434,7 @@ block sections
                 .block-content
                     .row
                         .col-md-12
-                            span.page-number.emph-1 - 2/4 -
+                            span.page-number.emph-1 - 2/5 -
     //Portfolio
     section#portfolio.bg-white.t-center
         .portfolio
@@ -477,7 +477,54 @@ block sections
                 .block-content
                     .row
                         .col-md-12
-                            span.page-number.emph-1 - 3/4 -
+                            span.page-number.emph-1 - 3/5 -
+    //Certificate
+    section#certificate.bg-white.t-center
+        .portfolio
+            .content
+                .block-content.mb-100
+                    .row
+                        .col-md-12
+                            .main-title
+                                h1.mb-20 Certificats
+                                h5.uppercase Mes Prix
+                .block-content.mb-100
+                    .works
+                        .row
+                            .col-md-12
+                                .block-filter.uppercase.mb-40
+                                    ul.filter
+                                        li
+                                            a.active(href='#', data-filter='all') all
+                                        each category, i in certificateCategory
+                                            li
+                                                a(href='#', data-filter=category) #{category}
+                        .row
+                            if certificates.length === 0
+                                p.mb-200 Comming Soon
+                            - var i = 0
+                            while i < certificates.length
+                                - var j = i;
+                                - i+=2;
+                                .col-md-12
+                                    ul.work.mb-20
+                                        while  j < Math.min(i, certificates.length)
+                                            li.col-sm-6
+                                                div.item(class=certificates[j].category)
+                                                    a
+                                                        .desc
+                                                            h5.proj-desc
+                                                                | #{certificates[j].title}
+                                                                span #{certificates[j].date}
+                                                        ul#block-slider-certification
+                                                            each image in certificates[j++].images
+                                                                li
+                                                                    a.popup(href='images/uploads/' + image)
+                                                                        img(src='images/uploads/' + image, alt='')
+                .block-content
+                    .row
+                        .col-md-12
+                            span.page-number.emph-1 - 4/5 -
     //Contact
     section#contact.bg-white.t-center
         .contact
@@ -559,4 +606,4 @@ block sections
                 .block-content
                     .row
                         .col-md-12
-                            span.page-number.emph-1 - 4/4 -
+                            span.page-number.emph-1 - 5/5 -

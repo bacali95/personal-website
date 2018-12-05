@@ -17,7 +17,7 @@ const baseDIR = "admin/dashboard/project/";
 const compress = CompressTool();
 
 router.get("/", ensureAuthenticated, function (req, res, next) {
-    Project.getAllProjects(function (err, projects) {
+    Project.getAll(function (err, projects) {
         if (err || !projects) {
             projects = [];
         }
@@ -30,7 +30,7 @@ router.get("/", ensureAuthenticated, function (req, res, next) {
 });
 
 router.get("/add", ensureAuthenticated, function (req, res, next) {
-    Category.getAllCategories(function (err, categories) {
+    Category.getAll(function (err, categories) {
         if (err || !categories) {
             categories = [];
         }
@@ -47,7 +47,7 @@ router.get("/show/:id", ensureAuthenticated, function (req, res, next) {
     if (!index || isNaN(index)) {
         index = 0;
     }
-    Project.getProjectById(req.params.id, function (err, project) {
+    Project.getById(req.params.id, function (err, project) {
         if (err || !project) {
             return res.redirect("/admin/project");
         }
@@ -116,7 +116,7 @@ router.post("/add", ensureAuthenticated, function (req, res, next) {
         images
     });
 
-    Project.createProject(project, function (err, project) {
+    Project.create(project, function (err, project) {
         if (err) {
             req.flash("error", "Adding project failed!");
             return res.redirect("/admin/project");
@@ -131,7 +131,7 @@ router.get("/edit/:id", ensureAuthenticated, function (req, res, next) {
         if (err || !project) {
             return res.redirect("/admin/project");
         }
-        Category.getAllCategories(function (err, categories) {
+        Category.getAll(function (err, categories) {
             if (err || !categories) {
                 categories = [];
             }
@@ -185,7 +185,7 @@ router.post("/edit/:id", upload, ensureAuthenticated, function (req, res, next) 
         creationDate: Date.now()
     });
 
-    Project.getProjectById(newProject._id, function (err, project) {
+    Project.getById(newProject._id, function (err, project) {
         if (err || !project) {
             req.flash("error", "Updating project failed!");
             return res.redirect("/admin/project");
@@ -199,7 +199,7 @@ router.post("/edit/:id", upload, ensureAuthenticated, function (req, res, next) 
             images[i] = renameFile(i, images[i]);
         }
         newProject.images = images;
-        Project.updateProject(project._id, newProject, function (err) {
+        Project.update(project._id, newProject, function (err) {
             if (err) {
                 req.flash("error", "Updating project failed!");
                 return res.redirect("/admin/project");

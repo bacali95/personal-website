@@ -6,7 +6,7 @@ const baseDIR = "admin/dashboard/user/";
 const User = require("../../models/user");
 
 router.get("/", ensureAuthenticated, function (req, res, next) {
-    User.getAllUsers(function (err, users) {
+    User.getAll(function (err, users) {
         if (err || !users) {
             users = [];
         }
@@ -30,7 +30,7 @@ router.post("/add", ensureAuthenticated, function (req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
 
-    User.createUser(username, password, function (err) {
+    User.create(username, password, function (err) {
         if (err) {
             req.flash("error", "Adding User failed!");
             return res.redirect("/admin/user");
@@ -55,7 +55,7 @@ router.get("/edit/:id", ensureAuthenticated, function (req, res, next) {
 router.post("/edit/:id", ensureAuthenticated, function (req, res, next) {
     const password = req.body.password;
 
-    User.updateUser(req.params.id, password, function (err) {
+    User.update(req.params.id, password, function (err) {
         if (err) {
             req.flash("error", "Updating User failed!");
             return res.redirect("/admin/user");

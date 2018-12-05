@@ -1,18 +1,18 @@
 (function ($) {
     "use strict";
 
-    var uploadedfilescount = 0;
-    var files = [];
-    var filesNames = [];
+    let uploadedFilesCount = 0;
+    const files = [];
+    const filesNames = [];
 
     document.addEventListener("DOMContentLoaded", init, false);
 
     function init() {
-        var files_input = document.querySelector('#files');
+        const files_input = document.querySelector('#files');
         if (files_input) {
             files_input.addEventListener('change', handleFileSelect, false);
             $('#selectedFiles').children('.col-md-4').each(function () {
-                var ID = Math.random().toString(36).substr(2, 9);
+                const ID = Math.random().toString(36).substr(2, 9);
                 let child = $(this).children('div.card');
                 child.prop('id', ID);
                 let filename = child.children('img.card-img-top').prop('src');
@@ -32,10 +32,10 @@
     function handleFileSelect(e) {
         if (!e.target.files || !window.FileReader) return;
 
-        var selectFiles = Array.prototype.slice.call(e.target.files);
+        const selectFiles = Array.prototype.slice.call(e.target.files);
 
         selectFiles.forEach(function (f) {
-            for (var i = 0; i < files.length; i++) {
+            for (let i = 0; i < files.length; i++) {
                 if (f.name === files[i].name
                     && f.lastModified === files[i].lastModified
                     && f.size === files[i].size) {
@@ -48,12 +48,12 @@
             }
             f.ID = ID();
             f.fromServer = false;
-            var reader = new FileReader();
+            const reader = new FileReader();
             reader.onload = function (e) {
                 $('#selectedFiles').append('' +
                     '<div class="col-md-4"> ' +
                     '   <div id="' + f.ID + '" class="card text-center form-group border-secondary" >' +
-                    '       <img class="card-img-top" src="' + e.target.result + '"/>' +
+                    '       <img class="card-img-top" src="' + e.target.result + '" alt=""/>' +
                     '       <div class="card-footer">' +
                     '           <a id="delete" class="btn btn-danger btn-sm" style="color: white">Delete</a>' +
                     '       </div>' +
@@ -79,19 +79,19 @@
             repoGithub: 'required',
         },
         submitHandler: function (form) {
-            var message = $('<div class="alert" style="display: none;">');
-            var close = $('<span class="closebtn" data-dismiss="alert">&times</span>');
+            const message = $('<div class="alert" style="display: none;">');
+            const close = $('<span class="closebtn" data-dismiss="alert">&times</span>');
             message.append(close);
             if (files.length === 0) {
                 message.append('Select images');
                 message.appendTo($('body')).fadeIn(300).delay(2000).fadeOut(500);
                 return;
             }
-            uploadedfilescount = 0;
-            var inprogress = 0;
+            uploadedFilesCount = 0;
+            let inProgress = 0;
             for (let i = 0; i < files.length; i++) {
                 if (!files[i].fromServer) {
-                    inprogress++;
+                    inProgress++;
                     $('#' + files[i].ID).children('.card-footer').html('' +
                         '<div class="progress">' +
                         '   <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Compressing...</div>' +
@@ -106,7 +106,44 @@
             }
             $('#images').val(filesNames.join(','));
             console.log('uploading...');
-            waitFor(() => uploadedfilescount === inprogress, () => form.submit());
+            waitFor(() => uploadedFilesCount === inProgress, () => form.submit());
+        }
+    });
+
+    $('#certificateForm').validate({
+        rules: {
+            title: 'required',
+            category: 'required',
+        },
+        submitHandler: function (form) {
+            const message = $('<div class="alert" style="display: none;">');
+            const close = $('<span class="closebtn" data-dismiss="alert">&times</span>');
+            message.append(close);
+            if (files.length === 0) {
+                message.append('Select images');
+                message.appendTo($('body')).fadeIn(300).delay(2000).fadeOut(500);
+                return;
+            }
+            uploadedFilesCount = 0;
+            let inProgress = 0;
+            for (let i = 0; i < files.length; i++) {
+                if (!files[i].fromServer) {
+                    inProgress++;
+                    $('#' + files[i].ID).children('.card-footer').html('' +
+                        '<div class="progress">' +
+                        '   <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Compressing...</div>' +
+                        '</div>');
+                    postImage(files[i]);
+                } else {
+                    $('#' + files[i].ID).children('.card-footer').html('' +
+                        '<div class="progress">' +
+                        '   <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Done</div>' +
+                        '</div>');
+                }
+            }
+            $('#images').val(filesNames.join(','));
+            console.log('uploading...');
+            waitFor(() => uploadedFilesCount === inProgress, () => form.submit());
         }
     });
 
@@ -125,7 +162,7 @@
     });
 
     $(document).on('click', '#delete', function (e) {
-        var ID = $(this).parents('.card')[0].id;
+        const ID = $(this).parents('.card')[0].id;
         for (let i = 0; i < files.length; i++) {
             if (files[i].ID === ID) {
                 files.splice(i, 1);
@@ -141,12 +178,12 @@
     /**
      * @return {string}
      */
-    var ID = function () {
+    const ID = function () {
         return Math.random().toString(36).substr(2, 9);
     };
 
-    var postImage = function (file_data) {
-        var form_data = new FormData();
+    const postImage = function (file_data) {
+        const form_data = new FormData();
         form_data.append('ID', file_data.ID);
         form_data.append('image', file_data);
         $.ajax({
@@ -157,7 +194,7 @@
             data: form_data,
             type: 'post',
             success: function (res) {
-                uploadedfilescount++;
+                uploadedFilesCount++;
                 let progressbar = $('#' + res.ID + ' .card-footer .progress');
                 progressbar.html('<div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Done</div>');
             },

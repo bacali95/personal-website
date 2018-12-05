@@ -16,6 +16,7 @@ const specs = require("./tools/specs");
 User = require("./models/user");
 require("./models/category");
 require("./models/project");
+require("./models/certificate");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(specs.DB_URL, {
@@ -28,6 +29,7 @@ const authRouter = require("./routes/admin/auth");
 const usersRouter = require("./routes/admin/users");
 const projectsRouter = require("./routes/admin/projects");
 const categoriesRouter = require("./routes/admin/categories");
+const certificatesRouter = require("./routes/admin/certificates");
 const app = express();
 
 app.locals.moment = require("moment");
@@ -90,8 +92,9 @@ app.use("/admin", authRouter);
 app.use("/admin/user", usersRouter);
 app.use("/admin/project", projectsRouter);
 app.use("/admin/category", categoriesRouter);
+app.use("/admin/certificate", certificatesRouter);
 
-passport.use(User.createStrategy());
+passport.use('local', User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 

@@ -27,7 +27,7 @@ CompressTool.prototype.begin = function begin(filename, callback) {
                 callback(error);
             }
             unlinkAsync(fileIN);
-            callback(null, "Image " + filename + " compressed successfully!");
+            callback(null);
         });
     });
 };

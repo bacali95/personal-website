@@ -43,7 +43,25 @@
             navigationText: ["<span class='icon-left-open-big'></span>", "<span class='icon-right-open-big'></span>"]
         });
 
+        $("#block-slider-certification").owlCarousel({
+            navigation: true,
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            responsiveRefreshRate: 200,
+            responsiveBaseWidth: window,
+            pagination: false,
+            autoPlay: true,
+            singleItem: true,
+            navigationText: []
+        });
+
 //Portfolio setup 
+        const $desc = $('.desc');
+        $desc.click((e)=>{
+            $desc.hide();
+            $(document.elementFromPoint(e.clientX, e.clientY)).trigger("click");
+            $desc.show();
+        });
 
         $('.popup').magnificPopup({
             type: 'image',
@@ -59,7 +77,7 @@
             }
         });
 
-        var works = $('.works');
+        const works = $('.works');
         $('.popup-youtube, .popup-vimeo').magnificPopup({
             disableOn: 700,
             type: 'iframe',
@@ -73,12 +91,12 @@
         $('.filter ').on("click", "li a", function () {
             $(this).addClass('active');
             $(this).parent().siblings().find('a').removeClass('active');
-            var filters = $(this).attr('data-filter');
+            const filters = $(this).attr('data-filter');
             $(this).closest(works).find('.item').removeClass('disable');
 
             if (filters !== 'all') {
-                var selected = $(this).closest(works).find('.item');
-                for (var i = 0; i < selected.length; i++) {
+                const selected = $(this).closest(works).find('.item');
+                for (let i = 0; i < selected.length; i++) {
                     if (!selected.eq(i).hasClass(filters)) {
                         selected.eq(i).addClass('disable');
                     }
@@ -100,10 +118,10 @@
 
 // Form validation 
 
-        var inputName = $('input#name');
-        var inputEmail = $('input#email');
-        var textArea = $('textarea#message');
-        var contactForm = $('.contact-form');
+        const inputName = $('input#name');
+        const inputEmail = $('input#email');
+        const textArea = $('textarea#message');
+        const contactForm = $('.contact-form');
 
 
         $('.submit').on("click", function () {
@@ -112,24 +130,24 @@
             textArea.removeClass("errorForm");
             inputEmail.removeClass("errorForm");
 
-            var error = false;
-            var name = inputName.val();
-            if (name == "" || name == " ") {
+            let error = false;
+            const name = inputName.val();
+            if (name === "" || name === " ") {
                 error = true;
                 inputName.addClass("errorForm");
             }
 
 
-            var msg = textArea.val();
-            if (msg == "" || msg == " ") {
+            const msg = textArea.val();
+            if (msg === "" || msg === " ") {
                 error = true;
                 textArea.addClass("errorForm");
 
             }
 
-            var email_compare = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-            var email = inputEmail.val();
-            if (email == "" || email == " ") {
+            const email_compare = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+            const email = inputEmail.val();
+            if (email === "" || email === " ") {
                 inputEmail.addClass("errorForm");
                 error = true;
             } else if (!email_compare.test(email)) {
@@ -137,11 +155,11 @@
                 error = true;
             }
 
-            if (error == true) {
+            if (error === true) {
                 return false;
             }
 
-            var data_string = contactForm.serialize();
+            const data_string = contactForm.serialize();
 
             $.ajax({
                 type: "POST",
@@ -149,7 +167,7 @@
                 data: data_string,
 
                 success: function (message) {
-                    if (message == 'SENDING') {
+                    if (message === 'SENDING') {
                         $('#success').fadeIn('slow');
                     }
                     else {

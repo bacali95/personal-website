@@ -17,7 +17,7 @@ UserSchema.plugin(passportLocalMongoose, {
 
 const User = module.exports = mongoose.model("User", UserSchema);
 
-module.exports.createUser = function (username, password, callback) {
+module.exports.create = function (username, password, callback) {
     User.register(new User({username}), password, function (err) {
         if (err) {
             callback(err);
@@ -26,20 +26,20 @@ module.exports.createUser = function (username, password, callback) {
     });
 };
 
-module.exports.getAllUsers = function (callback) {
+module.exports.getAll = function (callback) {
     User.find(callback);
 };
 
-module.exports.getUserByUsername = function (username, callback) {
+module.exports.getByUsername = function (username, callback) {
     const query = {username};
     User.findOne(query, callback);
 };
 
-module.exports.getUserById = function (id, callback) {
+module.exports.getById = function (id, callback) {
     User.findById(id, callback);
 };
 
-module.exports.updateUser = function (id, password, callback) {
+module.exports.update = function (id, password, callback) {
     User.findById(id, function (err, user) {
         console.log(id + " " + user);
         if (err || user === null) {
