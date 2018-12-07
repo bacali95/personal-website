@@ -13,7 +13,7 @@ router.get("/", ensureAuthenticated, function (req, res, next) {
         return res.render(baseDIR + "listCategory", {
             title: "Categories",
             layout: "dashboardLayout",
-            categories: categories
+            categories
         });
     });
 });
@@ -46,7 +46,7 @@ router.get("/edit/:id", ensureAuthenticated, function (req, res, next) {
         return res.render(baseDIR + "editCategory", {
             title: "Edit Category",
             layout: "dashboardLayout",
-            category: category
+            category
         });
     });
 });

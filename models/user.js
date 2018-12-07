@@ -41,7 +41,6 @@ module.exports.getById = function (id, callback) {
 
 module.exports.update = function (id, password, callback) {
     User.findById(id, function (err, user) {
-        console.log(id + " " + user);
         if (err || user === null) {
             callback(err);
         }

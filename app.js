@@ -13,7 +13,7 @@ const mongoose = require("mongoose");
 const initAdmin = require("./tools/initAdmin");
 const specs = require("./tools/specs");
 
-User = require("./models/user");
+const User = require("./models/user");
 require("./models/category");
 require("./models/project");
 require("./models/certificate");

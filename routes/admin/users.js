@@ -13,7 +13,7 @@ router.get("/", ensureAuthenticated, function (req, res, next) {
         return res.render(baseDIR + "listUser", {
             title: "Users",
             layout: "dashboardLayout",
-            users: users
+            users
         });
     });
 });
@@ -47,7 +47,7 @@ router.get("/edit/:id", ensureAuthenticated, function (req, res, next) {
         return res.render(baseDIR + "editUser", {
             title: "Edit User",
             layout: "dashboardLayout",
-            user: user
+            user
         });
     });
 });
@@ -71,7 +71,7 @@ router.get("/delete/:id", ensureAuthenticated, function (req, res, next) {
             return res.redirect("/admin/user");
         }
         return res.redirect("/admin/user");
-    })
+    });
 });
 
 router.get("/*", function (req, res, next) {

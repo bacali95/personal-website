@@ -79,7 +79,6 @@ router.get("/next/:index", function (req, res, next) {
 });
 
 router.get("/*", function (req, res, next) {
-    console.log(req.url);
     const regex = /^((\/en)|(\/fr)|(\/next)|(\/admin)|(\/project)|(\/images))/g;
     if (!String(req.url).match(regex)) {
         return res.redirect("/");
