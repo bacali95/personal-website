@@ -48,10 +48,8 @@ router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
     let name = req.body.name;
 
     await Category.update(req.params.id, name).catch(() => {
-        if (err) {
-            req.flash("error", "Updating Category failed!");
-            return res.redirect("/admin/category");
-        }
+        req.flash("error", "Updating Category failed!");
+        return res.redirect("/admin/category");
     });
 
     return res.redirect("/admin/category");

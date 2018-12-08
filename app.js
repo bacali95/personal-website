@@ -94,7 +94,7 @@ app.use("/admin/project", projectsRouter);
 app.use("/admin/category", categoriesRouter);
 app.use("/admin/certificate", certificatesRouter);
 
-passport.use('local', User.createStrategy());
+passport.use("local", User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
