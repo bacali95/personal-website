@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const CertificateSchema = mongoose.Schema({
-    title:{
+    title: {
         type: String
     },
     category: {
@@ -17,19 +17,22 @@ const CertificateSchema = mongoose.Schema({
 
 const Certificate = module.exports = mongoose.model("Certificate", CertificateSchema);
 
-module.exports.create = function (certificate, callback) {
-    certificate.save(callback);
+module.exports.create = function (certificate) {
+    return certificate.save();
 };
 
-module.exports.getAll = function (callback) {
-    Certificate.find(callback);
+module.exports.getAll = function () {
+    return Certificate.find();
 };
 
-module.exports.getById = function (id, callback) {
-    Certificate.findById(id, callback);
+module.exports.getById = function (id) {
+    return Certificate.findById(id);
 };
 
-module.exports.update = function (id, certificate, callback) {
-    Certificate.findByIdAndUpdate(id, certificate, callback);
+module.exports.update = function (id, certificate) {
+    return Certificate.findByIdAndUpdate(id, certificate);
 };
 
+module.exports.remove = function (id) {
+    return Certificate.deleteOne({_id: id});
+};

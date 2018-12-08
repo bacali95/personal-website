@@ -47,19 +47,22 @@ const ProjectSchema = mongoose.Schema({
 
 const Project = module.exports = mongoose.model("Project", ProjectSchema);
 
-module.exports.create = function (project, callback) {
-    project.save(callback);
+module.exports.create = function (project) {
+    return project.save();
 };
 
-module.exports.getAll = function (callback) {
-    Project.find(callback);
+module.exports.getAll = function () {
+    return Project.find();
 };
 
-module.exports.getById = function (id, callback) {
-    Project.findById(id, callback);
+module.exports.getById = function (id) {
+    return Project.findById(id);
 };
 
-module.exports.update = function (id, project, callback) {
-    Project.findByIdAndUpdate(id, project, callback);
+module.exports.update = function (id, project) {
+    return Project.findByIdAndUpdate(id, project);
 };
 
+module.exports.remove = function (id) {
+    return Project.deleteOne({_id: id});
+};

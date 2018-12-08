@@ -16,16 +16,13 @@ const baseDIR = "admin/dashboard/certificate/";
 
 const compress = CompressTool();
 
-router.get("/", ensureAuthenticated, function (req, res, next) {
-    Certificate.getAll(function (err, certificates) {
-        if (err || !certificates) {
-            certificates = [];
-        }
-        return res.render(baseDIR + "listCertificate", {
-            title: "Certificates",
-            layout: "dashboardLayout",
-            certificates
-        });
+router.get("/", ensureAuthenticated, async function (req, res, next) {
+    const certificates = await Certificate.getAll();
+
+    return res.render(baseDIR + "listCertificate", {
+        title: "Certificates",
+        layout: "dashboardLayout",
+        certificates
     });
 });
 
@@ -37,18 +34,14 @@ router.get("/add", ensureAuthenticated, function (req, res, next) {
     });
 });
 
-router.get("/show/:id", ensureAuthenticated, function (req, res, next) {
-    Certificate.getById(req.params.id, function (err, certificate) {
-        if (err || !certificate) {
-            return res.redirect("/admin/certificate");
-        }
-        return res.render(baseDIR + "showCertificate", {
-            title: "Show Certificate",
-            layout: "dashboardLayout",
-            certificate
-        });
-    });
+router.get("/show/:id", ensureAuthenticated, async function (req, res, next) {
+    const certificate = await Certificate.getById(req.params.id).catch(() => res.redirect("/admin/certificate"));
 
+    return res.render(baseDIR + "showCertificate", {
+        title: "Show Certificate",
+        layout: "dashboardLayout",
+        certificate
+    });
 });
 
 router.post("/postimage", upload, ensureAuthenticated, function (req, res, next) {
@@ -62,7 +55,7 @@ router.post("/postimage", upload, ensureAuthenticated, function (req, res, next)
     });
 });
 
-router.post("/add", ensureAuthenticated, function (req, res, next) {
+router.post("/add", ensureAuthenticated, async function (req, res, next) {
     let title = req.body.title;
     let category = req.body.category;
     let date = req.body.date;
@@ -85,31 +78,28 @@ router.post("/add", ensureAuthenticated, function (req, res, next) {
         images
     });
 
-    Certificate.create(certificate, function (err, result) {
-        if (err) {
-            req.flash("error", "Adding certificate failed!");
-            return res.redirect("/admin/certificate");
-        }
-        return res.redirect("/admin/certificate/show/" + result._id);
+    certificate = await Certificate.create(certificate).catch(() => {
+        req.flash("error", "Adding certificate failed!");
+        return res.redirect("/admin/certificate");
     });
 
+    return res.redirect("/admin/certificate/show/" + certificate._id);
 });
 
-router.get("/edit/:id", ensureAuthenticated, function (req, res, next) {
-    Certificate.findById(req.params.id, function (err, certificate) {
-        if (err || !certificate) {
-            return res.redirect("/admin/certificate");
-        }
-        return res.render(baseDIR + "editCertificate", {
-            title: "Edit Certificate",
-            layout: "dashboardLayout",
-            categories,
-            certificate
-        });
+router.get("/edit/:id", ensureAuthenticated, async function (req, res, next) {
+    const certificate = await Certificate.getById(req.params.id).catch(() => {
+        res.redirect("/admin/certificate");
+    });
+
+    return res.render(baseDIR + "editCertificate", {
+        title: "Edit Certificate",
+        layout: "dashboardLayout",
+        categories,
+        certificate
     });
 });
 
-router.post("/edit/:id", upload, ensureAuthenticated, function (req, res, next) {
+router.post("/edit/:id", upload, ensureAuthenticated, async function (req, res, next) {
     let title = req.body.title;
     let category = req.body.category;
     let date = req.body.date;
@@ -128,46 +118,44 @@ router.post("/edit/:id", upload, ensureAuthenticated, function (req, res, next) 
         date: date.split("-").reverse().join("-")
     });
 
-    Certificate.getById(newCertificate._id, function (err, certificate) {
-        if (err || !certificate) {
-            req.flash("error", "Updating certificate failed!");
-            return res.redirect("/admin/certificate");
-        }
-        certificate.images.forEach(function (name) {
-            if (!images.includes(name)) {
-                unlinkAsync("public/images/uploads/" + name);
-            }
-        });
-        for (let i = 0; i < images.length; i++) {
-            images[i] = renameFile(i, images[i]);
-        }
-        newCertificate.images = images;
-        Certificate.update(certificate._id, newCertificate, function (err) {
-            if (err) {
-                req.flash("error", "Updating certificate failed!");
-                return res.redirect("/admin/certificate");
-            }
-            return res.redirect("/admin/certificate/show/" + certificate._id);
-        });
+    let certificate = await Certificate.getById(newCertificate._id).catch(() => {
+        req.flash("error", "Updating certificate failed!");
+        return res.redirect("/admin/certificate");
     });
+
+    certificate.images.forEach(function (name) {
+        if (!images.includes(name)) {
+            unlinkAsync("public/images/uploads/" + name);
+        }
+    });
+
+    for (let i = 0; i < images.length; i++) {
+        images[i] = renameFile(i, images[i]);
+    }
+
+    newCertificate.images = images;
+
+    certificate = await Certificate.update(certificate._id, newCertificate).catch(() => {
+        req.flash("error", "Updating certificate failed!");
+        return res.redirect("/admin/certificate");
+    });
+
+    return res.redirect("/admin/certificate/show/" + certificate._id);
 });
 
-router.get("/delete/:id", ensureAuthenticated, function (req, res, next) {
-    Certificate.findById(req.params.id, function (err, result) {
-        if (err || !result) {
-            return res.redirect("/admin/certificate");
-        }
-        Certificate.deleteOne({_id: req.params.id}, function (err) {
-            if (err) {
-                req.flash("error", "Deleting certificate failed!");
-                return res.redirect("/admin/certificate");
-            }
-            result.images.forEach(function (name) {
-                unlinkAsync("public/images/uploads/" + name);
-            });
-            return res.redirect("/admin/certificate");
-        });
+router.get("/delete/:id", ensureAuthenticated, async function (req, res, next) {
+    const certificate = await Certificate.getById(req.params.id).catch(() => res.redirect("/admin/certificate"));
+
+    await Certificate.remove(req.params.id).catch(() => {
+        req.flash("error", "Deleting certificate failed!");
+        return res.redirect("/admin/certificate");
     });
+
+    certificate.images.forEach(function (name) {
+        unlinkAsync("public/images/uploads/" + name);
+    });
+
+    return res.redirect("/admin/certificate");
 });
 
 router.get("/*", function (req, res, next) {

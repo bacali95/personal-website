@@ -16,55 +16,46 @@ const baseDIR = "admin/dashboard/project/";
 
 const compress = CompressTool();
 
-router.get("/", ensureAuthenticated, function (req, res, next) {
-    Project.getAll(function (err, projects) {
-        if (err || !projects) {
-            projects = [];
-        }
-        return res.render(baseDIR + "listProject", {
-            title: "Projects",
-            layout: "dashboardLayout",
-            projects
-        });
+router.get("/", ensureAuthenticated, async function (req, res, next) {
+    const projects = await Project.getAll().catch(() => res.redirect("/admin/project"));
+
+    return res.render(baseDIR + "listProject", {
+        title: "Projects",
+        layout: "dashboardLayout",
+        projects
     });
 });
 
-router.get("/add", ensureAuthenticated, function (req, res, next) {
-    Category.getAll(function (err, categories) {
-        if (err || !categories) {
-            categories = [];
-        }
-        return res.render(baseDIR + "addProject", {
-            title: "Add Project",
-            layout: "dashboardLayout",
-            categories
-        });
+router.get("/add", ensureAuthenticated, async function (req, res, next) {
+    const categories = await Category.getAll().catch(() => res.redirect("/admin/project"));
+
+    return res.render(baseDIR + "addProject", {
+        title: "Add Project",
+        layout: "dashboardLayout",
+        categories
     });
 });
 
-router.get("/show/:id", ensureAuthenticated, function (req, res, next) {
-    var index = req.query.index;
+router.get("/show/:id", ensureAuthenticated, async function (req, res, next) {
+    let index = req.query.index;
     if (!index || isNaN(index)) {
         index = 0;
     }
-    Project.getById(req.params.id, function (err, project) {
-        if (err || !project) {
-            return res.redirect("/admin/project");
-        }
-        return res.render(baseDIR + "showProject", {
-            title: "Show Project",
-            layout: "dashboardLayout",
-            project,
-            index
-        });
-    });
 
+    const project = await Project.getById(req.params.id).catch(() => res.redirect("/admin/project"));
+
+    return res.render(baseDIR + "showProject", {
+        title: "Show Project",
+        layout: "dashboardLayout",
+        project,
+        index
+    });
 });
 
 router.post("/postimage", upload, ensureAuthenticated, function (req, res, next) {
     let ID = req.body.ID;
     let filename = req.file.filename;
-    compress.begin(filename, function (error, message) {
+    compress.begin(filename, function (error) {
         if (error) {
             throw error;
         }
@@ -72,7 +63,7 @@ router.post("/postimage", upload, ensureAuthenticated, function (req, res, next)
     });
 });
 
-router.post("/add", ensureAuthenticated, function (req, res, next) {
+router.post("/add", ensureAuthenticated, async function (req, res, next) {
     let titleFR = req.body.titleFR;
     let descriptionFR = req.body.descriptionFR;
     let typeFR = req.body.typeFR;
@@ -116,36 +107,27 @@ router.post("/add", ensureAuthenticated, function (req, res, next) {
         images
     });
 
-    Project.create(project, function (err, project) {
-        if (err) {
-            req.flash("error", "Adding project failed!");
-            return res.redirect("/admin/project");
-        }
-        return res.redirect("/admin/project/show/" + project._id);
+    await Project.create(project).catch(() => {
+        req.flash("error", "Adding project failed!");
+        return res.redirect("/admin/project");
     });
 
+    return res.redirect("/admin/project/show/" + project._id);
 });
 
-router.get("/edit/:id", ensureAuthenticated, function (req, res, next) {
-    Project.findById(req.params.id, function (err, project) {
-        if (err || !project) {
-            return res.redirect("/admin/project");
-        }
-        Category.getAll(function (err, categories) {
-            if (err || !categories) {
-                categories = [];
-            }
-            return res.render(baseDIR + "editProject", {
-                title: "Edit Project",
-                layout: "dashboardLayout",
-                categories,
-                project
-            });
-        });
+router.get("/edit/:id", ensureAuthenticated, async function (req, res, next) {
+    const project = await Project.getById(req.params.id).catch(() => res.redirect("/admin/project"));
+    const categories = await Category.getAll().catch(() => res.redirect("/admin/project"));
+
+    return res.render(baseDIR + "editProject", {
+        title: "Edit Project",
+        layout: "dashboardLayout",
+        categories,
+        project
     });
 });
 
-router.post("/edit/:id", upload, ensureAuthenticated, function (req, res, next) {
+router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
     let titleFR = req.body.titleFR;
     let descriptionFR = req.body.descriptionFR;
     let typeFR = req.body.typeFR;
@@ -185,46 +167,44 @@ router.post("/edit/:id", upload, ensureAuthenticated, function (req, res, next) 
         creationDate: Date.now()
     });
 
-    Project.getById(newProject._id, function (err, project) {
-        if (err || !project) {
-            req.flash("error", "Updating project failed!");
-            return res.redirect("/admin/project");
-        }
-        project.images.forEach(function (name) {
-            if (!images.includes(name)) {
-                unlinkAsync("public/images/uploads/" + name);
-            }
-        });
-        for (let i = 0; i < images.length; i++) {
-            images[i] = renameFile(i, images[i]);
-        }
-        newProject.images = images;
-        Project.update(project._id, newProject, function (err) {
-            if (err) {
-                req.flash("error", "Updating project failed!");
-                return res.redirect("/admin/project");
-            }
-            return res.redirect("/admin/project/show/" + project._id);
-        });
+
+    let project = await Project.getById(req.params.id).catch(() => {
+        req.flash("error", "Updating project failed!");
+        return res.redirect("/admin/project");
     });
+
+    project.images.forEach(function (name) {
+        if (!images.includes(name)) {
+            unlinkAsync("public/images/uploads/" + name);
+        }
+    });
+
+    for (let i = 0; i < images.length; i++) {
+        images[i] = renameFile(i, images[i]);
+    }
+    newProject.images = images;
+
+    project = await Project.update(project._id, newProject).catch(() => {
+        req.flash("error", "Updating project failed!");
+        return res.redirect("/admin/project");
+    });
+
+    return res.redirect("/admin/project/show/" + project._id);
 });
 
-router.get("/delete/:id", ensureAuthenticated, function (req, res, next) {
-    Project.findById(req.params.id, function (err, result) {
-        if (err || !result) {
-            return res.redirect("/admin/project");
-        }
-        Project.deleteOne({_id: req.params.id}, function (err) {
-            if (err) {
-                req.flash("error", "Deleting project failed!");
-                return res.redirect("/admin/project");
-            }
-            result.images.forEach(function (name) {
-                unlinkAsync("public/images/uploads/" + name);
-            });
-            return res.redirect("/admin/project");
-        });
+router.get("/delete/:id", ensureAuthenticated, async function (req, res, next) {
+    const project = await Project.getById(req.params.id).catch(() => res.redirect("/admin/project"));
+
+    await Project.remove(req.params.id).catch(() => {
+        req.flash("error", "Deleting project failed!");
+        return res.redirect("/admin/project");
     });
+
+    project.images.forEach(function (name) {
+        unlinkAsync("public/images/uploads/" + name);
+    });
+
+    return res.redirect("/admin/project");
 });
 
 router.get("/*", function (req, res, next) {

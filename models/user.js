@@ -17,40 +17,31 @@ UserSchema.plugin(passportLocalMongoose, {
 
 const User = module.exports = mongoose.model("User", UserSchema);
 
-module.exports.create = function (username, password, callback) {
-    User.register(new User({username}), password, function (err) {
-        if (err) {
-            callback(err);
-        }
-        callback(null);
-    });
+module.exports.create = function (username, password) {
+    return User.register(new User({username}), password);
 };
 
-module.exports.getAll = function (callback) {
-    User.find(callback);
+module.exports.getAll = function () {
+    return User.find();
 };
 
-module.exports.getByUsername = function (username, callback) {
-    const query = {username};
-    User.findOne(query, callback);
+module.exports.getByUsername = function (username) {
+    return User.findOne({username});
 };
 
-module.exports.getById = function (id, callback) {
-    User.findById(id, callback);
+module.exports.getById = function (id) {
+    return User.findById(id);
 };
 
-module.exports.update = function (id, password, callback) {
-    User.findById(id, function (err, user) {
-        if (err || user === null) {
-            callback(err);
-        }
-        user.setPassword(password, function (err) {
-            if (err || !user) {
-                callback(err);
-            }
-            user.save();
-            callback(null);
-        });
-    });
+module.exports.update = async function (id, password) {
+    const user = await User.findById(id);
+
+    await user.setPassword(password);
+
+    return user.save();
+};
+
+module.exports.remove = async function (id) {
+    return User.deleteOne({_id: id});
 };
 
