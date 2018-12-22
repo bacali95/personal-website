@@ -58,6 +58,14 @@ router.post("/add", ensureAuthenticated, async function (req, res, next) {
     let date = req.body.date;
     let images = JSON.parse(req.body.images);
 
+    images.sort(function(a, b){
+        const x = a.original_filename.toLowerCase();
+        const y = b.original_filename.toLowerCase();
+        if (x < y) {return -1;}
+        if (x > y) {return 1;}
+        return 0;
+    });
+
     category = category || [];
 
     if (Array.isArray(category)) {
@@ -97,6 +105,14 @@ router.post("/edit/:id", upload, ensureAuthenticated, async function (req, res, 
     let category = req.body.category;
     let date = req.body.date;
     let images = JSON.parse(req.body.images);
+
+    images.sort(function(a, b){
+        const x = a.original_filename.toLowerCase();
+        const y = b.original_filename.toLowerCase();
+        if (x < y) {return -1;}
+        if (x > y) {return 1;}
+        return 0;
+    });
 
     category = category || [];
 
