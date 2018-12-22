@@ -47,7 +47,7 @@ router.get("/show/:id", ensureAuthenticated, async function (req, res, next) {
 router.post("/postimage", upload, ensureAuthenticated, function (req, res, next) {
     let ID = req.body.ID;
     let filename = req.file.filename;
-    compress.begin(filename, {tags: ['certificate']}, function (error, image) {
+    compress.begin(filename, {tags: ["certificate"]}, function (error, image) {
         if (error) {
             throw error;
         }
@@ -143,14 +143,14 @@ router.post("/edit/:id", upload, ensureAuthenticated, async function (req, res, 
         }
     });
 
-    for (let i = 0; i < images.length; i++) {
+    images.forEach(function (image) {
         const found = newCertificate.images.find(function (element) {
-            return element.secure_url === images[i].secure_url;
+            return element.secure_url === image.secure_url;
         });
         if (!found) {
-            newCertificate.images.push(images[i]);
+            newCertificate.images.push(image);
         }
-    }
+    });
 
     newCertificate.images.sort(function (a, b) {
         const x = a.original_filename.toLowerCase();

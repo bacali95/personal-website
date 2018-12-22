@@ -36,7 +36,7 @@ CompressTool.prototype.begin = function begin(filename, options, callback) {
                 }
                 unlinkAsync(fileOUT);
                 callback(null, image);
-            })
+            });
         });
     });
 };

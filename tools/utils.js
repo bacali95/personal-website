@@ -1,6 +1,6 @@
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
-const specs = require('./specs');
+const specs = require("./specs");
 
 cloudinary.config({
     cloud_name: specs.IMAGE_CLOUD_NAME,

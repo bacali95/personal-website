@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const sortProjects = require('../tools/utils').sortProjects;
-const sortCertificates = require('../tools/utils').sortCertificates;
+const sortProjects = require("../tools/utils").sortProjects;
+const sortCertificates = require("../tools/utils").sortCertificates;
 
 const Category = require("../models/category");
 const certificateCategory = require("../models/certifCategory");
@@ -23,8 +23,8 @@ async function languageManager(req, res, next) {
         title: "Nasreddine Bac Ali",
         layout: "layout",
         language: req.session.lan.replace("/", ""),
-        projects: projects,
-        certificates: certificates,
+        projects,
+        certificates,
         certificateCategory,
         categories
     });

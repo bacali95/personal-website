@@ -17,8 +17,6 @@ const compress = CompressTool();
 router.get("/", ensureAuthenticated, async function (req, res, next) {
     let projects = await Project.getAll().catch(() => res.redirect("/admin/project"));
 
-    console.log(Object.keys(projects));
-
     sortProjects(projects);
 
     return res.render(baseDIR + "listProject", {
@@ -57,7 +55,7 @@ router.get("/show/:id", ensureAuthenticated, async function (req, res, next) {
 router.post("/postimage", upload, ensureAuthenticated, function (req, res, next) {
     let ID = req.body.ID;
     let filename = req.file.filename;
-    compress.begin(filename, {tags: ['project']}, function (error, image) {
+    compress.begin(filename, {tags: ["project"]}, function (error, image) {
         if (error) {
             throw error;
         }
@@ -195,14 +193,14 @@ router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
         }
     });
 
-    for (let i = 0; i < images.length; i++) {
+    images.forEach(function (image) {
         const found = newProject.images.find(function (element) {
-            return element.secure_url === images[i].secure_url;
+            return element.secure_url === image.secure_url;
         });
         if (!found) {
-            newProject.images.push(images[i]);
+            newProject.images.push(image);
         }
-    }
+    });
 
     newProject.images.sort(function (a, b) {
         const x = a.original_filename.toLowerCase();
