@@ -43,7 +43,7 @@
             navigationText: ["<span class='icon-left-open-big'></span>", "<span class='icon-right-open-big'></span>"]
         });
 
-        $("#block-slider-certification").owlCarousel({
+        $(".block-slider-certification").owlCarousel({
             navigation: true,
             slideSpeed: 300,
             paginationSpeed: 400,
@@ -57,7 +57,7 @@
 
 //Portfolio setup 
         const $desc = $('.desc');
-        $desc.click((e)=>{
+        $desc.click((e) => {
             $desc.hide();
             $(document.elementFromPoint(e.clientX, e.clientY)).trigger("click");
             $desc.show();
@@ -169,8 +169,7 @@
                 success: function (message) {
                     if (message === 'SENDING') {
                         $('#success').fadeIn('slow');
-                    }
-                    else {
+                    } else {
                         $('#error').fadeIn('slow');
                     }
                 }

@@ -516,9 +516,9 @@ block sections
                                                             h5.proj-desc
                                                                 | #{certificates[j].title}
                                                                 span #{certificates[j].date}
-                                                        ul#block-slider-certification
+                                                        .block-slider-certification
                                                             each image in certificates[j++].images
-                                                                li
+                                                                .col-md-12
                                                                     a.popup(href=image.secure_url)
                                                                         img(src=image.secure_url, alt='')
                 .block-content
