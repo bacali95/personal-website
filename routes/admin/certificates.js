@@ -4,6 +4,7 @@ const router = express.Router();
 const ensureAuthenticated = require("../../tools/ensureAuthenticated");
 const CompressTool = require("../../tools/compress");
 const deleteImage = require("../../tools/utils").deleteImage;
+const sortCertificates = require("../../tools/utils").sortCertificates;
 const upload = require("../../tools/utils").upload;
 
 const Certificate = require("../../models/certificate");
@@ -15,6 +16,8 @@ const compress = CompressTool();
 
 router.get("/", ensureAuthenticated, async function (req, res, next) {
     const certificates = await Certificate.getAll();
+
+    sortCertificates(certificates);
 
     return res.render(baseDIR + "listCertificate", {
         title: "Certificates",
@@ -58,11 +61,15 @@ router.post("/add", ensureAuthenticated, async function (req, res, next) {
     let date = req.body.date;
     let images = JSON.parse(req.body.images);
 
-    images.sort(function(a, b){
+    images.sort(function (a, b) {
         const x = a.original_filename.toLowerCase();
         const y = b.original_filename.toLowerCase();
-        if (x < y) {return -1;}
-        if (x > y) {return 1;}
+        if (x < y) {
+            return -1;
+        }
+        if (x > y) {
+            return 1;
+        }
         return 0;
     });
 
@@ -145,11 +152,15 @@ router.post("/edit/:id", upload, ensureAuthenticated, async function (req, res, 
         }
     }
 
-    newCertificate.images.sort(function(a, b){
+    newCertificate.images.sort(function (a, b) {
         const x = a.original_filename.toLowerCase();
         const y = b.original_filename.toLowerCase();
-        if (x < y) {return -1;}
-        if (x > y) {return 1;}
+        if (x < y) {
+            return -1;
+        }
+        if (x > y) {
+            return 1;
+        }
         return 0;
     });
 

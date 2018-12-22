@@ -4,6 +4,7 @@ const router = express.Router();
 const ensureAuthenticated = require("../../tools/ensureAuthenticated");
 const CompressTool = require("../../tools/compress");
 const deleteImage = require("../../tools/utils").deleteImage;
+const sortProjects = require("../../tools/utils").sortProjects;
 const upload = require("../../tools/utils").upload;
 
 const Project = require("../../models/project");
@@ -14,7 +15,11 @@ const baseDIR = "admin/dashboard/project/";
 const compress = CompressTool();
 
 router.get("/", ensureAuthenticated, async function (req, res, next) {
-    const projects = await Project.getAll().catch(() => res.redirect("/admin/project"));
+    let projects = await Project.getAll().catch(() => res.redirect("/admin/project"));
+
+    console.log(Object.keys(projects));
+
+    sortProjects(projects);
 
     return res.render(baseDIR + "listProject", {
         title: "Projects",
@@ -73,11 +78,15 @@ router.post("/add", ensureAuthenticated, async function (req, res, next) {
     let repoGithub = req.body.repoGithub;
     let images = JSON.parse(req.body.images);
 
-    images.sort(function(a, b){
+    images.sort(function (a, b) {
         const x = a.original_filename.toLowerCase();
         const y = b.original_filename.toLowerCase();
-        if (x < y) {return -1;}
-        if (x > y) {return 1;}
+        if (x < y) {
+            return -1;
+        }
+        if (x > y) {
+            return 1;
+        }
         return 0;
     });
 
@@ -195,11 +204,15 @@ router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
         }
     }
 
-    newProject.images.sort(function(a, b){
+    newProject.images.sort(function (a, b) {
         const x = a.original_filename.toLowerCase();
         const y = b.original_filename.toLowerCase();
-        if (x < y) {return -1;}
-        if (x > y) {return 1;}
+        if (x < y) {
+            return -1;
+        }
+        if (x > y) {
+            return 1;
+        }
         return 0;
     });
 

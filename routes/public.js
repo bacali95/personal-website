@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const sortProjects = require('../tools/utils').sortProjects;
+const sortCertificates = require('../tools/utils').sortCertificates;
 
 const Category = require("../models/category");
 const certificateCategory = require("../models/certifCategory");
@@ -14,12 +16,15 @@ async function languageManager(req, res, next) {
     const certificates = await Certificate.getAll();
     const projects = await Project.getAll();
 
+    sortProjects(projects);
+    sortCertificates(certificates);
+
     return res.render("public" + req.session.lan + "/sections", {
         title: "Nasreddine Bac Ali",
         layout: "layout",
         language: req.session.lan.replace("/", ""),
-        projects: projects.reverse(),
-        certificates: certificates.reverse(),
+        projects: projects,
+        certificates: certificates,
         certificateCategory,
         categories
     });
@@ -42,7 +47,7 @@ router.get("/project/:id", async function (req, res, next) {
 
     const project = await Project.getById(req.params.id).catch(() => res.redirect("/#portfolio"));
 
-    if (!project){
+    if (!project) {
         return res.redirect("/");
     }
 

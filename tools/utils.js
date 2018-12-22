@@ -30,3 +30,43 @@ module.exports.deleteImage = (name) => {
     cloudinary.uploader.destroy(name, function (err) {
     });
 };
+
+module.exports.sortProjects = (projects) => {
+    projects.sort(function (a, b) {
+        let x = new Date("01-" + a.period.start);
+        let y = new Date("01-" + b.period.start);
+
+        if (x.toString() === y.toString()) {
+            x = new Date("01-" + a.period.finish);
+            y = new Date("01-" + b.period.finish);
+        }
+
+        if (x > y) {
+            return -1;
+        }
+        if (x < y) {
+            return 1;
+        }
+        return 0;
+    });
+};
+
+module.exports.sortCertificates = (certificates) => {
+    certificates.sort(function (a, b) {
+        let x = new Date("01-" + a.date);
+        let y = new Date("01-" + b.date);
+
+        if (x.toString() === y.toString()) {
+            x = new Date("01-" + a.date);
+            y = new Date("01-" + b.date);
+        }
+
+        if (x > y) {
+            return -1;
+        }
+        if (x < y) {
+            return 1;
+        }
+        return 0;
+    });
+};
