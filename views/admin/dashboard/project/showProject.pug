@@ -80,6 +80,6 @@ block sub-content
                                 a.text-white.btn.btn-info.btn-lg.mr-2.mt-2(href='/admin/project/edit/' + project._id) Edit
                                 a.text-white.btn.btn-danger.btn-lg.mt-2(href='/admin/project/delete/' + project._id) Remove
             div.col-md-6.mt-3
-                each image, i in project.images
+                each image in project.images
                     div.form-group
-                        img(src='/images/uploads/' + image, width='100%')
+                        img(src=image.secure_url, width='100%')

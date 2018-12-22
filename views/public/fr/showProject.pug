@@ -61,7 +61,7 @@ html
                                         .col-sm-5.col-md-offset-1.col-sm-offset-1
                                             h5.mb-10 Type
                                             p.mb-15= project[language].type
-                                            if project.repoGithub!=="#"
+                                            if project.repoGithub !== "#"
                                                 a(href=project.repoGithub, target='_blank')
                                                     h5 Code
                                                         i.icon-whatsapp(style='font-size:3px; visibility: hidden')
@@ -85,7 +85,7 @@ html
                                             each image, i in project.images
                                                 .col-md-12
                                                     li
-                                                        img(src='../images/uploads/' + image, alt='')
+                                                        img(src=image.secure_url, alt='')
                                 .row
                                     .block-share.mb-30.t-center.clearfix
                                         .col-md-12

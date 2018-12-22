@@ -29,4 +29,4 @@ block sub-content
             div.col-md-6.mt-3
                 each image in certificate.images
                     div.form-group
-                        img(src='/images/uploads/' + image, width='100%')
+                        img(src=image.secure_url, width='100%')

@@ -473,7 +473,7 @@ block sections
                                                             h5.proj-desc
                                                                 | #{projects[j][language].title}
                                                                 span #{projects[j].category}
-                                                        img(src='images/uploads/' + projects[j++].images[0], alt='')
+                                                        img(src=projects[j++].images[0].secure_url, alt='')
                 .block-content
                     .row
                         .col-md-12
@@ -519,8 +519,8 @@ block sections
                                                         ul#block-slider-certification
                                                             each image in certificates[j++].images
                                                                 li
-                                                                    a.popup(href='images/uploads/' + image)
-                                                                        img(src='images/uploads/' + image, alt='')
+                                                                    a.popup(href=image.secure_url)
+                                                                        img(src=image.secure_url, alt='')
                 .block-content
                     .row
                         .col-md-12

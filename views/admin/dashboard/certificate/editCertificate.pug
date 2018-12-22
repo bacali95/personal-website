@@ -43,6 +43,6 @@ block sub-content
                 each image in certificate.images
                     .col-md-4
                         .card.text-center.form-group.border-secondary
-                            img.card-img-top(src='/images/uploads/' + image)
+                            img.card-img-top(src=image.secure_url)
                             .card-footer
                                 a#delete.btn.btn-danger.btn-sm(style='color: white') Delete

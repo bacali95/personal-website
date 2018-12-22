@@ -82,10 +82,10 @@ html
                                 .row
                                     .block-single.mb-60.clearfix
                                         ul#block-slider
-                                            each image, i in project.images
+                                            each image in project.images
                                                 .col-md-12
                                                     li
-                                                        img(src='../images/uploads/' + image, alt='')
+                                                        img(src=image.secure_url, alt='')
                                 .row
                                     .block-share.mb-30.t-center.clearfix
                                         .col-md-12

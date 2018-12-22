@@ -11,7 +11,7 @@ const CertificateSchema = mongoose.Schema({
         type: String
     },
     images: [{
-        type: String
+        type: Object
     }]
 });
 

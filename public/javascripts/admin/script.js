@@ -4,6 +4,7 @@
     let uploadedFilesCount = 0;
     const files = [];
     const filesNames = [];
+    const images = [];
 
     document.addEventListener("DOMContentLoaded", init, false);
 
@@ -23,6 +24,7 @@
                 };
                 files.push(file);
                 filesNames.push(filename.substr(filename.lastIndexOf('/') + 1));
+                images.push({secure_url: filename});
             })
         }
     }
@@ -104,9 +106,11 @@
                         '</div>');
                 }
             }
-            $('#images').val(filesNames.join(','));
             console.log('uploading...');
-            waitFor(() => uploadedFilesCount === inProgress, () => form.submit());
+            waitFor(() => uploadedFilesCount === inProgress, () => {
+                $('#images').val(JSON.stringify(images));
+                form.submit();
+            });
         }
     });
 
@@ -143,7 +147,10 @@
             }
             $('#images').val(filesNames.join(','));
             console.log('uploading...');
-            waitFor(() => uploadedFilesCount === inProgress, () => form.submit());
+            waitFor(() => uploadedFilesCount === inProgress, () => {
+                $('#images').val(JSON.stringify(images));
+                form.submit()
+            });
         }
     });
 
@@ -165,6 +172,11 @@
         const ID = $(this).parents('.card')[0].id;
         for (let i = 0; i < files.length; i++) {
             if (files[i].ID === ID) {
+                for (let j = 0; j < images.length; j++) {
+                    if (images[j].secure_url === files[i].name) {
+                        images.splice(j, 1);
+                    }
+                }
                 files.splice(i, 1);
                 filesNames.splice(i, 1);
                 break;
@@ -195,6 +207,7 @@
             type: 'post',
             success: function (res) {
                 uploadedFilesCount++;
+                images.push(res.image);
                 let progressbar = $('#' + res.ID + ' .card-footer .progress');
                 progressbar.html('<div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Done</div>');
             },

@@ -41,7 +41,7 @@ const ProjectSchema = mongoose.Schema({
         type: Date
     },
     images: [{
-        type: String
+        type: Object
     }]
 });
 

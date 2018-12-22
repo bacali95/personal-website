@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
-const {promisify} = require("util");
-const unlinkAsync = promisify(fs.unlink);
 
 const ensureAuthenticated = require("../../tools/ensureAuthenticated");
 const CompressTool = require("../../tools/compress");
-const renameFile = require("../../tools/utils").renameFile;
+const deleteImage = require("../../tools/utils").deleteImage;
 const upload = require("../../tools/utils").upload;
 
 const Certificate = require("../../models/certificate");
@@ -47,11 +44,11 @@ router.get("/show/:id", ensureAuthenticated, async function (req, res, next) {
 router.post("/postimage", upload, ensureAuthenticated, function (req, res, next) {
     let ID = req.body.ID;
     let filename = req.file.filename;
-    compress.begin(filename, function (error) {
+    compress.begin(filename, {tags: ['certificate']}, function (error, image) {
         if (error) {
             throw error;
         }
-        res.send({ID});
+        res.send({ID, image});
     });
 });
 
@@ -59,11 +56,7 @@ router.post("/add", ensureAuthenticated, async function (req, res, next) {
     let title = req.body.title;
     let category = req.body.category;
     let date = req.body.date;
-    let images = req.body.images.split(",");
-
-    for (let i = 0; i < images.length; i++) {
-        images[i] = renameFile(i, images[i]);
-    }
+    let images = JSON.parse(req.body.images);
 
     category = category || [];
 
@@ -103,7 +96,7 @@ router.post("/edit/:id", upload, ensureAuthenticated, async function (req, res, 
     let title = req.body.title;
     let category = req.body.category;
     let date = req.body.date;
-    let images = req.body.images.split(",");
+    let images = JSON.parse(req.body.images);
 
     category = category || [];
 
@@ -115,7 +108,8 @@ router.post("/edit/:id", upload, ensureAuthenticated, async function (req, res, 
         _id: req.params.id,
         title,
         category,
-        date: date.split("-").reverse().join("-")
+        date: date.split("-").reverse().join("-"),
+        images: []
     });
 
     let certificate = await Certificate.getById(newCertificate._id).catch(() => {
@@ -123,17 +117,25 @@ router.post("/edit/:id", upload, ensureAuthenticated, async function (req, res, 
         return res.redirect("/admin/certificate");
     });
 
-    certificate.images.forEach(function (name) {
-        if (!images.includes(name)) {
-            unlinkAsync("public/images/uploads/" + name);
+    certificate.images.forEach(function (image) {
+        const found = images.find(function (item) {
+            return item.secure_url === image.secure_url;
+        });
+        if (!found) {
+            deleteImage(image.public_id);
+        } else {
+            newCertificate.images.push(image);
         }
     });
 
     for (let i = 0; i < images.length; i++) {
-        images[i] = renameFile(i, images[i]);
+        const found = newCertificate.images.find(function (element) {
+            return element.secure_url === images[i].secure_url;
+        });
+        if (!found) {
+            newCertificate.images.push(images[i]);
+        }
     }
-
-    newCertificate.images = images;
 
     certificate = await Certificate.update(certificate._id, newCertificate).catch(() => {
         req.flash("error", "Updating certificate failed!");
@@ -151,8 +153,8 @@ router.get("/delete/:id", ensureAuthenticated, async function (req, res, next) {
         return res.redirect("/admin/certificate");
     });
 
-    certificate.images.forEach(function (name) {
-        unlinkAsync("public/images/uploads/" + name);
+    certificate.images.forEach(function (image) {
+        deleteImage(image.public_id);
     });
 
     return res.redirect("/admin/certificate");

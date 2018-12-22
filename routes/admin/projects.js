@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
-const {promisify} = require("util");
-const unlinkAsync = promisify(fs.unlink);
 
 const ensureAuthenticated = require("../../tools/ensureAuthenticated");
 const CompressTool = require("../../tools/compress");
-const renameFile = require("../../tools/utils").renameFile;
+const deleteImage = require("../../tools/utils").deleteImage;
 const upload = require("../../tools/utils").upload;
 
 const Project = require("../../models/project");
@@ -55,11 +52,11 @@ router.get("/show/:id", ensureAuthenticated, async function (req, res, next) {
 router.post("/postimage", upload, ensureAuthenticated, function (req, res, next) {
     let ID = req.body.ID;
     let filename = req.file.filename;
-    compress.begin(filename, function (error) {
+    compress.begin(filename, {tags: ['project']}, function (error, image) {
         if (error) {
             throw error;
         }
-        res.send({ID});
+        res.send({ID, image});
     });
 });
 
@@ -74,11 +71,7 @@ router.post("/add", ensureAuthenticated, async function (req, res, next) {
     let startDate = req.body.startDate;
     let finishDate = req.body.finishDate;
     let repoGithub = req.body.repoGithub;
-    let images = req.body.images.split(",");
-
-    for (let i = 0; i < images.length; i++) {
-        images[i] = renameFile(i, images[i]);
-    }
+    let images = JSON.parse(req.body.images)
 
     category = category || [];
 
@@ -138,7 +131,7 @@ router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
     let startDate = req.body.startDate;
     let finishDate = req.body.finishDate;
     let repoGithub = req.body.repoGithub;
-    let images = req.body.images.split(",");
+    let images = JSON.parse(req.body.images);
 
     category = category || [];
 
@@ -164,7 +157,8 @@ router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
             finish: finishDate.split("-").reverse().join("-")
         },
         repoGithub,
-        creationDate: Date.now()
+        creationDate: Date.now(),
+        images: []
     });
 
 
@@ -173,16 +167,25 @@ router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
         return res.redirect("/admin/project");
     });
 
-    project.images.forEach(function (name) {
-        if (!images.includes(name)) {
-            unlinkAsync("public/images/uploads/" + name);
+    project.images.forEach(function (image) {
+        const found = images.find(function (item) {
+            return item.secure_url === image.secure_url;
+        });
+        if (!found) {
+            deleteImage(image.public_id);
+        } else {
+            newProject.images.push(image);
         }
     });
 
     for (let i = 0; i < images.length; i++) {
-        images[i] = renameFile(i, images[i]);
+        const found = newProject.images.find(function (element) {
+            return element.secure_url === images[i].secure_url;
+        });
+        if (!found) {
+            newProject.images.push(images[i]);
+        }
     }
-    newProject.images = images;
 
     project = await Project.update(project._id, newProject).catch(() => {
         req.flash("error", "Updating project failed!");
@@ -200,8 +203,8 @@ router.get("/delete/:id", ensureAuthenticated, async function (req, res, next) {
         return res.redirect("/admin/project");
     });
 
-    project.images.forEach(function (name) {
-        unlinkAsync("public/images/uploads/" + name);
+    project.images.forEach(function (image) {
+        deleteImage(image.public_id);
     });
 
     return res.redirect("/admin/project");

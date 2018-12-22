@@ -1,6 +1,12 @@
-const fs = require("fs");
-const path = require("path");
 const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const specs = require('./specs');
+
+cloudinary.config({
+    cloud_name: specs.IMAGE_CLOUD_NAME,
+    api_key: specs.IMAGE_API_KEY,
+    api_secret: specs.IMAGE_API_SECRET
+});
 
 const storage = multer.diskStorage({
     destination: "./public/images/forcompress",
@@ -11,12 +17,16 @@ const storage = multer.diskStorage({
 
 module.exports.upload = multer({storage}).single("image");
 
-module.exports.renameFile = (index, oldName) => {
-    var newName = "image-" + index + "-" + Date.now() + path.extname(oldName);
-    fs.rename("public/images/uploads/" + oldName, "public/images/uploads/" + newName, function (err) {
+module.exports.uploadImage = (name, options, callback) => {
+    cloudinary.uploader.upload(name, options, function (err, image) {
         if (err) {
-            throw err;
+            callback(err, null);
         }
+        callback(null, image);
     });
-    return newName;
+};
+
+module.exports.deleteImage = (name) => {
+    cloudinary.uploader.destroy(name, function (err) {
+    });
 };

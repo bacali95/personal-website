@@ -1,9 +1,12 @@
-var specs = require("../tools/specs");
-var fs = require("fs");
+const specs = require("../tools/specs");
+const uploadImage = require("../tools/utils").uploadImage;
+const fs = require("fs");
 const {promisify} = require("util");
 const unlinkAsync = promisify(fs.unlink);
-var tinify = require("tinify");
+const tinify = require("tinify");
+
 tinify.key = specs.TINIFY_API_KEY;
+
 tinify.validate(function (err) {
     if (err) {
         throw err;
@@ -17,17 +20,23 @@ function getDestination(callback) {
 function CompressTool() {
 }
 
-CompressTool.prototype.begin = function begin(filename, callback) {
+CompressTool.prototype.begin = function begin(filename, options, callback) {
     getDestination(function (err, input, output) {
-        var fileIN = input + filename;
-        var fileOUT = output + filename;
-        var result = tinify.fromFile(fileIN);
+        const fileIN = input + filename;
+        const fileOUT = output + filename;
+        const result = tinify.fromFile(fileIN);
         result.toFile(fileOUT, function (error) {
             if (error) {
-                callback(error);
+                callback(error, null);
             }
             unlinkAsync(fileIN);
-            callback(null);
+            uploadImage(fileOUT, options, function (error, image) {
+                if (error) {
+                    callback(error, null);
+                }
+                unlinkAsync(fileOUT);
+                callback(null, image);
+            })
         });
     });
 };

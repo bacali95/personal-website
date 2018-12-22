@@ -42,6 +42,10 @@ router.get("/project/:id", async function (req, res, next) {
 
     const project = await Project.getById(req.params.id).catch(() => res.redirect("/#portfolio"));
 
+    if (!project){
+        return res.redirect("/");
+    }
+
     return res.render("public" + req.session.lan + "/showProject", {
         title: project[req.session.lan.replace("/", "")].title,
         language: req.session.lan.replace("/", ""),
