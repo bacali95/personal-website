@@ -141,14 +141,6 @@ router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
     let repoGithub = req.body.repoGithub;
     let images = JSON.parse(req.body.images);
 
-    images.sort(function(a, b){
-        const x = a.original_filename.toLowerCase();
-        const y = b.original_filename.toLowerCase();
-        if (x < y) {return -1;}
-        if (x > y) {return 1;}
-        return 0;
-    });
-
     category = category || [];
 
     if (Array.isArray(category)) {
@@ -202,6 +194,14 @@ router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
             newProject.images.push(images[i]);
         }
     }
+
+    newProject.images.sort(function(a, b){
+        const x = a.original_filename.toLowerCase();
+        const y = b.original_filename.toLowerCase();
+        if (x < y) {return -1;}
+        if (x > y) {return 1;}
+        return 0;
+    });
 
     project = await Project.update(project._id, newProject).catch(() => {
         req.flash("error", "Updating project failed!");
