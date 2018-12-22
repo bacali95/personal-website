@@ -68,6 +68,6 @@ block sub-content
                 each image in project.images
                     .col-md-4
                         .card.text-center.form-group.border-secondary
-                            img.card-img-top(src=image.secure_url)
+                            img.card-img-top(src=image.secure_url, alt=image.original_filename)
                             .card-footer
                                 a#delete.btn.btn-danger.btn-sm(style='color: white') Delete

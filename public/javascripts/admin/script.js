@@ -17,6 +17,7 @@
                 let child = $(this).children('div.card');
                 child.prop('id', ID);
                 let filename = child.children('img.card-img-top').prop('src');
+                let alt = child.children('img.card-img-top').prop('alt');
                 let file = {
                     ID: ID,
                     name: filename,
@@ -24,7 +25,7 @@
                 };
                 files.push(file);
                 filesNames.push(filename.substr(filename.lastIndexOf('/') + 1));
-                images.push({secure_url: filename});
+                images.push({secure_url: filename, original_filename: alt});
             })
         }
     }
