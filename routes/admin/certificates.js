@@ -106,14 +106,6 @@ router.post("/edit/:id", upload, ensureAuthenticated, async function (req, res, 
     let date = req.body.date;
     let images = JSON.parse(req.body.images);
 
-    images.sort(function(a, b){
-        const x = a.original_filename.toLowerCase();
-        const y = b.original_filename.toLowerCase();
-        if (x < y) {return -1;}
-        if (x > y) {return 1;}
-        return 0;
-    });
-
     category = category || [];
 
     if (Array.isArray(category)) {
@@ -152,6 +144,14 @@ router.post("/edit/:id", upload, ensureAuthenticated, async function (req, res, 
             newCertificate.images.push(images[i]);
         }
     }
+
+    newCertificate.images.sort(function(a, b){
+        const x = a.original_filename.toLowerCase();
+        const y = b.original_filename.toLowerCase();
+        if (x < y) {return -1;}
+        if (x > y) {return 1;}
+        return 0;
+    });
 
     certificate = await Certificate.update(certificate._id, newCertificate).catch(() => {
         req.flash("error", "Updating certificate failed!");
