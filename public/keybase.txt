@@ -1,0 +1,49 @@
+================================================================== 
+https://keybase.io/bacali 
+-------------------------------------------------------------------- I hereby 
+claim:
+  * I am an admin of http://www.nasreddinebacali.info
+  * I am bacali (https://keybase.io/bacali) on keybase.
+  * I have a public key ASDhBW3Bruqi6befA3GTnEYQ2YRHFzMDvOQ-GE908SuOiQo To do so, 
+I am signing this object: {
+  "body": {
+    "key": {
+      "eldest_kid": 
+"01205a8d70722a7bd7ec9b0ed226a3e6a881c7812cfa4f906362014db886430ef1ce0a",
+      "host": "keybase.io",
+      "kid": 
+"0120e1056dc1aeeaa2e9b79f0371939c4610d98447173303bce43e184f74f12b8e890a",
+      "uid": "a9b5a1b81679ad7c52a388d7e5f15719",
+      "username": "bacali"
+    },
+    "merkle_root": {
+      "ctime": 1545953021,
+      "hash": 
+"9e8ec5b017cd804a2be3e9847ada2fcab130afe03424296edaff45c7ff0ef1a8c74a248e7a41f37305f0b5cc9ee0474f9d30f9777b037ada9602f26f420a3d0c",
+      "hash_meta": 
+"09663a1a54f88c2d67c2906927253117bb9cd353f2c29d048fde6c5219a411c3",
+      "seqno": 4201230
+    },
+    "service": {
+      "entropy": "RScJJp739aEclBi8Mltf6+6D",
+      "hostname": "www.nasreddinebacali.info",
+      "protocol": "http:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "2.12.4"
+  },
+  "ctime": 1545953049,
+  "expire_in": 504576000,
+  "prev": "1e911426fc5f20d319b255a4235c799bcb05708033f11a38f7c000a43411dab7",
+  "seqno": 18,
+  "tag": "signature"
+}
+which yields the signature: 
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEg4QVtwa7qoum3nwNxk5xGENmERxczA7zkPhhPdPErjokKp3BheWxvYWTESpcCEsQgHpEUJvxfINMZslWkI1x5m8sFcIAz8Ro498AApDQR2rfEIHXt7kiHpGSTrlcJCyGEA8yileMgunSh7+hj5CqEpmBpAgHCo3NpZ8RARd/R1K20XEDa2SWLE12+m5l9VVBIH+/T+2xmjVWkHYBNmTLTexdMQnbKKIgHUvO3okI6cEGCfIa4xBSGDBQ+D6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIB4+yUkd01Ohn+bvmylzECvbh5/fGyHvH/JJmN5YJ3Vuo3RhZ80CAqd2ZXJzaW9uAQ== 
+And finally, I am proving ownership of this host by posting or appending to this 
+document. View my publicly-auditable identity here: https://keybase.io/bacali
+==================================================================
