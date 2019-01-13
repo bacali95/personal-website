@@ -1,27 +1,14 @@
 const mongoose = require("mongoose");
 
 const ProjectSchema = mongoose.Schema({
-    fr: {
-        title: {
-            type: String
-        },
-        description: {
-            type: String
-        },
-        type: {
-            type: String
-        }
+    title: {
+        type: String
     },
-    en: {
-        title: {
-            type: String
-        },
-        description: {
-            type: String
-        },
-        type: {
-            type: String
-        }
+    description: {
+        type: String
+    },
+    type: {
+        type: String
     },
     category: {
         type: String,

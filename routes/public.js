@@ -1,84 +1,43 @@
 const express = require("express");
 const router = express.Router();
+const path = require('path');
 const sortProjects = require("../tools/utils").sortProjects;
 const sortCertificates = require("../tools/utils").sortCertificates;
 
-const Category = require("../models/category");
-const certificateCategory = require("../models/certifCategory");
 const Project = require("../models/project");
+const Category = require("../models/category");
 const Certificate = require("../models/certificate");
+const CertificateCategory = require("../models/certifCategory");
 
-/* GET home page. */
-async function languageManager(req, res, next) {
-    req.session.lan = req.url;
-
-    const categories = await Category.getAll();
-    const certificates = await Certificate.getAll();
-    const projects = await Project.getAll();
-
+router.get("/ws/projects", async function (req, res) {
+    let projects = await Project.getAll();
     sortProjects(projects);
+    return res.status(200).json(projects);
+});
+
+router.get("/ws/categories", async function (req, res) {
+    let categories = await Category.getAll();
+    return res.status(200).json(categories);
+});
+
+router.get("/ws/certificates", async function (req, res) {
+    let certificates = await Certificate.getAll();
     sortCertificates(certificates);
-
-    return res.render("public" + req.session.lan + "/sections", {
-        title: "Nasreddine Bac Ali",
-        layout: "layout",
-        language: req.session.lan.replace("/", ""),
-        projects,
-        certificates,
-        certificateCategory,
-        categories
-    });
-}
-
-router.get("/", function (req, res, next) {
-    if (!req.session.lan) {
-        req.session.lan = "/en";
-    }
-    res.redirect(req.session.lan);
+    return res.status(200).json(certificates);
 });
 
-router.get("/fr", languageManager);
-router.get("/en", languageManager);
-
-router.get("/project/:id", async function (req, res, next) {
-    if (!req.session.lan) {
-        req.session.lan = "/en";
-    }
-
-    const project = await Project.getById(req.params.id).catch(() => res.redirect("/#portfolio"));
-
-    if (!project) {
-        return res.redirect("/");
-    }
-
-    return res.render("public" + req.session.lan + "/showProject", {
-        title: project[req.session.lan.replace("/", "")].title,
-        language: req.session.lan.replace("/", ""),
-        index: req.query.index,
-        project
-    });
+router.get("/ws/certificateCategories", function (req, res) {
+    return res.status(200).json(CertificateCategory);
 });
 
-router.get("/next/:index", async function (req, res, next) {
-    const projects = await Project.getAll();
+const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg'];
 
-    let index = req.params.index;
-    if (!index || isNaN(index)) {
-        index = 0;
+router.get("*", function (req, res, next) {
+    if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
+        res.sendFile(path.resolve(`frontend/dist/${req.url}`));
+    } else {
+        res.sendFile(path.resolve('frontend/dist/index.html'));
     }
-
-    index = projects.length + Number(index);
-    index %= projects.length;
-    const _id = projects[index]._id;
-    return res.redirect("/project/" + _id + "?index=" + index);
-});
-
-router.get("/*", function (req, res, next) {
-    const regex = /^((\/en)|(\/fr)|(\/next)|(\/admin)|(\/project)|(\/images))/g;
-    if (!String(req.url).match(regex)) {
-        return res.redirect("/");
-    }
-    return next();
 });
 
 module.exports = router;

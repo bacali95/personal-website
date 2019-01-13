@@ -23,7 +23,7 @@ block sub-content
                     each project, i in projects
                         tr(onclick="window.location.assign('/admin/project/show/" + project._id + "?index="+i+"')")
                             th.align-middle(scope='row') #{i + 1}
-                            td.align-middle #{project.en.title}
+                            td.align-middle #{project.title}
                             td.align-middle #{project.category}
                             td.align-middle #{project.period.start}
                             td.align-middle #{project.period.finish}

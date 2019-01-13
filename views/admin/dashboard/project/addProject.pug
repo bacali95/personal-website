@@ -9,26 +9,16 @@ block sub-content
     div.pt-sm-2
         form#projectForm.col-md-12.offset-md-0(method='post', action='/admin/project/add')
             div.row
-                div.col-md-6
+                div.col-md-12
                     div.float-left.ml-1
-                        label French Content :
+                        label Content :
                     div.justify-content-center
                         .form-group
-                            input.form-control(name='titleFR', type='text', placeholder='Enter Title', required)
+                            input.form-control(name='title', type='text', placeholder='Enter Title', required)
                         .form-group
-                            textarea.form-control(name='descriptionFR', rows='3', placeholder='Enter Description', required)
+                            textarea.form-control(name='description', rows='3', placeholder='Enter Description', required)
                         .form-group
-                            input.form-control(name='typeFR', type='text', placeholder='Enter Type', required)
-                div.col-md-6
-                    div.float-left.ml-1
-                        label English Content :
-                    div.justify-content-center
-                        .form-group
-                            input.form-control(name='titleEN', type='text', placeholder='Enter Title', required)
-                        .form-group
-                            textarea.form-control(name='descriptionEN', rows='3', placeholder='Enter Description', required)
-                        .form-group
-                            input.form-control(name='typeEN', type='text', placeholder='Enter Type', required)
+                            input.form-control(name='type', type='text', placeholder='Enter Type', required)
             div.row
                 div.col-md-6
                     div.float-left.ml-1

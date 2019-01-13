@@ -12,6 +12,7 @@ const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const initAdmin = require("./tools/initAdmin");
 const specs = require("./tools/specs");
+const cors = require("cors");
 
 const User = require("./models/user");
 require("./models/category");
@@ -40,6 +41,9 @@ app.set("view engine", "pug");
 
 //Helmet
 app.use(helmet());
+
+//Cors
+app.use(cors());
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -86,18 +90,16 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use("/", publicRouter);
-app.use("/project", publicRouter);
 app.use("/admin", authRouter);
 app.use("/admin/user", usersRouter);
 app.use("/admin/project", projectsRouter);
 app.use("/admin/category", categoriesRouter);
 app.use("/admin/certificate", certificatesRouter);
+app.use("/", publicRouter);
 
 passport.use("local", User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

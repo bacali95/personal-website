@@ -1,0 +1,60 @@
+/* --------------------------------- */
+/* Css Color Style                   */
+/*---------------------------------- */
+
+header nav a.home-btn, .estate figure .imgout .price, .site-btn, .timeline li:first-child i, nav ul li a:after, .owl-theme .owl-controls .owl-page span, .skill-list .progress .percentage, ul.profile-information li:first-child:before{
+    background: #ffc500 !important;
+}
+
+header nav ul li a:hover, .events ul li .datenlocation span, .namenprice .price, .cbp-filter-item-active, .portfolio-content p span, #blog-post .blog-sidebar ul.category-list li a:hover, #blog-post .blog-sidebar .popular-posts ul li a .info{
+    color: #ffc500 !important;
+}
+
+.spinner:before{
+    border-top-color: #ffb100;  
+}
+
+ul.profile-information li:before{
+	border-color: #ffc500; 
+}
+
+/* Hover Color*/
+
+.site-btn:hover, header nav a.home-btn:hover, .section-title span{
+   background-color: #ffb100 !important;
+}
+
+/* Opacity Color*/
+
+#portfolio .cbp-item .portfolio-image .icon i, #portfolio .cbp-item figure .icon i{
+    background: rgb(255, 197, 1);
+}
+
+/* for light colors */
+
+.site-btn, header nav a.home-btn i, ul.profile-information li:first-child:before, #blog .blog-box .date span, #blog .blog-box .date span, .timeline li:first-child i, .cbp-l-loadMore-link.site-btn{
+	color:#000 !important;
+}
+
+.timeline li:before, ul.profile-information li:before{
+	border-color: #ffb100 !important;
+}
+
+.tab.active a, #blog-post .post-list ul li a, #blog-post .post-comment ul li .comment-content a{
+	color: #ffb100;
+}
+
+ul.profile-information li:first-child:after{
+    background: url(../../images/glasses.png) no-repeat; 
+    background-size: 27px 10px;
+}
+
+
+
+
+
+
+
+
+
+

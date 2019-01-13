@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node ./bin/www",
+    "server": "nodemon ./bin/www",
+    "frontend": "npm run start --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
     "test": "mocha --exit"
   },
   "keywords": [
@@ -38,7 +42,10 @@
     "pug": "^2.0.3",
     "serve-favicon": "^2.5.0",
     "tinify": "^1.6.0-beta.2",
-    "cloudinary": "^1.13.2"
+    "cloudinary": "^1.13.2",
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.9",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "mocha": "^5.2.0",

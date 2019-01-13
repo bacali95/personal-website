@@ -64,12 +64,9 @@ router.post("/postimage", upload, ensureAuthenticated, function (req, res, next)
 });
 
 router.post("/add", ensureAuthenticated, async function (req, res, next) {
-    let titleFR = req.body.titleFR;
-    let descriptionFR = req.body.descriptionFR;
-    let typeFR = req.body.typeFR;
-    let titleEN = req.body.titleEN;
-    let descriptionEN = req.body.descriptionEN;
-    let typeEN = req.body.typeEN;
+    let title = req.body.title;
+    let description = req.body.description;
+    let type = req.body.type;
     let category = req.body.category;
     let startDate = req.body.startDate;
     let finishDate = req.body.finishDate;
@@ -95,16 +92,10 @@ router.post("/add", ensureAuthenticated, async function (req, res, next) {
     }
 
     let project = new Project({
-        fr: {
-            title: titleFR,
-            description: descriptionFR,
-            type: typeFR
-        },
-        en: {
-            title: titleEN,
-            description: descriptionEN,
-            type: typeEN
-        },
+        title: title,
+        description: description,
+        type: type
+        ,
         category,
         period: {
             start: startDate.split("-").reverse().join("-"),
@@ -136,12 +127,9 @@ router.get("/edit/:id", ensureAuthenticated, async function (req, res, next) {
 });
 
 router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
-    let titleFR = req.body.titleFR;
-    let descriptionFR = req.body.descriptionFR;
-    let typeFR = req.body.typeFR;
-    let titleEN = req.body.titleEN;
-    let descriptionEN = req.body.descriptionEN;
-    let typeEN = req.body.typeEN;
+    let title = req.body.title;
+    let description = req.body.description;
+    let type = req.body.type;
     let category = req.body.category;
     let startDate = req.body.startDate;
     let finishDate = req.body.finishDate;
@@ -156,16 +144,9 @@ router.post("/edit/:id", ensureAuthenticated, async function (req, res, next) {
 
     let newProject = new Project({
         _id: req.params.id,
-        fr: {
-            title: titleFR,
-            description: descriptionFR,
-            type: typeFR
-        },
-        en: {
-            title: titleEN,
-            description: descriptionEN,
-            type: typeEN
-        },
+        title: title,
+        description: description,
+        type: type,
         category,
         period: {
             start: startDate.split("-").reverse().join("-"),
