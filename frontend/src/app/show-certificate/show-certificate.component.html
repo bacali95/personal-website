@@ -1,0 +1,66 @@
+<div class="loader">
+  <div class="loader-inner">
+    <div class="spinner">
+      <div class="dot1"></div>
+      <div class="dot2"></div>
+    </div>
+  </div>
+</div>
+<div class="mb-150 mt-70" id="wrapper">
+  <div class="container">
+    <section class="bg-white portfolio single pt-20" id="portfolio">
+      <div class="portfolio">
+        <div class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="block-nav-work">
+                <ul>
+                  <li><a href="index/portfolio"><span>All Certificates</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="main-title mt-100 t-center">
+                <h1 class="mb-30">{{certificate.title}}</h1>
+                <h3>{{certificate.category}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="block-content">
+            <div class="row">
+              <div class="block-single mb-60 clearfix">
+                <owl-carousel
+                  [options]="options"
+                  [items]="images"
+                  [carouselClasses]="['owl-theme', 'row', 'sliding']">
+                  <div class="item" *ngFor="let image of images">
+                    <img src="{{image}}" alt="">
+                  </div>
+                </owl-carousel>
+              </div>
+            </div>
+            <div class="row">
+              <div class="block-share mb-30 t-center clearfix">
+                <div class="col-md-12">
+                  <hr>
+                  <h5 class="mt-20">Share this certificate</h5>
+                  <ul class="social mt-20">
+                    <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.nasreddinebacali.info"
+                           target="_blank"><i class="icon-facebook"></i></a></li>
+                    <li><a href="https://twitter.com/intent/tweet?text=http://www.nasreddinebacali.info"
+                           target="_blank"><i class="icon-twitter"></i></a></li>
+                    <li><a
+                      href="https://www.linkedin.com/shareArticle?url=http://nasreddinebacali.info?title={{certificate.title}}"
+                      target="_blank"><i class="icon-linkedin"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

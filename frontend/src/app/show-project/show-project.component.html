@@ -1,0 +1,105 @@
+<div class="loader">
+  <div class="loader-inner">
+    <div class="spinner">
+      <div class="dot1"></div>
+      <div class="dot2"></div>
+    </div>
+  </div>
+</div>
+<div class="mb-150 mt-70" id="wrapper">
+  <div class="container">
+    <section class="bg-white portfolio single pt-20" id="portfolio">
+      <div class="portfolio">
+        <div class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="block-nav-work">
+                <ul>
+                  <li><a href="index/portfolio"><span>All Projects</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="main-title mt-100 t-center">
+                <h1 class="mb-30">{{project.title}}</h1>
+                <h3>{{project.category}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="block-content">
+            <div class="row">
+              <div class="block-single mt-80 mb-20 clearfix">
+                <div class="col-sm-10 col-md-offset-1 col-sm-offset-1">
+                  <h5 class="mb-10">Description</h5>
+                  <p>{{project.description}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="block-single mt-10 mb-80 clearfix">
+                <div class="col-sm-5 col-md-offset-1 col-sm-offset-1">
+                  <h5 class="mb-10">Type</h5>
+                  <p class="mb-15">{{project.type}}</p>
+                  <a *ngIf="project.repoGithub!=='#'" [href]="project.repoGithub" target="_blank">
+                    <h5>Code<i class="icon-whatsapp" style="font-size:3px; visibility: hidden;"></i><i
+                      class="fa fa-external-link" style="font-size:13px;"></i></h5>
+                  </a>
+                </div>
+                <div class="col-sm-5">
+                  <h5 class="mb-10">Duration</h5>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p>From</p>
+                    </div>
+                    <div class="col-sm-6">
+                      <p>{{project.period.start}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p>To</p>
+                    </div>
+                    <div class="col-sm-6">
+                      <p>{{project.period.finish}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="block-single mb-60 clearfix">
+                <owl-carousel
+                  [options]="options"
+                  [items]="images"
+                  [carouselClasses]="['owl-theme', 'row', 'sliding']">
+                  <div class="item" *ngFor="let image of images">
+                      <img src="{{image}}" alt="">
+                  </div>
+                </owl-carousel>
+              </div>
+            </div>
+            <div class="row">
+              <div class="block-share mb-30 t-center clearfix">
+                <div class="col-md-12">
+                  <hr>
+                  <h5 class="mt-20">Share this project</h5>
+                  <ul class="social mt-20">
+                    <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.nasreddinebacali.info"
+                           target="_blank"><i class="icon-facebook"></i></a></li>
+                    <li><a href="https://twitter.com/intent/tweet?text=http://www.nasreddinebacali.info"
+                           target="_blank"><i class="icon-twitter"></i></a></li>
+                    <li><a
+                      href="https://www.linkedin.com/shareArticle?url=http://nasreddinebacali.info?title={{project.title}}"
+                      target="_blank"><i class="icon-linkedin"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -22,6 +22,11 @@ export class DataService {
     return this.http.get<Project[]>(`${this.url}/projects`, {headers: this.headers});
   }
 
+  getProjectById(id) {
+    return this.http.get<Project>(`${this.url}/project/${id}`, {headers: this.headers});
+  }
+
+
   getCategories() {
     return this.http.get<Category[]>(`${this.url}/categories`, {headers: this.headers});
   }
@@ -32,5 +37,9 @@ export class DataService {
 
   getCertificateCategories() {
     return this.http.get<String[]>(`${this.url}/certificateCategories`, {headers: this.headers});
+  }
+
+  getCertificateById(id) {
+    return this.http.get<Certificate>(`${this.url}/certificate/${id}`, {headers: this.headers});
   }
 }

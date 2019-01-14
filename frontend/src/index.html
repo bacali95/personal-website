@@ -1,51 +1,65 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Frontend</title>
+  <title>Nasreddine Bac Ali</title>
   <base href="/">
 
+  <meta charset="utf-8">
+  <meta name="keywords" content="nasreddine bac ali"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="telephone=no" name="format-detection"/>
+
   <link rel="icon" type="image/x-icon" href="favicon.png">
 
-  <!-- CSS
-================================================== -->
-  <link rel="stylesheet" href="assets/css/bootstrap.css"/>
-  <link rel="stylesheet" href="assets/css/reset.css"/>
-  <link rel="stylesheet" href="assets/cubeportfolio/css/cubeportfolio.min.css"/>
-  <link rel="stylesheet" href="assets/css/owl.theme.css"/>
-  <link rel="stylesheet" href="assets/css/owl.carousel.css"/>
-  <link rel="stylesheet" href="assets/css/style.css"/>
-  <link rel="stylesheet" href="assets/css/colors/yellow.css" id="color"/>
-
-
-  <!-- Google Web fonts
-  ================================================== -->
-  <link href="assets/css/fonts.googleapis.com/main.css" rel="stylesheet">
-
-  <!-- Font Icons
-  ================================================== -->
-  <link rel="stylesheet" href="assets/icon-fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
-  <link rel="stylesheet" href="assets/icon-fonts/web-design/flaticon.css"/>
+  <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+  <link href="assets/css/base.css" rel="stylesheet" type="text/css" media="all"/>
+  <link href="assets/css/main.css" rel="stylesheet" type="text/css" media="all"/>
+  <link href="assets/css/owl-carousel/owl.carousel.css" rel="stylesheet" media="all"/>
+  <link href="assets/css/owl-carousel/owl.theme.css" rel="stylesheet" media="all"/>
+  <link href="assets/css/magnific-popup.css" type="text/css" rel="stylesheet" media="all"/>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,300,600%7CRoboto+Slab:400,300,700"
+        rel="stylesheet" type="text/css"/>
+  <link href="assets/css/fontello.css" rel="stylesheet" type="text/css" media="all"/>
+  <link href="assets/css/leaflet.css" rel="stylesheet" type="text/css" media="all"/>
 
 </head>
 <body>
 <app-root></app-root>
 
+<script src="assets/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="assets/js/owl.carousel.js" type="text/javascript"></script>
+<script src="assets/js/jquery.magnific-popup.js" type="text/javascript"></script>
+<script src="assets/js/jquery.easytabs.min.js" type="text/javascript"></script>
+<script src="assets/js/placeholders.min.js" type="text/javascript"></script>
+<script src="assets/js/script.js" type="text/javascript"></script>
+<script>
+  (function ($) {
+    "use strict";
+    // Easytab setup
+    $('#wrapper').easytabs({
+      animate: true,
+      updateHash: false,
+      transitionIn: 'fadeIn',
+      transitionOut: 'fadeOut',
+      animationSpeed: 100,
+      tabActiveClass: 'active',
+      tabs: ' #main-nav.tabbed > ul > li ',
+      transitionInEasing: 'linear',
+      transitionOutEasing: 'linear'
+    });
+  })(jQuery);
+</script>
+<!-- Google analytics-->
+<script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-128575469-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
 
-<!-- Javascripts
-================================================== -->
-<script src="assets/js/jquery-2.1.4.min.js"></script>
-<script src="assets/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/jquery.easytabs.min.js"></script>
-<script src="assets/js/owl.carousel.min.js"></script>
-<script src="assets/js/main.js"></script>
-<!-- for color alternatives -->
-<script src="assets/js/jquery.cookie-1.4.1.min.js"></script>
-<script src="assets/js/Demo.js"></script>
-<link rel="stylesheet" href="assets/css/Demo.min.css"/>
+  function gtag() {
+    dataLayer.push(arguments);
+  }
 
-
+  gtag('js', new Date());
+  gtag('config', 'UA-128575469-1');
+</script>
 </body>
 </html>

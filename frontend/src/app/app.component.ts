@@ -7,14 +7,10 @@ import {DataService} from "./data.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
 
-  constructor(private service: DataService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.service.getProjects().subscribe(projects => {
-      console.log(projects);
-    })
   }
 }

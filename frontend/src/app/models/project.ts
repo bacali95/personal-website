@@ -1,4 +1,7 @@
+import {Image} from "./Image";
+
 export class Project {
+  _id: String;
   title: String;
   description: String;
   type: String;
@@ -9,5 +12,6 @@ export class Project {
   };
   repoGithub: String;
   creationDate: Date;
-  images: Object[];
+  images: Image[];
 }
+

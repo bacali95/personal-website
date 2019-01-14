@@ -15,6 +15,11 @@ router.get("/ws/projects", async function (req, res) {
     return res.status(200).json(projects);
 });
 
+router.get("/ws/project/:id", async function (req, res) {
+    const project = await Project.getById(req.params.id);
+    return res.status(200).json(project);
+});
+
 router.get("/ws/categories", async function (req, res) {
     let categories = await Category.getAll();
     return res.status(200).json(categories);
@@ -26,11 +31,16 @@ router.get("/ws/certificates", async function (req, res) {
     return res.status(200).json(certificates);
 });
 
+router.get("/ws/certificate/:id", async function (req, res) {
+    const certificate = await Certificate.getById(req.params.id);
+    return res.status(200).json(certificate);
+});
+
 router.get("/ws/certificateCategories", function (req, res) {
     return res.status(200).json(CertificateCategory);
 });
 
-const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg'];
+const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg', '.pdf'];
 
 router.get("*", function (req, res, next) {
     if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
