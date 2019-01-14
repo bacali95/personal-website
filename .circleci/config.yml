@@ -32,10 +32,8 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
-      - run: cd frontend
-      - run: yarn install
-      - run: cd ..
+
+      - run: cd frontend && yarn install
       - run: yarn build
       # run tests!
       - run: yarn test
