@@ -20,7 +20,7 @@ export class PortfolioComponent implements OnInit {
     this.service.getCategories().subscribe(categories => {
       categories.forEach(category => {
         $("#category").append(
-          `<li><a href="#" data-filter="${category.name}">${category.name}</a></li>`
+          `<li><a data-filter="${category.name}">${category.name}</a></li>`
         );
       });
     });

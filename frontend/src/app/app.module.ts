@@ -10,9 +10,8 @@ import {PortfolioComponent} from './portfolio/portfolio.component';
 import {HomeComponent} from './home/home.component';
 import {ShowProjectComponent} from './show-project/show-project.component';
 import {OwlModule} from "ngx-owl-carousel";
-import { CertificatesComponent } from './certificates/certificates.component';
 import {ContactComponent} from "./contact/contact.component";
-import { ShowCertificateComponent } from './show-certificate/show-certificate.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,9 +20,7 @@ import { ShowCertificateComponent } from './show-certificate/show-certificate.co
     PortfolioComponent,
     HomeComponent,
     ShowProjectComponent,
-    CertificatesComponent,
-    ContactComponent,
-    ShowCertificateComponent
+    ContactComponent
   ],
   imports: [
     OwlModule,

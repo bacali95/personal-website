@@ -1395,22 +1395,6 @@ ul.hb-list li h6 {
     display: block;
 }
 
-.flag-icon-fr {
-    background-image: url(../../images/public/flags/4x3/fr.svg);
-}
-
-.flag-icon-fr.flag-icon-squared {
-    background-image: url(../../images/public/flags/1x1/fr.svg);
-}
-
-.flag-icon-gb {
-    background-image: url(../../images/public/flags/4x3/gb.svg);
-}
-
-.flag-icon-gb.flag-icon-squared {
-    background-image: url(../../images/public/flags/1x1/gb.svg);
-}
-
 .footer .copyright {
     background: #2a2a2a;
     float: left;
@@ -1908,6 +1892,7 @@ ul.hb-list li h6 {
     }
 
     .main-title h1 {
+        line-height: 45px;
         font-size: 45px;
     }
 
@@ -2180,11 +2165,8 @@ ul.hb-list li h6 {
     }
 
     .main-title h1 {
+        line-height: 45px;
         font-size: 45px;
-    }
-
-    .main-title.profile h1 {
-        line-height: 50px;
     }
 
     .main-title h3 {
