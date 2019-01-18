@@ -8,7 +8,7 @@ import {Category} from "./models/category";
 })
 export class DataService {
 
-  url: String = 'http://localhost:3000/ws';
+  url: String = '/ws';
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Accept': 'application/json, text/plain, */*'
