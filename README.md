@@ -6,4 +6,4 @@
 [![dependencies Status](https://david-dm.org/bacali95/personal-website/status.svg)](https://david-dm.org/bacali95/personal-website)
 [![devDependencies Status](https://david-dm.org/bacali95/personal-website/dev-status.svg)](https://david-dm.org/bacali95/personal-website?type=dev)
 
-My Personal Website(Resume) with NodeJS.
+My Personal Website(Resume) V2 with NodeJS.
