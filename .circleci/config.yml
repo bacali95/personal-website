@@ -44,7 +44,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd personal-website && pm2 stop www && git pull && npm run build && npm install && pm2 start www"
+            ssh $SSH_USER@$SSH_HOST "cd personal-website && pm2 stop www && git pull && npm install && npm install --prefix frontend && npm run build && pm2 start www"
 workflows:
   version: 2
   build-and-deploy:
