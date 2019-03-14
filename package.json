@@ -5,7 +5,7 @@
     "start": "node ./bin/www",
     "server": "nodemon ./bin/www",
     "frontend": "npm run start --prefix frontend",
-    "postinstall": "npm install -g @angular/cli && cd frontend && ls -al && npm install && ls -al node_modules && npm run build",
+    "postinstall": "npm install -g @angular/cli && cd frontend && ls -al && npm install && npm install --only=dev && ls -al node_modules && npm run build",
     "test": "mocha --exit"
   },
   "keywords": [
