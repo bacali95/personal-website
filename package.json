@@ -5,7 +5,7 @@
     "start": "node ./bin/www",
     "server": "nodemon ./bin/www",
     "frontend": "npm run start --prefix frontend",
-    "build": "npm run build --prefix frontend",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend",
     "test": "mocha --exit"
   },
   "keywords": [
