@@ -31,7 +31,7 @@ There is two ways to run the project:
     ```
     then just run it in this way:
     ```bash
-    docker run -p 1234:3000 \
+    $ docker run -p 1234:3000 \
     -e ADMIN_USERNAME=<value> \
     -e ADMIN_PASSWORD=<value> \
     -e DB_HOST=<value> \
