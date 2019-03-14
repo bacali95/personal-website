@@ -6,7 +6,7 @@
     "server": "nodemon ./bin/www",
     "frontend": "npm run start --prefix frontend",
     "preinstall": "npm install -g angular-cli && npm install --prefix frontend",
-    "postinstall": "ng build --prefix frontend"
+    "postinstall": "ng build --prefix frontend",
     "test": "mocha --exit"
   },
   "keywords": [
