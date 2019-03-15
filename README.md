@@ -27,7 +27,7 @@ There is two ways to run the project:
     and open the browser on `http://localhost:3000`
 1. Build the docker image with:
     ```bash
-    $ docker build -t <username>/node-web-app .
+    $ docker build -t personal-website .
     ```
     then just run it in this way:
     ```bash
