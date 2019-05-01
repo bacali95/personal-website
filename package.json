@@ -41,7 +41,6 @@
     "serve-favicon": "^2.5.0",
     "tinify": "^1.6.0-beta.2",
     "cloudinary": "^1.14.0",
-    "nodemon": "^1.19.0",
     "cors": "^2.8.5"
   },
   "devDependencies": {
