@@ -1,0 +1,50 @@
+{
+  "name": "personal-website",
+  "version": "2.0.0",
+  "scripts": {
+    "start": "node ./bin/www",
+    "server": "nodemon ./bin/www",
+    "test": "mocha --exit"
+  },
+  "keywords": [
+    "CV",
+    "RESUME"
+  ],
+  "author": "Nasreddine Bac Ali",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bacali95/personal-website"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.16.1",
+    "express-validator": "^5.3.1",
+    "helmet": "^3.16.0",
+    "http-errors": "^1.7.2",
+    "moment": "^2.24.0",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.5.5",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "pug": "^2.0.3",
+    "serve-favicon": "^2.5.0",
+    "tinify": "^1.6.0-beta.2",
+    "cloudinary": "^1.14.0",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "mocha": "^6.0.2",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0"
+  }
+}
