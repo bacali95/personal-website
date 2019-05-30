@@ -20,7 +20,7 @@
            placeholder="Username"
            autofocus
            [status]="username.dirty ? (username.invalid  ? 'danger' : 'success') : ''"
-           [required]="getConfigValue('forms.validation.name.required')"
+           [required]="getConfigValue('forms.validation.title.required')"
            [attr.aria-invalid]="username.invalid && username.touched ? true : null">
     <ng-container *ngIf="username.invalid && username.touched">
       <p class="error-message" *ngIf="username.errors?.required">

@@ -7,13 +7,14 @@ import {APP_BASE_HREF} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ThemeModule} from './@theme/theme.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy} from '@nebular/auth';
+import {AuthInterceptor} from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,7 @@ import {NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy} from '@nebular/aut
     NbAuthModule.forRoot({
       strategies: [
         NbPasswordAuthStrategy.setup({
-          name: 'name',
+          name: 'title',
           token: {
             class: NbAuthJWTToken,
             key: 'token',
@@ -52,7 +53,7 @@ import {NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy} from '@nebular/aut
       forms: {
         login: {
           redirectDelay: 500,
-          strategy: 'name',
+          strategy: 'title',
           rememberMe: false,
           showMessages: {
             success: false,
@@ -68,6 +69,7 @@ import {NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy} from '@nebular/aut
   bootstrap: [AppComponent],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/admin'},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
 })
 export class AppModule {

@@ -12,7 +12,7 @@ import {
   NbCalendarRangeModule,
   NbCardModule,
   NbCheckboxModule,
-  NbContextMenuModule,
+  NbContextMenuModule, NbDatepicker, NbDatepickerModule,
   NbDialogModule,
   NbInputModule,
   NbLayoutModule,
@@ -75,6 +75,7 @@ const NB_MODULES = [
   NbRadioModule,
   NbSelectModule,
   NbTooltipModule,
+  NbDatepickerModule,
 ];
 
 const COMPONENTS = [
@@ -109,6 +110,7 @@ const NB_THEME_PROVIDERS = [
   ...NbDialogModule.forRoot().providers,
   ...NbWindowModule.forRoot().providers,
   ...NbToastrModule.forRoot().providers,
+  ...NbDatepickerModule.forRoot().providers,
 ];
 
 @NgModule({

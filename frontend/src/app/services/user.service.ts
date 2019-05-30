@@ -1,43 +1,33 @@
-import { Injectable } from '@angular/core';
-import { NbAuthService } from '@nebular/auth';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { User } from '../model/user';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {User} from '../model/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private headers = {};
   private baseUrl: string = '/api/user';
 
-  constructor(private http: HttpClient, private authService: NbAuthService) {
-    this.authService.onTokenChange().subscribe(token => {
-      this.headers['Authorization'] = `Bearer ${token.getValue()}`;
-    });
+  constructor(private http: HttpClient) {
   }
 
   getAll() {
-    return this.http.get<User[]>(this.baseUrl, { headers: this.headers });
+    return this.http.get<User[]>(this.baseUrl);
   }
 
   create(user: User) {
-    return this.http.post(this.baseUrl, user, { headers: this.headers });
+    return this.http.post(this.baseUrl, user);
   }
 
   get(id: string) {
-    return this.http.get<User>(`${this.baseUrl}/${id}`, {
-      headers: this.headers,
-    });
+    return this.http.get<User>(`${this.baseUrl}/${id}`);
   }
 
   update(user: User) {
-    return this.http.put(`${this.baseUrl}/${user._id}`, user, {
-      headers: this.headers,
-    });
+    return this.http.put(`${this.baseUrl}/${user._id}`, user);
   }
 
   delete(id: string) {
-    return this.http.delete(`${this.baseUrl}/${id}`, { headers: this.headers });
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 }

@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout('name').subscribe(() => {
+    this.authService.logout('title').subscribe(() => {
       this.router.navigate(['auth/login']);
     });
   }

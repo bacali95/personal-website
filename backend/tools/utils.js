@@ -30,8 +30,8 @@ module.exports.deleteImage = (name) => {
   cloudinary.uploader.destroy(name, null);
 };
 
-module.exports.sortProjects = (projects) => {
-  projects.sort(function (a, b) {
+module.exports.sortProjects = async (projects) => {
+  await projects.sort(function (a, b) {
     let x = new Date('01-' + a.period.start);
     let y = new Date('01-' + b.period.start);
 
