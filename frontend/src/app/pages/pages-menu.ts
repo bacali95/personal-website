@@ -14,7 +14,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Categories',
-    icon: 'nb-person',
+    icon: 'nb-list',
     link: '/pages/category',
+  },
+  {
+    title: 'Projects',
+    icon: 'nb-list',
+    link: '/pages/project',
   },
 ];

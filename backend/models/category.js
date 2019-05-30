@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const specs = require('../tools/specs');
 
 const CategorySchema = mongoose.Schema({
   name: {
@@ -9,10 +8,11 @@ const CategorySchema = mongoose.Schema({
   }
 });
 
+module.exports.schema = CategorySchema;
+
 const Category = module.exports = mongoose.model('Category', CategorySchema);
 
-module.exports.create = async function (name) {
-  const category = new Category({name});
+module.exports.create = async function (category) {
   return category.save();
 };
 
@@ -28,8 +28,8 @@ module.exports.getById = async function (id) {
   return Category.findById(id);
 };
 
-module.exports.update = async function (id, name) {
-  return Category.findByIdAndUpdate(id, {name});
+module.exports.update = async function (id, category) {
+  return Category.findByIdAndUpdate(id, category);
 };
 
 module.exports.remove = async function (id) {

@@ -9,9 +9,10 @@ router.route('/')
     return res.send(categories);
   })
   .post(async function (req, res, next) {
-    let name = req.body.name;
+    const name = req.body.name;
+    const category = new Category({name});
 
-    await Category.create(name).catch(() => {
+    await Category.create(category).catch(() => {
       return res.status(409).send({message: 'Category is already used!'});
     });
     return res.status(200).send({message: 'Category added successfully'});
@@ -25,7 +26,11 @@ router.route('/:id')
     return res.send(category);
   })
   .put(async function (req, res, next) {
-    await Category.update(req.params.id, req.body.name).catch(() => {
+    const _id = req.params.id;
+    const name = req.body.name;
+    const category = new Category({_id, name});
+
+    await Category.update(_id, category).catch(() => {
       return res.status(500).send({message: 'Updating Category failed!'});
     });
     return res.status(200).send({message: 'Category updated successfully'});

@@ -28,8 +28,8 @@ mongoose.connect(specs.DATABASE_URL, {
 const publicRouter = require('./routes/public');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/admin/user');
-// const projectsRouter = require("./routes/admin/projects");
 const categoryRouter = require('./routes/admin/category');
+const projectRouter = require('./routes/admin/projects');
 const app = express();
 
 app.locals.moment = require('moment');
@@ -84,7 +84,7 @@ app.use('/project', publicRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', passport.authenticate('jwt', {session: false}), userRouter);
 app.use('/api/category', passport.authenticate('jwt', {session: false}), categoryRouter);
-// app.use("/api/project", projectsRouter);
+app.use('/api/project', passport.authenticate('jwt', {session: false}), projectRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
