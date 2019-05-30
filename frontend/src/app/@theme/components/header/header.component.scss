@@ -13,6 +13,7 @@
     order: 0;
     flex-direction: row;
   }
+
   .right {
     order: 1;
     flex-direction: row-reverse;
@@ -26,6 +27,12 @@
 
   .control-item {
     display: block;
+  }
+
+  nb-action {
+    a {
+      color: white;
+    }
   }
 
   .header-container {
@@ -59,76 +66,6 @@
     }
   }
 
-  @include nb-for-theme(corporate) {
-    $menu-action-separator-color: #3f4550;
-
-    nb-action {
-      @include nb-ltr(border-left-color, $menu-action-separator-color);
-      @include nb-rtl(border-right-color, $menu-action-separator-color);
-    }
-
-    .header-container .logo {
-      @include nb-ltr(border, none);
-      @include nb-rtl(border, none);
-    }
-
-    .header-container /deep/ nba-theme-switcher .dropdown-toggle {
-      color: nb-theme(color-white);
-      background: transparent;
-    }
-  }
-
-  nba-layout-direction-switcher {
-    margin: 0 1.5rem;
-  }
-
-  nba-theme-switcher {
-    margin: nb-theme(layout-padding);
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  @include media-breakpoint-down(xl) {
-    nba-layout-direction-switcher {
-      display: none;
-    }
-  }
-
-  .toggle-settings /deep/ a {
-    display: block;
-    text-decoration: none;
-    line-height: 1;
-
-    i {
-      color: nb-theme(color-fg-highlight);
-      font-size: 2.25rem;
-      border-radius: 50%;
-      position: relative;
-      animation-name: pulse-light;
-
-      &::after {
-        content: ' ';
-        // hack to be able to set border-radius
-        background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
-        border-radius: 50%;
-        pointer-events: none;
-
-        position: absolute;
-        top: 52.3%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 13%;
-        height: 13%;
-
-        animation: 3s linear infinite pulse;
-
-        @include nb-for-theme(default) {
-          animation-name: pulse-light;
-        }
-      }
-    }
-  }
-
   @include keyframes(pulse) {
     0% {
       box-shadow: 0 0 1px 0 rgba(nb-theme(color-fg-highlight), 0);
@@ -158,29 +95,6 @@
     nb-action:not(.toggle-settings) {
       border: none;
     }
-
-    .control-item {
-      display: none;
-    }
-
-    .toggle-settings {
-      padding: 0;
-    }
-
-    nba-layout-direction-switcher {
-      display: none;
-    }
-
-    nba-theme-switcher {
-      margin: 0 0.5rem;
-    }
-  }
-
-  @include media-breakpoint-down(sm) {
-
-    nb-user /deep/ .user-name {
-      display: none;
-    }
   }
 
   @include media-breakpoint-down(is) {
@@ -189,14 +103,6 @@
       .logo {
         font-size: 1.25rem;
       }
-    }
-
-    .toggle-settings {
-      display: none;
-    }
-
-    nba-theme-switcher {
-      display: none;
     }
 
     nb-action:not(.toggle-settings) {

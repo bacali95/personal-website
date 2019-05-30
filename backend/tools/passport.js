@@ -15,11 +15,11 @@ passport.use('login', new LocalStrategy({
   try {
     const user = await User.findOne({username: username});
     if (!user) {
-      return done(null, false, {message: 'User not found'});
+      return done(Error('User not found'));
     }
     const validate = await User.isValidPassword(username, password);
     if (!validate) {
-      return done(null, false, {message: 'Wrong Password'});
+      return done(Error('Wrong Password'));
     }
     return done(null, user, {message: 'Logged in Successfully'});
   } catch (error) {
@@ -28,7 +28,7 @@ passport.use('login', new LocalStrategy({
 }));
 
 passport.use('jwt', new JWTStrategy({
-    jwtFromRequest: ExtractJWT.fromHeader('token'),
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     secretOrKey: 'top_secret'
   }, async function (jwtPayload, callback) {
     const user = await User.findOne({_id: jwtPayload.user._id});
