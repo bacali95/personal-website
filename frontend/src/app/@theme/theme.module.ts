@@ -4,59 +4,43 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {
+  NbAccordionModule,
   NbActionsModule,
-  NbCardModule,
-  NbLayoutModule,
-  NbMenuModule,
-  NbRouteTabsetModule,
-  NbSearchModule,
-  NbSidebarModule,
-  NbTabsetModule,
-  NbThemeModule,
-  NbUserModule,
-  NbCheckboxModule,
-  NbPopoverModule,
-  NbContextMenuModule,
-  NbProgressBarModule,
+  NbAlertModule,
+  NbButtonModule,
   NbCalendarModule,
   NbCalendarRangeModule,
-  NbStepperModule,
-  NbButtonModule,
-  NbInputModule,
-  NbAccordionModule,
+  NbCardModule,
+  NbCheckboxModule,
+  NbContextMenuModule,
   NbDialogModule,
-  NbWindowModule,
+  NbInputModule,
+  NbLayoutModule,
   NbListModule,
-  NbToastrModule,
-  NbAlertModule,
-  NbSpinnerModule,
+  NbMenuModule,
+  NbPopoverModule,
+  NbProgressBarModule,
   NbRadioModule,
+  NbRouteTabsetModule,
+  NbSearchModule,
   NbSelectModule,
+  NbSidebarModule,
+  NbSpinnerModule,
+  NbStepperModule,
+  NbTabsetModule,
+  NbThemeModule,
+  NbToastrModule,
   NbTooltipModule,
+  NbUserModule,
+  NbWindowModule,
 } from '@nebular/theme';
 
 import {NbSecurityModule} from '@nebular/security';
 
-import {
-  FooterComponent,
-  HeaderComponent,
-  ThemeSettingsComponent,
-  SwitcherComponent,
-  ThemeSwitcherComponent,
-  ThemeSwitcherListComponent,
-} from './components';
-import {
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
-  EvaIconsPipe,
-} from './pipes';
+import {FooterComponent, HeaderComponent, ConfirmDialogComponent} from './components';
+import {CapitalizePipe, EvaIconsPipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe} from './pipes';
 import {SampleLayoutComponent} from './layouts';
 import {DEFAULT_THEME} from './styles/theme.default';
-import {COSMIC_THEME} from './styles/theme.cosmic';
-import {CORPORATE_THEME} from './styles/theme.corporate';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -94,17 +78,14 @@ const NB_MODULES = [
 ];
 
 const COMPONENTS = [
-  SwitcherComponent,
-  ThemeSwitcherComponent,
-  ThemeSwitcherListComponent,
   HeaderComponent,
   FooterComponent,
-  ThemeSettingsComponent,
+  ConfirmDialogComponent,
   SampleLayoutComponent,
 ];
 
 const ENTRY_COMPONENTS = [
-  ThemeSwitcherListComponent,
+  ConfirmDialogComponent,
 ];
 
 const PIPES = [
@@ -119,9 +100,9 @@ const PIPES = [
 const NB_THEME_PROVIDERS = [
   ...NbThemeModule.forRoot(
     {
-      name: 'cosmic',
+      name: 'default',
     },
-    [DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME],
+    [DEFAULT_THEME],
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,

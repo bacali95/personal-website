@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
-import { NbMenuService, NbSidebarService } from '@nebular/theme';
-import { UserData } from '../../../@core/data/users';
-import { AnalyticsService } from '../../../@core/utils';
+import {NbMenuService, NbSidebarService} from '@nebular/theme';
+import {NbAuthService} from '@nebular/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'nba-header',
@@ -11,26 +11,17 @@ import { AnalyticsService } from '../../../@core/utils';
 })
 export class HeaderComponent implements OnInit {
 
-  @Input() position = 'normal';
-
-  user: any;
-
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
-
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
-              private userService: UserData,
-              private analyticsService: AnalyticsService) {
+              private authService: NbAuthService,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.userService.getUsers()
-      .subscribe((users: any) => this.user = users.nick);
   }
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
-
     return false;
   }
 
@@ -38,7 +29,9 @@ export class HeaderComponent implements OnInit {
     this.menuService.navigateHome();
   }
 
-  startSearch() {
-    this.analyticsService.trackEvent('startSearch');
+  logout() {
+    this.authService.logout('name').subscribe(() => {
+      this.router.navigate(['auth/login']);
+    });
   }
 }

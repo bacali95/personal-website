@@ -4,7 +4,8 @@ const {decrypt, encrypt} = require('../tools/encryption');
 const UserSchema = mongoose.Schema({
   username: {
     type: String,
-    index: true
+    index: true,
+    unique: true
   },
   password: {
     type: String
@@ -13,7 +14,7 @@ const UserSchema = mongoose.Schema({
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports.create = function (username, password) {
+module.exports.create = async function (username, password) {
   const user = new User({
     username,
     password: encrypt(password)
@@ -21,23 +22,21 @@ module.exports.create = function (username, password) {
   return user.save();
 };
 
-module.exports.getAll = function () {
+module.exports.getAll = async function () {
   return User.find();
 };
 
-module.exports.getByUsername = function (username) {
+module.exports.getByUsername = async function (username) {
   return User.findOne({username});
 };
 
-module.exports.getById = function (id) {
+module.exports.getById = async function (id) {
   return User.findById(id);
 };
 
 module.exports.update = async function (id, password) {
   const user = await User.findById(id);
-
-  await user.setPassword(encrypt(password));
-
+  user.password = encrypt(password);
   return user.save();
 };
 
