@@ -1,6 +1,13 @@
 version: "3"
 
 services:
+  www:
+    image: docker.nasreddinebacali.info/personal-website-entrypoint:latest
+    ports:
+      - 4000:4000
+    links:
+      - backend:backend
+      - frontend:frontend
   backend:
     image: docker.nasreddinebacali.info/personal-website-backend:latest
     environment:
@@ -17,7 +24,3 @@ services:
       - TINIFY_API_KEY=tinify_api_key
   frontend:
     image: docker.nasreddinebacali.info/personal-website-frontend:latest
-    links:
-      - backend:backend
-    ports:
-      - 4000:4000

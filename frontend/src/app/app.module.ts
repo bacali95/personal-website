@@ -63,7 +63,7 @@ import {AuthInterceptor} from './auth/auth.interceptor';
   ],
   bootstrap: [AppComponent],
   providers: [
-    {provide: APP_BASE_HREF, useValue: '/admin'},
+    {provide: APP_BASE_HREF, useValue: '/'},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
 })

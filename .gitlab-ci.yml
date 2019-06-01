@@ -25,23 +25,32 @@ before_script:
   - ssh-keyscan $VPS_IP | sort -u - ~/.ssh/known_hosts -o ~/.ssh/known_hosts
 
 
-#build-backend:
-#  stage: build
-#  script:
-#    - cd backend
-#    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-backend:latest" .
-#    - docker push "$CI_DOCKER_REPOSITORY/personal-website-backend:latest"
-#  only:
-#    - master
-#
-#build-frontend:
-#  stage: build
-#  script:
-#    - cd frontend
-#    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest" .
-#    - docker push "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest"
-#  only:
-#    - master
+build-entrypoint:
+  stage: build
+  script:
+    - cd entrypoint
+    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-entrypoint:latest" .
+    - docker push "$CI_DOCKER_REPOSITORY/personal-website-entrypoint:latest"
+  only:
+    - master
+
+build-backend:
+  stage: build
+  script:
+    - cd backend
+    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-backend:latest" .
+    - docker push "$CI_DOCKER_REPOSITORY/personal-website-backend:latest"
+  only:
+    - master
+
+build-frontend:
+  stage: build
+  script:
+    - cd frontend
+    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest" .
+    - docker push "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest"
+  only:
+    - master
 
 deploy-acc:
   stage: deploy

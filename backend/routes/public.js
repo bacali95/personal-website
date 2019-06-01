@@ -53,7 +53,7 @@ router.get('/next/:index', async function (req, res, next) {
 });
 
 router.get('/*', function (req, res, next) {
-  const regex = /^((\/next)|(\/admin)|(\/project)|(\/images)|(\/api))/g;
+  const regex = /^((\/next)|(\/project)|(\/images)|(\/api))/g;
   if (!String(req.url).match(regex)) {
     return res.redirect('/');
   }
