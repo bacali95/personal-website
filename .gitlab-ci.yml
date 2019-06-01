@@ -49,7 +49,7 @@ deploy-acc:
     name: Acceptance
     url: https://acc.nasreddinebacali.info
   script:
-    - ssh root@$VPS_IP "cd personal-website/ && \
+    - ssh root@$VPS_IP "cd personal-website/ && pwd &&\
       docker-compose -f docker-compose.acc.yml -p acc_personal_website down && \
       docker-compose -f docker-compose.acc.yml -p acc_personal_website up -d && exit"
   only:
