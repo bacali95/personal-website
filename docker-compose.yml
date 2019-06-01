@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  backend:
+    image: docker.nasreddinebacali.info/personal-website-backend:latest
+    environment:
+      - ADMIN_USERNAME=username
+      - ADMIN_PASSWORD=password
+      - DATABASE_HOST=mongodb_hostname
+      - DATABASE_USER=mongodb_username
+      - DATABASE_PASS=mongodb_password
+      - DATABASE_NAME=test
+      - IMAGE_API_KEY=cloudinary_api_key
+      - IMAGE_API_SECRET=cloudinary_api_secret
+      - IMAGE_CLOUD_NAME=cloudinary_cloud_name
+      - TINIFY_API_KEY=tinify_api_key
+  frontend:
+    image: docker.nasreddinebacali.info/personal-website-frontend:latest
+    links:
+      - backend:backend
+    ports:
+      - 4000:4000
