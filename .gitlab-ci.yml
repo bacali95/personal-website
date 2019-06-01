@@ -19,9 +19,9 @@ before_script:
   - 'which ssh-agent || apk add openssh'
   - eval $(ssh-agent -s)
   - mkdir .ssh/
-  - echo $SSH_PRIVATE_KEY > .ssh/id_rsa.pkcs8
-  - chmod 400 .ssh/id_rsa.pkcs8
-  - ssh-add .ssh/id_rsa.pkcs8
+  - echo $SSH_PRIVATE_KEY > .ssh/id_rsa.rsa
+  - chmod 400 .ssh/id_rsa.rsa
+  - ssh-add .ssh/id_rsa.rsa
 
 build-backend:
   stage: build
