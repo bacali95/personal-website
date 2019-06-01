@@ -18,7 +18,7 @@ before_script:
   - apk update
   - 'which ssh-agent || apk add openssh'
   - eval $(ssh-agent -s)
-  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - bash -c "ssh-add <(echo '$SSH_PRIVATE_KEY')"
   - mkdir -p ~/.ssh
   - ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
   - ssh-keyscan gitlab.com | sort -u - ~/.ssh/known_hosts -o ~/.ssh/known_hosts
