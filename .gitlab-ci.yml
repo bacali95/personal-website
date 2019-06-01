@@ -4,6 +4,7 @@ image: docker:latest
 
 variables:
   CI_REGISTRY: https://docker.nasreddinebacali.info
+  CI_DOCKER_REPOSITORY: docker.nasreddinebacali.info
 
 services:
   - docker:dind
@@ -18,15 +19,15 @@ before_script:
 build-backend:
   stage: Build and push backend image
   script:
-    - docker build -t "$CI_REGISTRY/personal-website-backend:latest" .
-    - docker push "$CI_REGISTRY/personal-website-backend:latest"
+    - docker build -t "CI_DOCKER_REPOSITORY/personal-website-backend:latest" .
+    - docker push "CI_DOCKER_REPOSITORY/personal-website-backend:latest"
   only:
     - master
 
 build-frontend:
   stage: Build and push frontend image
   script:
-    - docker build -t "$CI_REGISTRY/personal-website-frontend:latest" .
-    - docker push "$CI_REGISTRY/personal-website-frontend:latest"
+    - docker build -t "CI_DOCKER_REPOSITORY/personal-website-frontend:latest" .
+    - docker push "CI_DOCKER_REPOSITORY/personal-website-frontend:latest"
   only:
     - master
