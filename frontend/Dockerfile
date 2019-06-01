@@ -13,8 +13,7 @@ RUN npm install @angular-devkit/build-angular@0.13.9
 
 RUN npm install --production
 
-#RUN npm run build -- --prod --build-optimizer=false
-RUN npm run build
+RUN npm run build:prod
 
 FROM nginx:alpine
 

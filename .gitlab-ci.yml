@@ -15,12 +15,10 @@ stages:
 
 before_script:
   - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-  - apt-get update -qq
-  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - apk update
+  - 'which ssh-agent || ( apk add openssh)'
   - eval $(ssh-agent -s)
   - ssh-add < (echo "$SSH_PRIVATE_KEY")
-  - mkdir -p ~/.ssh
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
 build-backend:
   stage: build
@@ -46,7 +44,7 @@ deploy-acc:
     name: Acceptance
     url: https://acc.nasreddinebacali.info
   script:
-    - ssh root@$VPS_IP "cd personal_website/ &&\
+    - ssh root@$VPS_IP "cd personal_website/ && \
       docker-compose -f docker-compose.acc.yml -p acc_personal_website down && \
       docker-compose -f docker-compose.acc.yml -p acc_personal_website up -d && exit"
   only:
@@ -58,7 +56,7 @@ deploy-prod:
     name: Production
     url: https://www.nasreddinebacali.info
   script:
-    - ssh root@$VPS_IP "cd personal_website/ &&\
+    - ssh root@$VPS_IP "cd personal_website/ && \
       docker-compose -f docker-compose.prod.yml -p prod_personal_website down && \
       docker-compose -f docker-compose.prod.yml -p prod_personal_website up -d && exit"
   when: manual
