@@ -16,9 +16,9 @@ stages:
 before_script:
   - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   - apk update
-  - 'which ssh-agent || ( apk add openssh)'
+  - 'which ssh-agent || apk add openssh'
   - eval $(ssh-agent -s)
-  - ssh-add < (echo "$SSH_PRIVATE_KEY")
+  - ssh-add < $(echo "$SSH_PRIVATE_KEY")
 
 build-backend:
   stage: build
