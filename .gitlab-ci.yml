@@ -19,6 +19,7 @@ before_script:
 build-backend:
   stage: Build and push backend image
   script:
+    - cd backend
     - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-backend:latest" .
     - docker push "$CI_DOCKER_REPOSITORY/personal-website-backend:latest"
   only:
@@ -27,6 +28,7 @@ build-backend:
 build-frontend:
   stage: Build and push frontend image
   script:
+    - cd frontend
     - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest" .
     - docker push "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest"
   only:
