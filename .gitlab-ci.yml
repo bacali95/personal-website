@@ -18,7 +18,8 @@ before_script:
   - apk update
   - 'which ssh-agent || apk add openssh'
   - eval $(ssh-agent -s)
-  - ssh-add < $(echo "$SSH_PRIVATE_KEY")
+  - echo $SSH_PRIVATE_KEY > ssh_key.txt
+  - ssh-add ssh_key.txt
 
 build-backend:
   stage: build
