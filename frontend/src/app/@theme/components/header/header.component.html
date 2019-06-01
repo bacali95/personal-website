@@ -1,0 +1,14 @@
+<div class="header-container left">
+  <div class="logo-containter">
+    <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
+    <div class="logo" (click)="goToHome()">Admin</div>
+  </div>
+</div>
+
+<div class="header-container">
+  <nb-actions size="medium" class="right">
+    <nb-action class="toggle-layout" (click)="logout()">
+      <a nbButton status="danger" size="xsmall">Logout</a>
+    </nb-action>
+  </nb-actions>
+</div>

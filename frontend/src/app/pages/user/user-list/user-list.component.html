@@ -1,0 +1,14 @@
+<nb-card size="large">
+  <nb-card-header>
+    Users
+    <a nbButton size="xsmall" class="float-right" (click)="openAddForm()">Add</a>
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="source"
+      (custom)="onCustomActions($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
