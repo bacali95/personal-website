@@ -43,11 +43,6 @@ import {AuthInterceptor} from './auth/auth.interceptor';
             endpoint: '/auth/logout',
             method: 'get',
           },
-          errors: {
-            getter: (module, res, options) => {
-              return res.error || options[module].defaultErrors;
-            },
-          },
         }),
       ],
       forms: {
