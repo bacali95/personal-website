@@ -25,23 +25,23 @@ before_script:
   - ssh-keyscan $VPS_IP | sort -u - ~/.ssh/known_hosts -o ~/.ssh/known_hosts
 
 
-build-backend:
-  stage: build
-  script:
-    - cd backend
-    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-backend:latest" .
-    - docker push "$CI_DOCKER_REPOSITORY/personal-website-backend:latest"
-  only:
-    - master
-
-build-frontend:
-  stage: build
-  script:
-    - cd frontend
-    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest" .
-    - docker push "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest"
-  only:
-    - master
+#build-backend:
+#  stage: build
+#  script:
+#    - cd backend
+#    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-backend:latest" .
+#    - docker push "$CI_DOCKER_REPOSITORY/personal-website-backend:latest"
+#  only:
+#    - master
+#
+#build-frontend:
+#  stage: build
+#  script:
+#    - cd frontend
+#    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest" .
+#    - docker push "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest"
+#  only:
+#    - master
 
 deploy-acc:
   stage: deploy
@@ -49,7 +49,7 @@ deploy-acc:
     name: Acceptance
     url: https://acc.nasreddinebacali.info
   script:
-    - ssh root@$VPS_IP "cd personal_website/ && \
+    - ssh root@$VPS_IP "cd personal-website/ && \
       docker-compose -f docker-compose.acc.yml -p acc_personal_website down && \
       docker-compose -f docker-compose.acc.yml -p acc_personal_website up -d && exit"
   only:
@@ -61,7 +61,7 @@ deploy-prod:
     name: Production
     url: https://www.nasreddinebacali.info
   script:
-    - ssh root@$VPS_IP "cd personal_website/ && \
+    - ssh root@$VPS_IP "cd personal-website/ && \
       docker-compose -f docker-compose.prod.yml -p prod_personal_website down && \
       docker-compose -f docker-compose.prod.yml -p prod_personal_website up -d && exit"
   when: manual
