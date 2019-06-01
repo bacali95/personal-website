@@ -2,3 +2,5 @@ node_modules/
 .idea
 .DS_Store
 .vscode
+backend/public/images/for_compress
+backend/public/images/uploads

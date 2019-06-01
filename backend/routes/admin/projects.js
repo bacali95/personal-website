@@ -8,6 +8,7 @@ const multipartMiddleware = multipart({
 
 const CompressTool = require('../../tools/compress');
 const deleteImage = require('../../tools/utils').deleteImage;
+const specs  = require('../../tools/specs');
 
 const Project = require('../../models/project');
 
@@ -76,7 +77,9 @@ router.route('/:id')
 
 router.post('/postImage', multipartMiddleware, function (req, res, next) {
   const file = req.files.uploads[0];
-  compress.begin(file, {tags: ['project']}, function (error, image) {
+  compress.begin(file, {
+    folder: `personal_website/${specs.ENV}`
+  }, function (error, image) {
     if (error) {
       return res.status(500).send({message: error});
     }
