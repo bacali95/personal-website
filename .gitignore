@@ -4,3 +4,4 @@ node_modules/
 .vscode
 backend/public/images/for_compress
 backend/public/images/uploads
+docker-compose.test.yml

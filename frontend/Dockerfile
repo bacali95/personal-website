@@ -6,13 +6,20 @@ RUN apk add --no-cache nodejs-npm
 
 COPY . .
 
-RUN npm install
+RUN npm install @angular/cli@7.3.9
+RUN npm install @angular/compiler-cli@7.2.15
+RUN npm install @angular/language-service@7.2.15
+RUN npm install @angular-devkit/build-angular@0.13.9
 
-RUN npm run build -- --prod --build-optimizer=false
+RUN npm install --production
+
+#RUN npm run build -- --prod --build-optimizer=false
+RUN npm run build
 
 FROM nginx:alpine
 
 COPY --from=buildstage /frontend/dist/ /var/www/portal/
+
 RUN chmod -R 777 /var/www/portal/
 
 ADD nginx-conf/default.conf /etc/nginx/conf.d/default.conf

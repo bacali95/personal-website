@@ -8,16 +8,22 @@ variables:
 
 services:
   - docker:dind
- 
+
 stages:
-  - Build and push backend image
-  - Build and push frontend image
+  - build
+  - deploy
 
 before_script:
   - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+  - apt-get update -qq
+  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - eval $(ssh-agent -s)
+  - ssh-add < (echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
 build-backend:
-  stage: Build and push backend image
+  stage: build
   script:
     - cd backend
     - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-backend:latest" .
@@ -26,10 +32,35 @@ build-backend:
     - master
 
 build-frontend:
-  stage: Build and push frontend image
+  stage: build
   script:
     - cd frontend
     - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest" .
     - docker push "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest"
+  only:
+    - master
+
+deploy-acc:
+  stage: deploy
+  environment:
+    name: Acceptance
+    url: https://acc.nasreddinebacali.info
+  script:
+    - ssh root@$VPS_IP "cd personal_website/ &&\
+      docker-compose -f docker-compose.acc.yml -p acc_personal_website down && \
+      docker-compose -f docker-compose.acc.yml -p acc_personal_website up -d && exit"
+  only:
+    - master
+
+deploy-prod:
+  stage: deploy
+  environment:
+    name: Production
+    url: https://www.nasreddinebacali.info
+  script:
+    - ssh root@$VPS_IP "cd personal_website/ &&\
+      docker-compose -f docker-compose.prod.yml -p prod_personal_website down && \
+      docker-compose -f docker-compose.prod.yml -p prod_personal_website up -d && exit"
+  when: manual
   only:
     - master
