@@ -102,18 +102,6 @@
       "check-separator",
       "check-type"
     ],
-    "directive-selector": [
-      true,
-      "attribute",
-      "nba",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "nba",
-      "kebab-case"
-    ],
     "ban": [
       true,
       "eval",

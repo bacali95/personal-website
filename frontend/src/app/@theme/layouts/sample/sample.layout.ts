@@ -4,12 +4,12 @@ import {NbMediaBreakpoint, NbMediaBreakpointsService, NbMenuItem, NbMenuService,
 
 // TODO: move layouts into the framework
 @Component({
-  selector: 'nba-sample-layout',
+  selector: 'sample-layout',
   styleUrls: ['./sample.layout.scss'],
   template: `
     <nb-layout center="false" windowMode>
       <nb-layout-header fixed>
-        <nba-header></nba-header>
+        <header></header>
       </nb-layout-header>
 
       <nb-sidebar class="menu-sidebar"
@@ -24,7 +24,7 @@ import {NbMediaBreakpoint, NbMediaBreakpointsService, NbMenuItem, NbMenuService,
       </nb-layout-column>
 
       <nb-layout-footer fixed>
-        <nba-footer></nba-footer>
+        <footer></footer>
       </nb-layout-footer>
     </nb-layout>
   `,

@@ -7,7 +7,7 @@ import {ConfirmDialogComponent} from '../../../@theme/components';
 import {CategoryService} from '../../../services/category.service';
 
 @Component({
-  selector: 'nba-category-list',
+  selector: 'category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss'],
 })

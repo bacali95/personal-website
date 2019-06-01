@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NbDialogRef} from '@nebular/theme';
 
 @Component({
-  selector: 'nba-confirm-dialog',
+  selector: 'confirm-dialog',
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss'],
 })

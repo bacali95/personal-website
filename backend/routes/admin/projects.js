@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart({
+  uploadDir: './public/images/for_compress'
+});
+
 const CompressTool = require('../../tools/compress');
 const deleteImage = require('../../tools/utils').deleteImage;
-const sortProjects = require('../../tools/utils').sortProjects;
-const upload = require('../../tools/utils').upload;
 
 const Project = require('../../models/project');
 
@@ -16,27 +19,6 @@ router.route('/')
     return res.send(projects);
   })
   .post(async function (req, res, next) {
-    // const title = req.body.title;
-    // const description = req.body.description;
-    // const type = req.body.type;
-    // const categories = req.body.categories;
-    // const startDate = req.body.startDate;
-    // const finishDate = req.body.finishDate;
-    // const repoGithub = req.body.repoGithub;
-    // const images = JSON.parse(req.body.images);
-    //
-    // await images.sort(function (a, b) {
-    //   const x = a.original_filename.toLowerCase();
-    //   const y = b.original_filename.toLowerCase();
-    //   if (x < y) {
-    //     return -1;
-    //   }
-    //   if (x > y) {
-    //     return 1;
-    //   }
-    //   return 0;
-    // });
-    //
     const project = new Project(req.body);
 
     await Project.create(project).catch(() => {
@@ -55,70 +37,22 @@ router.route('/:id')
     return res.send(project);
   })
   .put(async function (req, res, next) {
-    // const title = req.body.title;
-    // const description = req.body.description;
-    // const type = req.body.type;
-    // const categories = req.body.categories;
-    // const startDate = req.body.startDate;
-    // const finishDate = req.body.finishDate;
-    // const repoGithub = req.body.repoGithub;
-    // const images = JSON.parse(req.body.images);
-    //
-    // const newProject = new Project({
-    //   _id: req.params.id,
-    //   title,
-    //   description,
-    //   type,
-    //   categories,
-    //   period: {
-    //     start: startDate,
-    //     finish: finishDate
-    //   },
-    //   repoGithub,
-    //   creationDate: Date.now(),
-    //   images: []
-    // });
-    //
-    // const project = await Project.getById(req.params.id).catch(() => {
-    //   return res.status(500).send({message: 'Project not found!'});
-    // });
-    //
-    // project.images.forEach(function (image) {
-    //   const found = images.find(function (item) {
-    //     return item.secure_url === image.secure_url;
-    //   });
-    //   if (!found) {
-    //     deleteImage(image.public_id);
-    //   } else {
-    //     newProject.images.push(image);
-    //   }
-    // });
-    //
-    // images.forEach(function (image) {
-    //   const found = newProject.images.find(function (element) {
-    //     return element.secure_url === image.secure_url;
-    //   });
-    //   if (!found) {
-    //     newProject.images.push(image);
-    //   }
-    // });
-    //
-    // await newProject.images.sort(function (a, b) {
-    //   const x = a.original_filename.toLowerCase();
-    //   const y = b.original_filename.toLowerCase();
-    //   if (x < y) {
-    //     return -1;
-    //   }
-    //   if (x > y) {
-    //     return 1;
-    //   }
-    //   return 0;
-    // });
-    console.log(req.body);
+    const project = await Project.getById(req.params.id).catch(() => {
+      return res.status(500).send({message: 'Project not found!'});
+    });
 
-    const project = new Project(req.body);
+    const newProject = new Project(req.body);
 
-    await Project.update(project._id ,project).catch(() => {
+    project.images.forEach(function (image) {
+      const found = newProject.images.find(function (item) {
+        return item.secure_url === image.secure_url;
+      });
+      if (!found) {
+        deleteImage(image.public_id);
+      }
+    });
+
+    await Project.update(newProject._id, newProject).catch(() => {
       return res.status(500).send({message: 'Updating Project failed!'});
     });
 
@@ -134,21 +68,19 @@ router.route('/:id')
     });
 
     project.images.forEach(function (image) {
-      delete
-        deleteImage(image.public_id);
+      deleteImage(image.public_id);
     });
 
     return res.status(200).send({message: 'Project deleted successfully'});
   });
 
-router.post('/postimage', upload, function (req, res, next) {
-  const ID = req.body.ID;
-  const filename = req.file.filename;
-  compress.begin(filename, {tags: ['project']}, function (error, image) {
+router.post('/postImage', multipartMiddleware, function (req, res, next) {
+  const file = req.files.uploads[0];
+  compress.begin(file, {tags: ['project']}, function (error, image) {
     if (error) {
-      throw error;
+      return res.status(500).send({message: error});
     }
-    res.send({ID, image});
+    return res.send(image);
   });
 });
 

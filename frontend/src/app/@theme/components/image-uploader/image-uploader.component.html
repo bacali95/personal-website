@@ -1,0 +1,43 @@
+<nb-card [accent]="'disabled'">
+  <nb-card-body>
+    <div class="col-md-4 offset-md-5 mb-2 mt-2" id="add-images-btn">
+      <label>
+        <input #imagesInput type="file" (change)="addImages(imagesInput.files)" multiple hidden>
+        <span
+          hero
+          nbButton
+          status="info"
+          size="small">Add Images
+        </span>
+      </label>
+    </div>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let image of images">
+        <div class="card text-center mt-3">
+          <img class="card-img-top"
+               [src]="image.secure_url"
+               [alt]="image.public_id">
+          <div class="card-footer">
+            <a nbButton hero status="danger" size="xsmall"
+               *ngIf="!uploading" (click)="delete(image)">Delete</a>
+            <div class="progress" *ngIf="uploading && !isFromServer(image) && image.progress < 100">
+              <div class="progress-bar bg-warning" role="progressbar"
+                   [style.width]="image.progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">Uploading...
+              </div>
+            </div>
+            <div class="progress" *ngIf="uploading && !isFromServer(image) && image.progress === 100">
+              <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar"
+                   style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Compressing...
+              </div>
+            </div>
+            <div class="progress" *ngIf="uploading && isFromServer(image)">
+              <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100"
+                   aria-valuemin="0" aria-valuemax="100">Done
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

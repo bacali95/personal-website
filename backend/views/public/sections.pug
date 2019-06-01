@@ -467,12 +467,12 @@ block sections
                                     ul.work.mb-20
                                         while  j < Math.min(i, projects.length)
                                             li.col-sm-6
-                                                div.item(class=projects[j].category)
+                                                div.item(class=projects[j].categories.map(value => value.name).join(' '))
                                                     a(href='/project/' + projects[j]._id + '?index=' + j, target='_blank')
                                                         .desc
                                                             h5.proj-desc
                                                                 | #{projects[j].title}
-                                                                span #{projects[j].category}
+                                                                span #{projects[j].categories.map(value => value.name).join(', ')}
                                                         img(src=projects[j++].images[0].secure_url, alt='')
                 .block-content
                     .row

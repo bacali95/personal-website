@@ -9,8 +9,7 @@ const Project = require('../models/project');
 router.get('/', async function (req, res, next) {
   const categories = await Category.getAll();
   const projects = await Project.getAll();
-
-  sortProjects(projects);
+  await sortProjects(projects);
 
   return res.render('public/sections', {
     title: 'Nasreddine Bac Ali',
@@ -21,10 +20,6 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/project/:id', async function (req, res, next) {
-  if (!req.session.lan) {
-    req.session.lan = '/en';
-  }
-
   const project = await Project.getById(req.params.id).catch(() =>
     res.redirect('/#portfolio')
   );
@@ -32,6 +27,8 @@ router.get('/project/:id', async function (req, res, next) {
   if (!project) {
     return res.redirect('/');
   }
+  project.clicks++;
+  project.save();
 
   return res.render('public/showProject', {
     title: project.title,
@@ -42,6 +39,7 @@ router.get('/project/:id', async function (req, res, next) {
 
 router.get('/next/:index', async function (req, res, next) {
   const projects = await Project.getAll();
+  await sortProjects(projects);
 
   let index = req.params.index;
   if (!index || isNaN(index)) {

@@ -1,27 +1,30 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {NbDialogRef} from '@nebular/theme';
 import {ToastService} from '../../../services/toast.service';
 import {Project} from '../../../model/project';
 import {ProjectService} from '../../../services/project.service';
 import {CategoryService} from '../../../services/category.service';
 import {Category} from '../../../model/category';
 import {NbSelectComponent} from '@nebular/theme/components/select/select.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UploadService} from '../../../services/upload.service';
+import {HttpEventType} from '@angular/common/http';
+import {Subject} from 'rxjs';
+import {LocalImage} from '../../../model/image';
 
 @Component({
-  selector: 'nba-project-form',
+  selector: 'project-form',
   templateUrl: './project-form.component.html',
   styleUrls: ['./project-form.component.scss'],
 })
 export class ProjectFormComponent implements OnInit, AfterViewInit {
-
-  @Input() value: Project;
 
   @ViewChild('categoriesSelect') categoriesSelect: NbSelectComponent<Category>;
 
   categoriesList: Category[] = [];
 
   model: FormGroup;
+  _id: string;
   title: FormControl = new FormControl('', [Validators.required]);
   description: FormControl = new FormControl('', [Validators.required]);
   type: FormControl = new FormControl('', [Validators.required]);
@@ -29,11 +32,30 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   startDate: FormControl = new FormControl(new Date(), [Validators.required]);
   endDate: FormControl = new FormControl(new Date(), [Validators.required]);
   githubLink: FormControl = new FormControl('#');
+  images: any[] = [];
+  submitting: boolean = false;
+  submittedImagesNumber: Subject<number> = new Subject<number>();
 
   constructor(private projectService: ProjectService,
               private categoryService: CategoryService,
-              private dialogRef: NbDialogRef<ProjectFormComponent>,
+              private uploadService: UploadService,
+              private activatedRoute: ActivatedRoute,
+              private router: Router,
               private toastService: ToastService) {
+    this._id = this.activatedRoute.snapshot.paramMap.get('id');
+    if (this._id) {
+      this.projectService.get(this._id)
+        .subscribe(project => {
+          this.title.setValue(project.title);
+          this.description.setValue(project.description);
+          this.type.setValue(project.type);
+          this.categories.setValue([...project.categories]);
+          this.startDate.setValue(new Date(project.startDate));
+          this.endDate.setValue(new Date(project.endDate));
+          this.githubLink.setValue(project.githubLink);
+          this.images = [...project.images];
+        });
+    }
     this.categoryService.getAll()
       .subscribe((categories) => {
         this.categoriesList = [...categories];
@@ -50,46 +72,74 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
       endDate: this.endDate,
       githubLink: this.githubLink,
     });
-    if (this.value) {
-      this.title.setValue(this.value.title);
-      this.description.setValue(this.value.description);
-      this.type.setValue(this.value.type);
-      this.categories.setValue([...this.value.categories]);
-      this.startDate.setValue(new Date(this.value.startDate));
-      this.endDate.setValue(new Date(this.value.endDate));
-      this.githubLink.setValue(this.value.githubLink);
-    }
   }
 
   ngAfterViewInit(): void {
     this.categoriesSelect.setSelected = this.categories.value;
   }
 
-  submit() {
-    if (this.model.valid) {
-      if (this.value && this.value._id) {
-        this.model.value._id = this.value._id;
-        this.projectService.update(this.model.value)
-          .subscribe((data: { message: string }) => {
-            this.toastService.success(data.message);
-            // this.dialogRef.close('success');
-          }, (data) => {
-            this.toastService.error(data.error.message);
+  uploadImages() {
+    let finished = 0;
+    for (let i = 0; i < this.images.length; i++) {
+      if (this.images[i] instanceof LocalImage) {
+        const formData = new FormData();
+        formData.append('uploads[]', this.images[i].payload, this.images[i].payload.name);
+        this.uploadService.uploadFile(formData)
+          .subscribe(response => {
+            if (response.status === HttpEventType.UploadProgress) {
+              this.images[i].progress = response.body;
+            } else if (response.status === HttpEventType.Sent) {
+              this.images[i].progress = 100;
+            } else if (response.status === HttpEventType.Response) {
+              this.images[i] = response.body;
+              finished++;
+              this.submittedImagesNumber.next(finished);
+            }
           });
       } else {
-        const project: Project = this.model.value;
-        this.projectService.create(project)
-          .subscribe((data: { message: string }) => {
-            this.toastService.success(data.message);
-            // this.dialogRef.close('success');
-          }, (data) => {
-            this.toastService.error(data.error.message);
-          });
+        finished++;
+        this.submittedImagesNumber.next(finished);
       }
     }
   }
 
+  submit() {
+    if (this.model.valid && this.images.length > 0) {
+      this.submittedImagesNumber.asObservable()
+        .subscribe(value => {
+          if (value === this.images.length) {
+            this.model.value.images = this.images;
+            if (this._id) {
+              this.model.value._id = this._id;
+              this.projectService.update(this.model.value)
+                .subscribe((data: { message: string }) => {
+                  this.toastService.success(data.message);
+                  this.router.navigate(['pages/project']);
+                }, (data) => {
+                  this.submitting = false;
+                  this.toastService.error(data.error.message);
+                });
+            } else {
+              const project: Project = this.model.value;
+              this.projectService.create(project)
+                .subscribe((data: { message: string }) => {
+                  this.toastService.success(data.message);
+                  this.router.navigate(['pages/project']);
+                }, (data) => {
+                  this.submitting = false;
+                  this.toastService.error(data.error.message);
+                });
+            }
+          }
+        });
+      this.submitting = true;
+      this.uploadImages();
+    } else if (this.images.length === 0) {
+      this.toastService.info('Select images for the project!');
+    }
+  }
+
   cancel() {
-    this.dialogRef.close('cancel');
+    this.router.navigate(['pages/project']);
   }
 }

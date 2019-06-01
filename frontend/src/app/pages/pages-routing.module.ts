@@ -6,6 +6,8 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {UserListComponent} from './user/user-list/user-list.component';
 import {CategoryListComponent} from './category/category-list/category-list.component';
 import {ProjectListComponent} from './project/project-list/project-list.component';
+import {ProjectFormComponent} from './project/project-form/project-form.component';
+import {AuthGuard} from '../auth/auth.guard';
 
 const routes: Routes = [{
   path: '',
@@ -25,7 +27,7 @@ const routes: Routes = [{
     },
     {
       path: 'project',
-      component: ProjectListComponent,
+      loadChildren: 'app/pages/project/project.module#ProjectModule',
     },
     {
       path: '',

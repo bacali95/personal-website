@@ -1,0 +1,14 @@
+@import '../../styles/themes';
+
+@include nb-install-component() {
+  #add-images-btn {
+    display: inline-block;
+  }
+  #add-images-btn input[type=file] {
+    display: none;
+  }
+
+  .progress {
+    height: 4vh;
+  }
+}

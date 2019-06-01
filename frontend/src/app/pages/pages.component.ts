@@ -3,13 +3,13 @@ import { Component } from '@angular/core';
 import { MENU_ITEMS } from './pages-menu';
 
 @Component({
-  selector: 'nba-pages',
+  selector: 'pages',
   styleUrls: ['pages.component.scss'],
   template: `
-    <nba-sample-layout>
+    <sample-layout>
       <nb-menu [items]="menu"></nb-menu>
       <router-outlet></router-outlet>
-    </nba-sample-layout>
+    </sample-layout>
   `,
 })
 export class PagesComponent {

@@ -6,7 +6,7 @@ import {Category} from '../../../model/category';
 import {CategoryService} from '../../../services/category.service';
 
 @Component({
-  selector: 'nba-category-form',
+  selector: 'category-form',
   templateUrl: './category-form.component.html',
   styleUrls: ['./category-form.component.scss'],
 })

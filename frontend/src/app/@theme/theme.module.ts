@@ -37,7 +37,7 @@ import {
 
 import {NbSecurityModule} from '@nebular/security';
 
-import {FooterComponent, HeaderComponent, ConfirmDialogComponent} from './components';
+import {FooterComponent, HeaderComponent, ConfirmDialogComponent,ImageUploaderComponent} from './components';
 import {CapitalizePipe, EvaIconsPipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe} from './pipes';
 import {SampleLayoutComponent} from './layouts';
 import {DEFAULT_THEME} from './styles/theme.default';
@@ -83,6 +83,7 @@ const COMPONENTS = [
   FooterComponent,
   ConfirmDialogComponent,
   SampleLayoutComponent,
+  ImageUploaderComponent,
 ];
 
 const ENTRY_COMPONENTS = [

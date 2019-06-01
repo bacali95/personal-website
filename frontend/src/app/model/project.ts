@@ -1,4 +1,5 @@
 import {Category} from './category';
+import {Image} from './image';
 
 export class Project {
   _id?: string;
@@ -9,5 +10,5 @@ export class Project {
   startDate: Date;
   endDate: Date;
   githubLink: string;
-  images: any[];
+  images: Image[];
 }
