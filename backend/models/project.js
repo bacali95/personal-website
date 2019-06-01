@@ -13,7 +13,9 @@ const ProjectSchema = mongoose.Schema({
   type: {
     type: String
   },
-  categories: [Category.schema],
+  categories: [
+    Category.schema
+  ],
   startDate: {
     type: Date
   },
@@ -25,7 +27,11 @@ const ProjectSchema = mongoose.Schema({
   },
   images: [{
     type: Object
-  }]
+  }],
+  clicks: {
+    type: Number,
+    default: 0
+  }
 });
 
 const Project = module.exports = mongoose.model('Project', ProjectSchema);
@@ -43,7 +49,7 @@ module.exports.getById = function (_id) {
 };
 
 module.exports.update = function (_id, project) {
-    return Project.updateOne({_id}, project);
+  return Project.updateOne({_id}, project);
 };
 
 module.exports.remove = function (id) {

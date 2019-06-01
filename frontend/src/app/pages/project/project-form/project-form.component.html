@@ -1,6 +1,6 @@
 <nb-card>
   <nb-card-header>
-    Add User
+    Add Project
     <button hero nbButton size="xsmall" status="success" class="float-right m-1" (click)="submit()"
             [disabled]="model.invalid">Submit
     </button>
@@ -100,5 +100,6 @@
           required>
       </div>
     </form>
+    <image-uploader [(images)]="images" [uploading]="submitting"></image-uploader>
   </nb-card-body>
 </nb-card>

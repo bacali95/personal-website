@@ -5,7 +5,7 @@ import {NbAuthService} from '@nebular/auth';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'nba-header',
+  selector: 'header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })

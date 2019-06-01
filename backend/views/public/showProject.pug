@@ -49,35 +49,35 @@ html
                                 .col-md-12
                                     .main-title.mt-100.t-center
                                         h1.mb-30= project.title
-                                        h3= project.category
+                                        h3= project.categories.map(value => value.name).join(', ')
                             .block-content
                                 .row
                                     .block-single.mt-80.mb-20.clearfix
-                                        .col-sm-10.col-md-offset-1.col-sm-offset-1
+                                        .col-md-10.col-md-offset-1.col-md-offset-1
                                             h5.mb-10 Description
                                             p!= project.description
                                 .row
                                     .block-single.mt-10.mb-80.clearfix
-                                        .col-sm-5.col-md-offset-1.col-sm-offset-1
+                                        .col-md-5.col-md-offset-1.col-md-offset-1
                                             h5.mb-10 Type
                                             p.mb-15= project.type
-                                            if project.repoGithub !== "#"
-                                                a(href=project.repoGithub, target='_blank')
+                                            if project.githubLink !== "#"
+                                                a(href=project.githubLink, target='_blank')
                                                     h5 Code
                                                         i.icon-whatsapp(style='font-size:3px; visibility: hidden')
                                                         i.fa.fa-external-link(style='font-size:13px')
-                                        .col-sm-5
+                                        .col-md-5
                                             h5.mb-10 Duration
                                             .row
-                                                .col-sm-3
+                                                .col-md-2
                                                     p From
-                                                .col-sm-6
-                                                    p= project.period.start
+                                                .col-md-7
+                                                    p= `${project.startDate.getMonth() + 1}/${project.startDate.getFullYear()}`
                                             .row
-                                                .col-sm-3
+                                                .col-md-2
                                                     p To
-                                                .col-sm-6
-                                                    p= project.period.finish
+                                                .col-md-7
+                                                    p= `${project.endDate.getMonth() + 1}/${project.endDate.getFullYear()}`
 
                                 .row
                                     .block-single.mb-60.clearfix
@@ -85,7 +85,7 @@ html
                                             each image in project.images
                                                 .col-md-12
                                                     li
-                                                        img(src=image.secure_url, alt='')
+                                                        img(src=image.secure_url, alt=image.public_id)
                                 .row
                                     .block-share.mb-30.t-center.clearfix
                                         .col-md-12
@@ -111,11 +111,11 @@ html
         // Google analytics
         script(async, src="https://www.googletagmanager.com/gtag/js?id=UA-128575469-1")
         script.
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
 
-            gtag('config', 'UA-128575469-1');
+          gtag('config', 'UA-128575469-1');
 

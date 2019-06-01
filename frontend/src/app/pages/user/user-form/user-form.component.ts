@@ -6,7 +6,7 @@ import {NbDialogRef} from '@nebular/theme';
 import {ToastService} from '../../../services/toast.service';
 
 @Component({
-  selector: 'nba-user-form',
+  selector: 'user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
 })

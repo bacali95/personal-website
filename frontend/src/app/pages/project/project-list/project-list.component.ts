@@ -5,9 +5,10 @@ import {ProjectFormComponent} from '../project-form/project-form.component';
 import {ToastService} from '../../../services/toast.service';
 import {ConfirmDialogComponent} from '../../../@theme/components';
 import {ProjectService} from '../../../services/project.service';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: 'nba-project-list',
+  selector: 'project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss'],
 })
@@ -63,6 +64,7 @@ export class ProjectListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
 
   constructor(private projectService: ProjectService,
+              private router: Router,
               private dialogService: NbDialogService,
               private toastService: ToastService) {
     this.refresh();
@@ -78,21 +80,12 @@ export class ProjectListComponent implements OnInit {
   }
 
   openAddForm() {
-    this.dialogService.open(ProjectFormComponent).onClose
-      .subscribe((res) => {
-        this.refresh();
-      });
+    this.router.navigate(['pages/project/add']);
   }
 
   onCustomActions(event: any) {
     if (event.action === 'edit') {
-      this.dialogService.open(ProjectFormComponent, {
-        context: {
-          value: event.data,
-        },
-      }).onClose.subscribe(() => {
-        this.refresh();
-      });
+      this.router.navigate([`pages/project/edit/${event.data._id}`]);
     } else {
       this.dialogService.open(ConfirmDialogComponent, {
         context: {

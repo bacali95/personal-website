@@ -7,7 +7,7 @@ import {ToastService} from '../../../services/toast.service';
 import {ConfirmDialogComponent} from '../../../@theme/components';
 
 @Component({
-  selector: 'nba-user-list',
+  selector: 'user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
 })
