@@ -49,10 +49,12 @@ deploy-acc:
     name: Acceptance
     url: https://acc.nasreddinebacali.info
   script:
-    - echo -e
-      "ssh root@$VPS_IP 'cd personal-website &&
-       docker-compose -f docker-compose.acc.yml -p acc_personal_website down &&
-       docker-compose -f docker-compose.acc.yml -p acc_personal_website up -d && exit'"
+    - |
+      ssh root@$VPS_IP /bin/bash -s << EOT
+        cd personal-website
+          docker-compose -f docker-compose.acc.yml -p acc_personal_website down
+        docker-compose -f docker-compose.acc.yml -p acc_personal_website up -d
+      EOT
   only:
     - master
 
@@ -62,10 +64,12 @@ deploy-prod:
     name: Production
     url: https://www.nasreddinebacali.info
   script:
-    - echo -e
-      "ssh root@$VPS_IP 'cd personal-website &&
-       docker-compose -f docker-compose.prod.yml -p prod_personal_website down &&
-       docker-compose -f docker-compose.prod.yml -p prod_personal_website up -d && exit'"
+    - |
+      ssh root@$VPS_IP /bin/bash -s << EOT
+        cd personal-website
+        docker-compose -f docker-compose.prod.yml -p prod_personal_website down
+        docker-compose -f docker-compose.prod.yml -p prod_personal_website up -d
+      EOT
   when: manual
   only:
     - master
