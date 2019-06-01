@@ -12,7 +12,7 @@ RUN npm run build -- --prod --build-optimizer=false
 
 FROM nginx:alpine
 
-COPY --from=buildstage /build/dist/ /var/www/portal/
+COPY --from=buildstage /frontend/dist/ /var/www/portal/
 RUN chmod -R 777 /var/www/portal/
 
 ADD nginx-conf/default.conf /etc/nginx/conf.d/default.conf
