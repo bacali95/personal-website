@@ -1,8 +1,8 @@
 FROM node:8-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /backend
 
-COPY docker .
+COPY . .
 
 RUN npm install
 

@@ -1,11 +1,21 @@
-FROM node:8-alpine
+FROM alpine:3.8 as buildstage
 
-WORKDIR /usr/src/app
+WORKDIR /frontend
 
-COPY docker .
+RUN apk add --no-cache nodejs-npm
+
+COPY . .
 
 RUN npm install
 
-EXPOSE 3000
+RUN npm run build -- --prod --build-optimizer=false
 
-CMD [ "npm", "start" ]
+FROM nginx:alpine
+
+COPY --from=buildstage /build/dist/ /var/www/portal/
+RUN chmod -R 777 /var/www/portal/
+
+ADD nginx-conf/default.conf /etc/nginx/conf.d/default.conf
+ADD nginx-conf/nginx.conf  /etc/nginx/nginx.conf
+
+CMD nginx -g "daemon off;"
