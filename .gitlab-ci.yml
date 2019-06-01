@@ -52,7 +52,9 @@ deploy-acc:
     - |
       ssh root@$VPS_IP /bin/bash -s << EOT
         cd personal-website
-          docker-compose -f docker-compose.acc.yml -p acc_personal_website down
+        echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+        docker-compose -f docker-compose.acc.yml -p acc_personal_website down
+        docker-compose -f docker-compose.acc.yml pull
         docker-compose -f docker-compose.acc.yml -p acc_personal_website up -d
       EOT
   only:
@@ -67,7 +69,9 @@ deploy-prod:
     - |
       ssh root@$VPS_IP /bin/bash -s << EOT
         cd personal-website
+        echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
         docker-compose -f docker-compose.prod.yml -p prod_personal_website down
+        docker-compose -f docker-compose.prod.yml pull
         docker-compose -f docker-compose.prod.yml -p prod_personal_website up -d
       EOT
   when: manual
