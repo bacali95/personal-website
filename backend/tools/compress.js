@@ -1,8 +1,6 @@
 const specs = require('./specs');
 const uploadImage = require('./utils').uploadImage;
 const fs = require('fs');
-const {promisify} = require('util');
-const unlinkAsync = promisify(fs.unlink);
 const tinify = require('tinify');
 
 tinify.key = specs.TINIFY_API_KEY;
@@ -24,12 +22,12 @@ CompressTool.prototype.begin = (file, options, callback) => {
     if (error) {
       callback(error, null);
     }
-    unlinkAsync(fileIN);
+    fs.unlinkSync(fileIN);
     uploadImage(fileOUT, options, function (error, image) {
       if (error) {
         callback(error, null);
       }
-      unlinkAsync(fileOUT);
+      fs.unlinkSync(fileOUT);
       callback(null, image);
     });
   });

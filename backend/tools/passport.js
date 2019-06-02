@@ -13,7 +13,7 @@ passport.use('login', new LocalStrategy({
   passwordField: 'password'
 }, async (username, password, done) => {
   try {
-    const user = await User.findOne({username: username});
+    const user = await User.findOne({username});
     if (!user) {
       return done(Error('User not found'));
     }

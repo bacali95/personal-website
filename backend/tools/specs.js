@@ -12,5 +12,5 @@ module.exports = {
   IMAGE_CLOUD_NAME: process.env.IMAGE_CLOUD_NAME,
   IMAGE_API_KEY: process.env.IMAGE_API_KEY,
   IMAGE_API_SECRET: process.env.IMAGE_API_SECRET,
-  ENV: ENV
+  ENV
 };

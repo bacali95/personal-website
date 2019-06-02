@@ -16,7 +16,7 @@ COPY --from=buildstage /frontend/dist/ /var/www/portal/
 
 RUN chmod -R 777 /var/www/portal/
 
-ADD nginx-conf/default.conf /etc/nginx/conf.d/default.conf
-ADD nginx-conf/nginx.conf  /etc/nginx/nginx.conf
+COPY nginx-conf/default.conf /etc/nginx/conf.d/default.conf
+COPY nginx-conf/nginx.conf  /etc/nginx/nginx.conf
 
 CMD nginx -g "daemon off;"

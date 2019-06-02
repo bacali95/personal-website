@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
-ADD default.conf /etc/nginx/conf.d/default.conf
-ADD nginx.conf  /etc/nginx/nginx.conf
+COPY default.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf  /etc/nginx/nginx.conf
 
 EXPOSE 4000
 
