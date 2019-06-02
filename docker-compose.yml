@@ -8,6 +8,8 @@ services:
     links:
       - backend:backend
       - frontend:frontend
+  frontend:
+    image: docker.nasreddinebacali.info/personal-website-frontend:latest
   backend:
     image: docker.nasreddinebacali.info/personal-website-backend:latest
     environment:
@@ -22,5 +24,3 @@ services:
       - IMAGE_API_SECRET=cloudinary_api_secret
       - IMAGE_CLOUD_NAME=cloudinary_cloud_name
       - TINIFY_API_KEY=tinify_api_key
-  frontend:
-    image: docker.nasreddinebacali.info/personal-website-frontend:latest
