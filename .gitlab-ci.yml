@@ -3,8 +3,8 @@
 image: docker:latest
 
 variables:
-  CI_REGISTRY: https://docker.nasreddinebacali.info
-  CI_DOCKER_REPOSITORY: docker.nasreddinebacali.info
+  CI_REGISTRY: registry.gitlab.com
+  CI_DOCKER_REPOSITORY: registry.gitlab.com/bacali/personal-website
 
 services:
   - docker:dind
@@ -29,8 +29,8 @@ build-entrypoint:
   stage: build
   script:
     - cd entrypoint
-    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-entrypoint:latest" .
-    - docker push "$CI_DOCKER_REPOSITORY/personal-website-entrypoint:latest"
+    - docker build -t "$CI_DOCKER_REPOSITORY/entrypoint:latest" .
+    - docker push "$CI_DOCKER_REPOSITORY/entrypoint:latest"
   only:
     - master
 
@@ -38,8 +38,8 @@ build-backend:
   stage: build
   script:
     - cd backend
-    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-backend:latest" .
-    - docker push "$CI_DOCKER_REPOSITORY/personal-website-backend:latest"
+    - docker build -t "$CI_DOCKER_REPOSITORY/backend:latest" .
+    - docker push "$CI_DOCKER_REPOSITORY/backend:latest"
   only:
     - master
 
@@ -47,8 +47,8 @@ build-frontend:
   stage: build
   script:
     - cd frontend
-    - docker build -t "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest" .
-    - docker push "$CI_DOCKER_REPOSITORY/personal-website-frontend:latest"
+    - docker build -t "$CI_DOCKER_REPOSITORY/frontend:latest" .
+    - docker push "$CI_DOCKER_REPOSITORY/frontend:latest"
   only:
     - master
 

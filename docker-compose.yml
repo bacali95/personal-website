@@ -2,16 +2,16 @@ version: "3"
 
 services:
   www:
-    image: docker.nasreddinebacali.info/personal-website-entrypoint:latest
+    image: registry.gitlab.com/bacali/personal-website/entrypoint:latest
     ports:
       - 4000:4000
     links:
       - backend:backend
       - frontend:frontend
   frontend:
-    image: docker.nasreddinebacali.info/personal-website-frontend:latest
+    image: registry.gitlab.com/bacali/personal-website/frontend:latest
   backend:
-    image: docker.nasreddinebacali.info/personal-website-backend:latest
+    image: registry.gitlab.com/bacali/personal-website/backend:latest
     environment:
       - ENV=test
       - ADMIN_USERNAME=username
