@@ -19,7 +19,7 @@
            id="input-username"
            placeholder="Username"
            autofocus
-           [status]="username.dirty ? (username.invalid  ? 'danger' : 'success') : ''"
+           [status]="username.dirty ? (username.invalid  ? 'danger' : 'primary') : ''"
            [required]="getConfigValue('forms.validation.title.required')"
            [attr.aria-invalid]="username.invalid && username.touched ? true : null">
     <ng-container *ngIf="username.invalid && username.touched">
@@ -39,20 +39,12 @@
            type="password"
            id="input-password"
            placeholder="Password"
-           [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''"
+           [status]="password.dirty ? (password.invalid  ? 'danger' : 'primary') : ''"
            [required]="getConfigValue('forms.validation.password.required')"
-           [minlength]="getConfigValue('forms.validation.password.minLength')"
-           [maxlength]="getConfigValue('forms.validation.password.maxLength')"
            [attr.aria-invalid]="password.invalid && password.touched ? true : null">
     <ng-container *ngIf="password.invalid && password.touched ">
       <p class="error-message" *ngIf="password.errors?.required">
         Password is required!
-      </p>
-      <p class="error-message" *ngIf="(password.errors?.minlength || password.errors?.maxlength)">
-        Password should contains
-        from {{ getConfigValue('forms.validation.password.minLength') }}
-        to {{ getConfigValue('forms.validation.password.maxLength') }}
-        characters
       </p>
     </ng-container>
   </div>
@@ -60,7 +52,6 @@
   <button nbButton
           hero
           fullWidth
-          status="success"
           [disabled]="submitted || !form.valid"
           [class.btn-pulse]="submitted">
     Sign In
