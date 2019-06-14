@@ -1,8 +1,6 @@
-FROM alpine:3.8 as buildstage
+FROM node:10.16-alpine as buildstage
 
 WORKDIR /frontend
-
-RUN apk add --no-cache nodejs-npm
 
 COPY . .
 

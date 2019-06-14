@@ -24,7 +24,7 @@ const routes: Routes = [{
     },
     {
       path: 'project',
-      loadChildren: 'app/pages/project/project.module#ProjectModule',
+      loadChildren: () => import('./project/project.module').then(m => m.ProjectModule),
     },
     {
       path: '',

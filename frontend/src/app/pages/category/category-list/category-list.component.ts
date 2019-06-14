@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
+import {LocalDataSource} from '@bacali/ng2-smart-table';
 import {NbDialogService} from '@nebular/theme';
 import {CategoryFormComponent} from '../category-form/category-form.component';
 import {ToastService} from '../../../services/toast.service';

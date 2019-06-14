@@ -12,7 +12,8 @@ import {
   NbCalendarRangeModule,
   NbCardModule,
   NbCheckboxModule,
-  NbContextMenuModule, NbDatepicker, NbDatepickerModule,
+  NbContextMenuModule,
+  NbDatepickerModule,
   NbDialogModule,
   NbInputModule,
   NbLayoutModule,
@@ -37,14 +38,16 @@ import {
 
 import {NbSecurityModule} from '@nebular/security';
 
-import {FooterComponent, HeaderComponent, ConfirmDialogComponent,ImageUploaderComponent} from './components';
-import {CapitalizePipe, EvaIconsPipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe} from './pipes';
+import {ConfirmDialogComponent, FooterComponent, HeaderComponent, ImageUploaderComponent} from './components';
+import {CapitalizePipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe} from './pipes';
 import {SampleLayoutComponent} from './layouts';
 import {DEFAULT_THEME} from './styles/theme.default';
+import {NbEvaIconsModule} from '@nebular/eva-icons';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 const NB_MODULES = [
+  NbEvaIconsModule,
   NbCardModule,
   NbLayoutModule,
   NbTabsetModule,
@@ -96,7 +99,6 @@ const PIPES = [
   RoundPipe,
   TimingPipe,
   NumberWithCommasPipe,
-  EvaIconsPipe,
 ];
 
 const NB_THEME_PROVIDERS = [

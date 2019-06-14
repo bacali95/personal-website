@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
+import {LocalDataSource} from '@bacali/ng2-smart-table';
 import {NbDialogService} from '@nebular/theme';
-import {ProjectFormComponent} from '../project-form/project-form.component';
 import {ToastService} from '../../../services/toast.service';
 import {ConfirmDialogComponent} from '../../../@theme/components';
 import {ProjectService} from '../../../services/project.service';

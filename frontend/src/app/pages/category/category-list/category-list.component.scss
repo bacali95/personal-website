@@ -2,7 +2,7 @@
 
 @include nb-install-component() {
 
-  /deep/ ng2-smart-table .ng2-smart-actions {
+  ::ng-deep ng2-smart-table .ng2-smart-actions {
     width: 15% !important;
 
     ng2-st-tbody-edit-delete {

@@ -5,12 +5,12 @@ import {Project} from '../../../model/project';
 import {ProjectService} from '../../../services/project.service';
 import {CategoryService} from '../../../services/category.service';
 import {Category} from '../../../model/category';
-import {NbSelectComponent} from '@nebular/theme/components/select/select.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UploadService} from '../../../services/upload.service';
 import {HttpEventType} from '@angular/common/http';
 import {Subject} from 'rxjs';
 import {LocalImage} from '../../../model/image';
+import {NbOptionComponent, NbSelectComponent} from '@nebular/theme';
 
 @Component({
   selector: 'project-form',
@@ -19,7 +19,7 @@ import {LocalImage} from '../../../model/image';
 })
 export class ProjectFormComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('categoriesSelect') categoriesSelect: NbSelectComponent<Category>;
+  @ViewChild('categoriesSelect', {static: false}) categoriesSelect;
 
   categoriesList: Category[] = [];
 
@@ -59,6 +59,13 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
     this.categoryService.getAll()
       .subscribe((categories) => {
         this.categoriesList = [...categories];
+        setTimeout(() => {
+          const options = this.categoriesSelect.nativeElement.options;
+          for (let i = 0; i < options.length; i++) {
+            const value = options[i].value.replace(`${i}: `, '').replace(new RegExp('\'', 'g'), '');
+            options[i].selected = this.categories.value.map(c => c._id).indexOf(value) > -1;
+          }
+        }, 100);
       });
   }
 
@@ -75,7 +82,6 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.categoriesSelect.setSelected = this.categories.value;
   }
 
   uploadImages() {

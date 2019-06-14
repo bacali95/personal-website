@@ -1,10 +1,10 @@
 <nb-card>
   <nb-card-header>
     Add User
-    <button nbButton size="xsmall" status="success" class="float-right m-1" (click)="submit()"
+    <button nbButton hero size="small" status="success" class="float-right m-1" (click)="submit()"
             [disabled]="model.invalid">Submit
     </button>
-    <button nbButton size="xsmall" status="danger" class="float-right m-1" (click)="cancel()">Cancel</button>
+    <button nbButton hero size="small" status="danger" class="float-right m-1" (click)="cancel()">Cancel</button>
   </nb-card-header>
   <nb-card-body>
     <form [formGroup]="model">

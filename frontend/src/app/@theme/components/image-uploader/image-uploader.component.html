@@ -3,11 +3,14 @@
     <div class="col-md-4 offset-md-5 mb-2 mt-2" id="add-images-btn">
       <label>
         <input #imagesInput type="file" (change)="addImages(imagesInput.files)" multiple hidden>
-        <span
-          hero
-          nbButton
-          status="info"
-          size="small">Add Images
+        <span>
+          <a
+            hero
+            nbButton
+            status="info"
+            size="small">
+            Add Images
+          </a>
         </span>
       </label>
     </div>
@@ -18,7 +21,7 @@
                [src]="image.secure_url"
                [alt]="image.public_id">
           <div class="card-footer">
-            <a nbButton hero status="danger" size="xsmall"
+            <a nbButton hero status="danger" size="small"
                *ngIf="!uploading" (click)="delete(image)">Delete</a>
             <div class="progress" *ngIf="uploading && !isFromServer(image) && image.progress < 100">
               <div class="progress-bar bg-warning" role="progressbar"

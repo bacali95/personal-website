@@ -1,8 +1,6 @@
-FROM alpine:3.8
+FROM node:10.16-alpine
 
 WORKDIR /backend
-
-RUN apk add --no-cache nodejs-npm
 
 COPY . .
 

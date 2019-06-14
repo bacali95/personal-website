@@ -1,10 +1,10 @@
 <nb-card>
   <nb-card-header>
     Add Project
-    <button hero nbButton size="xsmall" status="success" class="float-right m-1" (click)="submit()"
+    <button hero nbButton hero size="small" status="success" class="float-right m-1" (click)="submit()"
             [disabled]="model.invalid">Submit
     </button>
-    <button hero nbButton size="xsmall" status="danger" class="float-right m-1" (click)="cancel()">Cancel</button>
+    <button hero nbButton hero size="small" status="danger" class="float-right m-1" (click)="cancel()">Cancel</button>
   </nb-card-header>
   <nb-card-body>
     <form [formGroup]="model">
@@ -43,21 +43,18 @@
           required>
       </div>
       <div class="form-group">
-        <nb-select
+        <select
           #categoriesSelect
-          hero
+          nbInput
           multiple
           formControlName="categories"
-          placeholder="Select categories"
           id="categories"
-          [status]="categories.invalid && categories.touched ? 'danger' : 'success'"
-          [selected]="categories.value"
           required>
-          <nb-option *ngFor="let category of categoriesList"
-                     [value]="category">
+          <option *ngFor="let category of categoriesList"
+                  [value]="category._id">
             {{category.name}}
-          </nb-option>
-        </nb-select>
+          </option>
+        </select>
       </div>
       <div class="row">
         <div class="col-md-6">

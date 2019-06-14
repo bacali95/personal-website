@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
+import {LocalDataSource} from '@bacali/ng2-smart-table';
 import {UserService} from '../../../services/user.service';
 import {NbDialogService, NbGlobalLogicalPosition} from '@nebular/theme';
 import {UserFormComponent} from '../user-form/user-form.component';

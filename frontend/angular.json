@@ -39,6 +39,7 @@
           },
           "configurations": {
             "production": {
+              "deployUrl": "/admin/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -82,8 +83,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/pace-js/pace.min.js",
-              "node_modules/eva-icons/eva.min.js"
+              "node_modules/pace-js/pace.min.js"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
