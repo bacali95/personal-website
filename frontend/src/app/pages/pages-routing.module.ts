@@ -3,38 +3,17 @@ import {NgModule} from '@angular/core';
 
 import {PagesComponent} from './pages.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
-import {UserListComponent} from './user/user-list/user-list.component';
-import {CategoryListComponent} from './category/category-list/category-list.component';
+import {ProfileComponent} from './profile/profile.component';
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
-    {
-      path: 'dashboard',
-      component: DashboardComponent,
-    },
-    {
-      path: 'user',
-      component: UserListComponent,
-    },
-    {
-      path: 'category',
-      component: CategoryListComponent,
-    },
-    {
-      path: 'project',
-      loadChildren: () => import('./project/project.module').then(m => m.ProjectModule),
-    },
-    {
-      path: '',
-      redirectTo: 'dashboard',
-      pathMatch: 'full',
-    },
-    {
-      path: '**',
-      redirectTo: '../',
-    },
+    {path: 'dashboard', component: DashboardComponent},
+    {path: 'profile', component: ProfileComponent},
+    {path: 'portfolio', loadChildren: () => import('./portfolio/portfolio.module').then(m => m.PortfolioModule)},
+    {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+    {path: '**', redirectTo: 'dashboard'},
   ],
 }];
 

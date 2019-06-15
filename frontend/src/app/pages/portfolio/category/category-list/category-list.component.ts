@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalDataSource} from '@bacali/ng2-smart-table';
-import {UserService} from '../../../services/user.service';
-import {NbDialogService, NbGlobalLogicalPosition} from '@nebular/theme';
-import {UserFormComponent} from '../user-form/user-form.component';
-import {ToastService} from '../../../services/toast.service';
-import {ConfirmDialogComponent} from '../../../@theme/components';
+import {NbDialogService} from '@nebular/theme';
+import {CategoryFormComponent} from '../category-form/category-form.component';
+import {ToastService} from '../../../../services/toast.service';
+import {ConfirmDialogComponent} from '../../../../@theme/components';
+import {CategoryService} from '../../../../services/category.service';
 
 @Component({
-  selector: 'user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss'],
+  selector: 'category-list',
+  templateUrl: './category-list.component.html',
+  styleUrls: ['./category-list.component.scss'],
 })
-export class UserListComponent implements OnInit {
+export class CategoryListComponent implements OnInit {
 
   settings = {
     hideSubHeader: true,
@@ -26,8 +26,8 @@ export class UserListComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      username: {
-        title: 'Username',
+      name: {
+        title: 'Name',
         type: 'string',
       },
     },
@@ -35,8 +35,7 @@ export class UserListComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-
-  constructor(private userService: UserService,
+  constructor(private categoryService: CategoryService,
               private dialogService: NbDialogService,
               private toastService: ToastService) {
     this.refresh();
@@ -46,13 +45,14 @@ export class UserListComponent implements OnInit {
   }
 
   refresh() {
-    this.userService.getAll().subscribe((users) => {
-      this.source.load(users);
-    });
+    this.categoryService.getAll()
+      .then((categories) => {
+        this.source.load(categories);
+      });
   }
 
   openAddForm() {
-    this.dialogService.open(UserFormComponent).onClose
+    this.dialogService.open(CategoryFormComponent).onClose
       .subscribe((res) => {
         this.refresh();
       });
@@ -60,7 +60,7 @@ export class UserListComponent implements OnInit {
 
   onCustomActions(event: any) {
     if (event.action === 'edit') {
-      this.dialogService.open(UserFormComponent, {
+      this.dialogService.open(CategoryFormComponent, {
         context: {
           value: event.data,
         },
@@ -70,14 +70,14 @@ export class UserListComponent implements OnInit {
     } else {
       this.dialogService.open(ConfirmDialogComponent, {
         context: {
-          title: 'Delete user',
+          title: 'Delete category',
           message: 'Are you sure you want to delete?',
         },
       }).onClose
         .subscribe((result) => {
           if (result) {
-            this.userService.delete(event.data._id)
-              .subscribe((data: { message: string }) => {
+            this.categoryService.delete(event.data._id)
+              .then((data: { message: string }) => {
                 this.toastService.success(data.message);
                 this.refresh();
               });

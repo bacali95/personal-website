@@ -12,22 +12,22 @@ export class ProjectService {
   }
 
   getAll() {
-    return this.http.get<Project[]>(this.baseUrl);
+    return this.http.get<Project[]>(this.baseUrl).toPromise();
   }
 
   create(project: Project) {
-    return this.http.post(this.baseUrl, project);
+    return this.http.post(this.baseUrl, project).toPromise();
   }
 
   get(id: string) {
-    return this.http.get<Project>(`${this.baseUrl}/${id}`);
+    return this.http.get<Project>(`${this.baseUrl}/${id}`).toPromise();
   }
 
   update(project: Project) {
-    return this.http.put(`${this.baseUrl}/${project._id}`, project);
+    return this.http.put(`${this.baseUrl}/${project._id}`, project).toPromise();
   }
 
   delete(id: string) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`).toPromise();
   }
 }

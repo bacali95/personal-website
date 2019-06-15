@@ -21,7 +21,8 @@ require('./tools/passport');
 mongoose.Promise = global.Promise;
 mongoose.connect(specs.DATABASE_URL, {
   useNewUrlParser: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 }, initAdmin);
 
 const publicRouter = require('./routes/public');

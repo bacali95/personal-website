@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({
@@ -7,8 +8,9 @@ const multipartMiddleware = multipart({
 });
 
 const CompressTool = require('../../tools/compress');
+const uploadImage = require('../../tools/utils').uploadImage;
 const deleteImage = require('../../tools/utils').deleteImage;
-const specs  = require('../../tools/specs');
+const specs = require('../../tools/specs');
 
 const Project = require('../../models/project');
 
@@ -84,6 +86,19 @@ router.post('/postImage', multipartMiddleware, function (req, res, next) {
       return res.status(500).send({message: error});
     }
     return res.send(image);
+  });
+});
+
+router.post('/postFile', multipartMiddleware, function (req, res, next) {
+  const file = req.files.uploads[0];
+  uploadImage(file.path, {
+    folder: `personal_website/${specs.ENV}`
+  }, function (error, fileEntity) {
+    fs.unlinkSync(file.path);
+    if (error) {
+      return res.status(500).send({message: error});
+    }
+    return res.send(fileEntity);
   });
 });
 

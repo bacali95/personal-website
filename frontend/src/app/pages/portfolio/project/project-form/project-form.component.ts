@@ -1,16 +1,15 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ToastService} from '../../../services/toast.service';
-import {Project} from '../../../model/project';
-import {ProjectService} from '../../../services/project.service';
-import {CategoryService} from '../../../services/category.service';
-import {Category} from '../../../model/category';
+import {ToastService} from '../../../../services/toast.service';
+import {Project} from '../../../../model/project';
+import {ProjectService} from '../../../../services/project.service';
+import {CategoryService} from '../../../../services/category.service';
+import {Category} from '../../../../model/category';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UploadService} from '../../../services/upload.service';
+import {UploadService} from '../../../../services/upload.service';
 import {HttpEventType} from '@angular/common/http';
 import {Subject} from 'rxjs';
-import {LocalImage} from '../../../model/image';
-import {NbOptionComponent, NbSelectComponent} from '@nebular/theme';
+import {LocalImage} from '../../../../model/image';
 
 @Component({
   selector: 'project-form',
@@ -45,7 +44,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
     this._id = this.activatedRoute.snapshot.paramMap.get('id');
     if (this._id) {
       this.projectService.get(this._id)
-        .subscribe(project => {
+        .then(project => {
           this.title.setValue(project.title);
           this.description.setValue(project.description);
           this.type.setValue(project.type);
@@ -57,7 +56,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
         });
     }
     this.categoryService.getAll()
-      .subscribe((categories) => {
+      .then((categories) => {
         this.categoriesList = [...categories];
         setTimeout(() => {
           const options = this.categoriesSelect.nativeElement.options;
@@ -118,23 +117,23 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
             if (this._id) {
               this.model.value._id = this._id;
               this.projectService.update(this.model.value)
-                .subscribe((data: { message: string }) => {
+                .then((data: { message: string }) => {
                   this.toastService.success(data.message);
-                  this.router.navigate(['pages/project']);
-                }, (data) => {
-                  this.submitting = false;
-                  this.toastService.error(data.error.message);
-                });
+                  this.router.navigate(['pages/portfolio/project']);
+                }).catch((data) => {
+                this.submitting = false;
+                this.toastService.error(data.error.message);
+              });
             } else {
               const project: Project = this.model.value;
               this.projectService.create(project)
-                .subscribe((data: { message: string }) => {
+                .then((data: { message: string }) => {
                   this.toastService.success(data.message);
-                  this.router.navigate(['pages/project']);
-                }, (data) => {
-                  this.submitting = false;
-                  this.toastService.error(data.error.message);
-                });
+                  this.router.navigate(['pages/portfolio/project']);
+                }).catch((data) => {
+                this.submitting = false;
+                this.toastService.error(data.error.message);
+              });
             }
           }
         });
@@ -146,6 +145,6 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   }
 
   cancel() {
-    this.router.navigate(['pages/project']);
+    this.router.navigate(['pages/portfolio/project']);
   }
 }

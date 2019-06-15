@@ -4,9 +4,9 @@ import {PagesComponent} from './pages.component';
 import {DashboardModule} from './dashboard/dashboard.module';
 import {PagesRoutingModule} from './pages-routing.module';
 import {ThemeModule} from '../@theme/theme.module';
-import {UserModule} from './user/user.module';
-import {CategoryModule} from './category/category.module';
-import {ProjectModule} from './project/project.module';
+import {ProfileModule} from './profile/profile.module';
+import {CategoryModule} from './portfolio/category/category.module';
+import {ProjectModule} from './portfolio/project/project.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -18,7 +18,7 @@ const PAGES_COMPONENTS = [
     ThemeModule,
     DashboardModule,
 
-    UserModule,
+    ProfileModule,
     CategoryModule,
     ProjectModule,
   ],

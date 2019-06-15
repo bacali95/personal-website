@@ -11,23 +11,12 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  getAll() {
-    return this.http.get<User[]>(this.baseUrl);
-  }
-
-  create(user: User) {
-    return this.http.post(this.baseUrl, user);
-  }
-
-  get(id: string) {
-    return this.http.get<User>(`${this.baseUrl}/${id}`);
+  getCurrent() {
+    return this.http.get<User>(`${this.baseUrl}`).toPromise();
   }
 
   update(user: User) {
-    return this.http.put(`${this.baseUrl}/${user._id}`, user);
+    return this.http.put(`${this.baseUrl}`, user).toPromise();
   }
 
-  delete(id: string) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
-  }
 }

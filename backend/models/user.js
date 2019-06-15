@@ -9,6 +9,66 @@ const UserSchema = mongoose.Schema({
   },
   password: {
     type: String
+  },
+  image: {
+    type: Object
+  },
+  firstName: {
+    type: String
+  },
+  lastName: {
+    type: String
+  },
+  profession: {
+    type: String
+  },
+  intro: {
+    type: String
+  },
+  birthday: {
+    date: {
+      type: Date
+    },
+    place: {
+      type: String
+    }
+  },
+  nationality: {
+    type: String
+  },
+  maritalStatus: {
+    type: String
+  },
+  principal: {
+    address: {
+      type: String,
+    },
+    email: {
+      type: String
+    },
+    website: {
+      type: String
+    },
+    phone: {
+      type: String
+    }
+  },
+  secondary: {
+    address: {
+      type: String
+    },
+    email: {
+      type: String
+    },
+    website: {
+      type: String
+    },
+    phone: {
+      type: String
+    }
+  },
+  skype: {
+    type: String
   }
 });
 
@@ -17,7 +77,9 @@ const User = module.exports = mongoose.model('User', UserSchema);
 module.exports.create = async function (username, password) {
   const user = new User({
     username,
-    password: encrypt(password)
+    password: encrypt(password),
+    firstName: 'Change',
+    lastName: 'Me'
   });
   return user.save();
 };
@@ -34,10 +96,14 @@ module.exports.getById = async function (id) {
   return User.findById(id);
 };
 
-module.exports.update = async function (id, password) {
-  const user = await User.findById(id);
-  user.password = encrypt(password);
-  return user.save();
+module.exports.update = async function (user) {
+  const oldUser = await User.findById(user._id);
+  if (user.password !== null) {
+    user.password = encrypt(user.password);
+  } else {
+    user.password = oldUser.password;
+  }
+  return User.findOneAndUpdate({_id: user._id}, user);
 };
 
 module.exports.remove = async function (id) {

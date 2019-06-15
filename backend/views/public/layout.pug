@@ -32,9 +32,9 @@ html
                         header#header
                             .main-header
                                 .img-profile
-                                    img(src='images/public/profile.jpg', alt='', width='982px')
+                                    img(src=user.image ? user.image.secure_url : "images/public/noimage.png", alt='', width='982px')
                                     .name-profile.t-center
-                                        h5.uppercase Nasreddine Bac Ali
+                                        h5.uppercase #{user.firstName} #{user.lastName}
                                 nav#main-nav.main-nav.clearfix.t-center.uppercase.tabbed
                                     ul.clearfix
                                         li
@@ -89,29 +89,29 @@ html
         script(src='javascripts/public/script.js', type='text/javascript')
         script(src='javascripts/public/leaflet.js', type='text/javascript')
         script.
-            (function ($) {
-                "use strict";
-                // Easytab setup
-                $('#wrapper').easytabs({
-                    animate: true,
-                    updateHash: false,
-                    transitionIn: 'fadeIn',
-                    transitionOut: 'fadeOut',
-                    animationSpeed: 100,
-                    tabActiveClass: 'active',
-                    tabs: ' #main-nav.tabbed > ul > li ',
-                    transitionInEasing: 'linear',
-                    transitionOutEasing: 'linear'
-                });
-            })(jQuery);
+          (function ($) {
+            "use strict";
+            // Easytab setup
+            $('#wrapper').easytabs({
+              animate: true,
+              updateHash: false,
+              transitionIn: 'fadeIn',
+              transitionOut: 'fadeOut',
+              animationSpeed: 100,
+              tabActiveClass: 'active',
+              tabs: ' #main-nav.tabbed > ul > li ',
+              transitionInEasing: 'linear',
+              transitionOutEasing: 'linear'
+            });
+          })(jQuery);
         // Google analytics
         script(async, src="https://www.googletagmanager.com/gtag/js?id=UA-128575469-1")
         script.
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
 
-            gtag('config', 'UA-128575469-1');
+          gtag('config', 'UA-128575469-1');
 

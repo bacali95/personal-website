@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NbDialogRef} from '@nebular/theme';
-import {ToastService} from '../../../services/toast.service';
-import {Category} from '../../../model/category';
-import {CategoryService} from '../../../services/category.service';
+import {ToastService} from '../../../../services/toast.service';
+import {Category} from '../../../../model/category';
+import {CategoryService} from '../../../../services/category.service';
 
 @Component({
   selector: 'category-form',
@@ -36,23 +36,23 @@ export class CategoryFormComponent implements OnInit {
       if (this.value && this.value._id) {
         this.value.name = this.name.value;
         this.categoryService.update(this.value)
-          .subscribe((data: { message: string }) => {
+          .then((data: { message: string }) => {
             this.toastService.success(data.message);
             this.dialogRef.close('success');
-          }, (data) => {
-            this.toastService.error(data.error.message);
-          });
+          }).catch((data) => {
+          this.toastService.error(data.error.message);
+        });
       } else {
         const category: Category = {
           name: this.name.value,
         };
         this.categoryService.create(category)
-          .subscribe((data: { message: string }) => {
+          .then((data: { message: string }) => {
             this.toastService.success(data.message);
             this.dialogRef.close('success');
-          }, (data) => {
-            this.toastService.error(data.error.message);
-          });
+          }).catch((data) => {
+          this.toastService.error(data.error.message);
+        });
       }
     }
   }

@@ -1,0 +1,60 @@
+<nb-card size="large">
+  <nb-card-header>
+    Profile
+    <a nbButton hero size="small" class="float-right"
+       *ngIf="!editMode" (click)="toggleEditMode()">Edit</a>
+    <a nbButton hero size="small" class="float-right ml-2" status="success"
+       *ngIf="editMode" (click)="toggleEditMode()">Save</a>
+    <a nbButton hero size="small" class="float-right" status="danger"
+       *ngIf="editMode" (click)="toggleEditMode()">Cancel</a>
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="!showCropper">
+      <div class="col-md-12 d-flex justify-content-center">
+        <img [src]="user.image ? user.image.secure_url : 'assets/images/noimage.png'" alt="profile image"
+             height="200vh">
+      </div>
+      <div class="col-md-12 d-flex justify-content-center mt-2">
+        <label>
+          <input type="file" (change)="fileChangeEvent($event)" hidden>
+          <span>
+            <a nbButton hero shape="round" size="small">Select an image</a>
+          </span>
+        </label>
+      </div>
+    </div>
+    <div [style.display]="showCropper ? null : 'none'">
+      <div class="col-md-12 d-flex justify-content-center" [style.maxHeight]="'50vh'">
+        <image-cropper
+          #imageCropper
+          [nbSpinner]="imageUploading"
+          nbSpinnerStatus="info"
+          [imageChangedEvent]="imageEvent"
+          (imageLoaded)="imageLoaded()"
+          (imageCroppedFile)="imageCropped($event)"
+          resizeToWidth="982">
+        </image-cropper>
+      </div>
+      <div class="col-md-12 d-flex justify-content-center">
+        <a nbButton hero shape="round" size="small" class="mr-2" status="warning"
+           (click)="imageCropper.rotateLeft()">
+          <nb-icon icon="corner-up-left-outline"></nb-icon>
+        </a>
+        <a nbButton hero shape="round" size="small" class="mr-2" status="warning"
+           (click)="imageCropper.rotateRight()">
+          <nb-icon icon="corner-up-right-outline"></nb-icon>
+        </a>
+        <a nbButton hero shape="round" size="small" class="mr-2" status="danger"
+           (click)="cancelCropping()">
+          <nb-icon icon="close-outline"></nb-icon>
+        </a>
+        <a nbButton hero shape="round" size="small" status="success"
+           (click)="validCropping()">
+          <nb-icon icon="crop-outline"></nb-icon>
+        </a>
+      </div>
+    </div>
+
+  </nb-card-body>
+</nb-card>
+

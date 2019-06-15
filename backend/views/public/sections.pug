@@ -9,19 +9,15 @@ block sections
                     .row
                         .col-md-12
                             .main-title.profile
-                                h1.mb-20 Nasreddine Bac Ali
-                                h3 Engineering Student
+                                h1.mb-20 #{user.firstName} #{user.lastName}
+                                h3 #{user.profession || '--'}
                 .block-content.mb-100
                     .row
                         .col-md-12
                             .sub-title.mb-40
                                 h2.uppercase About Me
                     p.lead-intro
-                        | “ Currently an engineering student at the National School of Engineers of Sousse.
-                        | At least one year of experience in backend, web development and embedded systems.
-                        | Super nerd who loves competitive programming, Linux and likes to give a hand to
-                        | anyone who needs help. Interested in developing a better problem-solving method
-                        | for challenging tasks and learning new technologies and tools. “
+                        | “ #{user.intro || '--'} “
                     img.signature.mt-20(src='images/public/signature.png', alt='')
                 .block-content.mb-100.pb-30
                     .row
@@ -40,11 +36,14 @@ block sections
                                             li.emph-1 Nationality
                                             li.emph-1 Marital Status
                                         ul.data.right
-                                            li Nasreddine Bac Ali
-                                            li 21.12.1995
-                                            li Mahdia
-                                            li Tunsian
-                                            li Single
+                                            li #{user.firstName} #{user.lastName}
+                                            li
+                                            | #{user.birthday && user.birthday.date ? user.birthday.date.getUTCDate() : '--'}.
+                                            | #{user.birthday && user.birthday.date ? user.birthday.date.getMonth() + 1 : '--'}.
+                                            | #{user.birthday && user.birthday.date ? user.birthday.date.getFullYear() : '----'}
+                                            li #{user.birthday && user.birthday.date ? user.birthday.place : '--'}
+                                            li #{user.nationality || '--'}
+                                            li #{user.maritalStatus || '--'}
                 .block-content.mb-100.pb-30
                     .row
                         .col-md-12
@@ -62,24 +61,20 @@ block sections
                                                 span.emph-1 Address
                                                 |  :
                                                 br
-                                                |                                                             Soestdijksekade 551
-                                                br
-                                                |                                                             2574 BE Den Haag
-                                                br
-                                                |                                                             Netherlands
+                                                | #{user.principal && user.principal.address ? user.principal.address : '--'}
                                         ul.data.right
                                             li
                                                 span.emph-1 E-Mail
-                                                |  : nasreddine.bacali95@gmail.com
+                                                |  : #{user.principal && user.principal.email ? user.principal.email : '--'}
                                             li
                                                 span.emph-1 Website
-                                                |  : www.nasreddinebacali.info
+                                                |  : #{user.principal && user.principal.website ? user.principal.website : '--'}
                                             li
                                                 span.emph-1 Phone
-                                                |  : +31 6 26734687
+                                                |  : #{user.principal && user.principal.phone ? user.principal.phone : '--'}
                                             li
                                                 span.emph-1 Skype
-                                                |  : bac_ali3
+                                                |  : #{user.skype || '--'}
                 .block-content
                     .row
                         .col-md-12

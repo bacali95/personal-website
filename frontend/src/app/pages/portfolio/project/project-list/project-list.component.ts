@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalDataSource} from '@bacali/ng2-smart-table';
 import {NbDialogService} from '@nebular/theme';
-import {ToastService} from '../../../services/toast.service';
-import {ConfirmDialogComponent} from '../../../@theme/components';
-import {ProjectService} from '../../../services/project.service';
+import {ToastService} from '../../../../services/toast.service';
+import {ConfirmDialogComponent} from '../../../../@theme/components';
+import {ProjectService} from '../../../../services/project.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -73,18 +73,19 @@ export class ProjectListComponent implements OnInit {
   }
 
   refresh() {
-    this.projectService.getAll().subscribe((projects) => {
-      this.source.load(projects);
-    });
+    this.projectService.getAll()
+      .then((projects) => {
+        this.source.load(projects);
+      });
   }
 
   openAddForm() {
-    this.router.navigate(['pages/project/add']);
+    this.router.navigate(['pages/portfolio/project/add']);
   }
 
   onCustomActions(event: any) {
     if (event.action === 'edit') {
-      this.router.navigate([`pages/project/edit/${event.data._id}`]);
+      this.router.navigate([`pages/portfolio/project/edit/${event.data._id}`]);
     } else {
       this.dialogService.open(ConfirmDialogComponent, {
         context: {
@@ -95,7 +96,7 @@ export class ProjectListComponent implements OnInit {
         .subscribe((result) => {
           if (result) {
             this.projectService.delete(event.data._id)
-              .subscribe((data: { message: string }) => {
+              .then((data: { message: string }) => {
                 this.toastService.success(data.message);
                 this.refresh();
               });

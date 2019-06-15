@@ -29,28 +29,22 @@ build-entrypoint:
   stage: build
   script:
     - cd entrypoint
-    - docker build -t "$CI_DOCKER_REPOSITORY/entrypoint:latest" .
-    - docker push "$CI_DOCKER_REPOSITORY/entrypoint:latest"
-  only:
-    - master
+    - docker build -t "$CI_DOCKER_REPOSITORY/entrypoint-$CI_COMMIT_REF_NAME:latest" .
+    - docker push "$CI_DOCKER_REPOSITORY/entrypoint-$CI_COMMIT_REF_NAME:latest"
 
 build-backend:
   stage: build
   script:
     - cd backend
-    - docker build -t "$CI_DOCKER_REPOSITORY/backend:latest" .
-    - docker push "$CI_DOCKER_REPOSITORY/backend:latest"
-  only:
-    - master
+    - docker build -t "$CI_DOCKER_REPOSITORY/backend-$CI_COMMIT_REF_NAME:latest" .
+    - docker push "$CI_DOCKER_REPOSITORY/backend-$CI_COMMIT_REF_NAME:latest"
 
 build-frontend:
   stage: build
   script:
     - cd frontend
-    - docker build -t "$CI_DOCKER_REPOSITORY/frontend:latest" .
-    - docker push "$CI_DOCKER_REPOSITORY/frontend:latest"
-  only:
-    - master
+    - docker build -t "$CI_DOCKER_REPOSITORY/frontend-$CI_COMMIT_REF_NAME:latest" .
+    - docker push "$CI_DOCKER_REPOSITORY/frontend-$CI_COMMIT_REF_NAME:latest"
 
 deploy-acc:
   stage: deploy

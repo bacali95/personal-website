@@ -9,7 +9,7 @@
   <nb-card-body>
     <form [formGroup]="model">
       <div class="form-group">
-        <label for="title">Content</label>
+        <label for="title">Title</label>
         <input
           nbInput
           fullWidth
@@ -21,6 +21,7 @@
           required>
       </div>
       <div class="form-group">
+        <label for="description">Description</label>
         <textarea
           nbInput
           fullWidth
@@ -32,6 +33,7 @@
         </textarea>
       </div>
       <div class="form-group">
+        <label for="type">Type</label>
         <input
           nbInput
           fullWidth
@@ -43,6 +45,7 @@
           required>
       </div>
       <div class="form-group">
+        <label for="categories">Categories</label>
         <select
           #categoriesSelect
           nbInput
@@ -73,7 +76,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="startDate">End Date</label>
+            <label for="endDate">End Date</label>
             <input
               nbInput
               fullWidth
@@ -87,12 +90,13 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="githubLink">Source Link</label>
         <input
           nbInput
           fullWidth
           formControlName="githubLink"
           id="githubLink"
-          placeholder="Type"
+          placeholder="Source Link"
           type="text"
           required>
       </div>

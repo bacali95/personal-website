@@ -1,19 +1,24 @@
 const express = require('express');
 const router = express.Router();
+const specs = require('../tools/specs');
 const sortProjects = require('../tools/utils').sortProjects;
 
-const Category = require('../models/category');
+const User = require('../models/user');
 const Project = require('../models/project');
+const Category = require('../models/category');
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
   const categories = await Category.getAll();
   const projects = await Project.getAll();
   await sortProjects(projects);
+  const user = await User.getByUsername(specs.ADMIN_USERNAME);
+  console.log(user);
 
   return res.render('public/sections', {
     title: 'Nasreddine Bac Ali',
     layout: 'layout',
+    user,
     projects,
     categories
   });
