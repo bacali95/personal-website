@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
   imageEvent: Event;
   showCropper: boolean = false;
 
-  private editMode: boolean = false;
+  editMode: boolean = false;
   user: User = new User();
   private croppedImage: any = '';
   imageUploading: boolean = false;
