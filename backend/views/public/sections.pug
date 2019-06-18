@@ -61,17 +61,17 @@ block sections
                                                 span.emph-1 Address
                                                 |  :
                                                 br
-                                                | #{user.principal && user.principal.address ? user.principal.address : '--'}
+                                                | #{user.address ? user.address : '--'}
                                         ul.data.right
                                             li
                                                 span.emph-1 E-Mail
-                                                |  : #{user.principal && user.principal.email ? user.principal.email : '--'}
+                                                |  : #{user.email ? user.email : '--'}
                                             li
                                                 span.emph-1 Website
-                                                |  : #{user.principal && user.principal.website ? user.principal.website : '--'}
+                                                |  : #{user.website ? user.website : '--'}
                                             li
                                                 span.emph-1 Phone
-                                                |  : #{user.principal && user.principal.phone ? user.principal.phone : '--'}
+                                                |  : #{user.phone ? user.phone : '--'}
                                             li
                                                 span.emph-1 Skype
                                                 |  : #{user.skype || '--'}
@@ -134,28 +134,20 @@ block sections
                     .row
                         .col-md-12
                             .timeline
-                                .timeline-inner
-                                    .name
-                                        span.date September 2016 - June 2019
-                                        h4 National School of Engineers of Sousse
-                                    .detail
-                                        p Computer Engineering
-                                        br
-                                        br
-                                .timeline-inner
-                                    .name.switched
-                                        span.date September 2014 - June 2016
-                                        h4 Preparatory Institute for Engineering Studies of El Manar
-                                    .detail
-                                        p Mathematical and Physical Major 2016
-                                        br
-                                        br
-                                .timeline-inner
-                                    .name
-                                        span.date September 2010 - June 2014
-                                        h4 Ibn Rochd High School
-                                    .detail
-                                        p Baccalaureate Mathematics 2014
+                                each stage, index in user.education
+                                    .timeline-inner
+                                        if index % 2
+                                            .name.switched
+                                                span.date= stage.period
+                                                h4= stage.name
+                                        else
+                                            .name
+                                                span.date= stage.period
+                                                h4= stage.name
+                                        .detail
+                                            p= stage.detail
+                                            br
+                                            br
                 .block-content.mb-100.pb-30
                     .row
                         .col-md-12

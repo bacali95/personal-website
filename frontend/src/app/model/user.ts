@@ -15,17 +15,9 @@ export class User {
   };
   nationality: string;
   maritalStatus: string;
-  principal: {
-    address: string;
-    email: string;
-    website: string;
-    phone: string;
-  };
-  secondary: {
-    address: string;
-    email: string;
-    website: string;
-    phone: string;
-  };
+  address: string;
+  email: string;
+  website: string;
+  phone: string;
   skype: string;
 }

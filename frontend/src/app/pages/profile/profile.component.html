@@ -1,30 +1,21 @@
-<nb-card size="large">
-  <nb-card-header>
-    Profile
-    <a nbButton hero size="small" class="float-right"
-       *ngIf="!editMode" (click)="toggleEditMode()">Edit</a>
-    <a nbButton hero size="small" class="float-right ml-2" status="success"
-       *ngIf="editMode" (click)="toggleEditMode()">Save</a>
-    <a nbButton hero size="small" class="float-right" status="danger"
-       *ngIf="editMode" (click)="toggleEditMode()">Cancel</a>
-  </nb-card-header>
+<nb-card>
   <nb-card-body>
     <div *ngIf="!showCropper">
-      <div class="col-md-12 d-flex justify-content-center">
+      <div class="d-flex justify-content-center">
         <img [src]="user.image ? user.image.secure_url : 'assets/images/noimage.png'" alt="profile image"
              height="200vh">
       </div>
-      <div class="col-md-12 d-flex justify-content-center mt-2">
+      <div class="d-flex justify-content-center mt-3">
         <label>
           <input type="file" (change)="fileChangeEvent($event)" hidden>
           <span>
-            <a nbButton hero shape="round" size="small">Select an image</a>
+            <a nbButton hero shape="round" size="small">Select image</a>
           </span>
         </label>
       </div>
     </div>
     <div [style.display]="showCropper ? null : 'none'">
-      <div class="col-md-12 d-flex justify-content-center" [style.maxHeight]="'50vh'">
+      <div class="d-flex justify-content-center" [style.maxHeight]="'50vh'">
         <image-cropper
           #imageCropper
           [nbSpinner]="imageUploading"
@@ -35,7 +26,7 @@
           resizeToWidth="982">
         </image-cropper>
       </div>
-      <div class="col-md-12 d-flex justify-content-center">
+      <div class="d-flex justify-content-center">
         <a nbButton hero shape="round" size="small" class="mr-2" status="warning"
            (click)="imageCropper.rotateLeft()">
           <nb-icon icon="corner-up-left-outline"></nb-icon>
@@ -54,7 +45,31 @@
         </a>
       </div>
     </div>
-
   </nb-card-body>
 </nb-card>
-
+<nb-accordion>
+  <nb-accordion-item>
+    <nb-accordion-item-header>
+      Credentials
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <login-details [user]="user" (userUpdated)="updateUser($event)"></login-details>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+  <nb-accordion-item>
+    <nb-accordion-item-header>
+      General
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <general-details [user]="user" (userUpdated)="updateUser($event)"></general-details>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+  <nb-accordion-item>
+    <nb-accordion-item-header>
+      Education
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <education-details [user]="user" (userUpdated)="updateUser($event)"></education-details>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>

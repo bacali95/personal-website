@@ -4,12 +4,18 @@ import {ThemeModule} from '../../@theme/theme.module';
 import {Ng2SmartTableModule} from '@bacali/ng2-smart-table';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ProfileComponent} from './profile.component';
-import {NbDialogModule, NbIconModule} from '@nebular/theme';
+import {NbDatepickerModule, NbDialogModule, NbIconModule} from '@nebular/theme';
 import {ImageCropperModule} from 'ngx-image-cropper';
+import {LoginDetailsComponent} from './login-details/login-details.component';
+import {GeneralDetailsComponent} from './general-details/general-details.component';
+import { EducationDetailsComponent } from './education-details/education-details.component';
 
 @NgModule({
   declarations: [
     ProfileComponent,
+    LoginDetailsComponent,
+    GeneralDetailsComponent,
+    EducationDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -20,6 +26,7 @@ import {ImageCropperModule} from 'ngx-image-cropper';
     NbDialogModule.forChild(),
     Ng2SmartTableModule,
     NbIconModule,
+    NbDatepickerModule,
   ],
 })
 export class ProfileModule {

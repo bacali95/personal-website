@@ -1,0 +1,47 @@
+<div class="row" [formGroup]="model">
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        nbInput
+        fullWidth
+        formControlName="username"
+        id="username"
+        placeholder="Username"
+        type="text">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        nbInput
+        fullWidth
+        formControlName="password"
+        id="password"
+        placeholder="Password"
+        type="password"
+        required
+        [status]="password.invalid && password.touched ? 'danger' : ''">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input
+        nbInput
+        fullWidth
+        formControlName="confirmPassword"
+        id="confirmPassword"
+        placeholder="Confirm Password"
+        type="password"
+        required
+        [status]="confirmPassword.invalid && confirmPassword.touched ? 'danger' : ''">
+    </div>
+  </div>
+</div>
+<div class="mt-3 mr-3">
+  <button nbButton hero size="medium" class="float-right" status="success"
+          (click)="submit()" [disabled]="!model.valid">Save
+  </button>
+</div>

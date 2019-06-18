@@ -39,37 +39,32 @@ const UserSchema = mongoose.Schema({
   maritalStatus: {
     type: String
   },
-  principal: {
-    address: {
-      type: String,
-    },
-    email: {
-      type: String
-    },
-    website: {
-      type: String
-    },
-    phone: {
-      type: String
-    }
+  address: {
+    type: String,
   },
-  secondary: {
-    address: {
-      type: String
-    },
-    email: {
-      type: String
-    },
-    website: {
-      type: String
-    },
-    phone: {
-      type: String
-    }
+  email: {
+    type: String
+  },
+  website: {
+    type: String
+  },
+  phone: {
+    type: String
   },
   skype: {
     type: String
-  }
+  },
+  education: [{
+    name: {
+      type: String
+    },
+    detail: {
+      type: String
+    },
+    period: {
+      type: String
+    },
+  }]
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);

@@ -3,6 +3,7 @@ import {UserService} from '../../services/user.service';
 import {User} from '../../model/user';
 import {HttpEventType} from '@angular/common/http';
 import {UploadService} from '../../services/upload.service';
+import {ToastService} from '../../services/toast.service';
 
 @Component({
   selector: 'profile',
@@ -14,24 +15,24 @@ export class ProfileComponent implements OnInit {
   imageEvent: Event;
   showCropper: boolean = false;
 
-  editMode: boolean = false;
   user: User = new User();
   private croppedImage: any = '';
   imageUploading: boolean = false;
 
   constructor(private userService: UserService,
-              private uploadService: UploadService) {
-    userService.getCurrent()
-      .then(user => {
-        this.user = user;
-      });
+              private uploadService: UploadService,
+              private toastService: ToastService) {
+    this.refresh();
   }
 
   ngOnInit() {
   }
 
-  toggleEditMode() {
-    this.editMode = !this.editMode;
+  private refresh() {
+    this.userService.getCurrent()
+      .then(user => {
+        this.user = user;
+      });
   }
 
   fileChangeEvent(event) {
@@ -67,4 +68,11 @@ export class ProfileComponent implements OnInit {
     this.croppedImage = image;
   }
 
+  updateUser(user: User) {
+    this.userService.update(user)
+      .then((data: { message: string }) => {
+        this.refresh();
+        this.toastService.success(data.message);
+      });
+  }
 }
