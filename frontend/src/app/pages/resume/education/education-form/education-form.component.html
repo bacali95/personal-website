@@ -1,0 +1,49 @@
+<nb-card>
+  <nb-card-header>
+    Add User
+    <button nbButton hero size="small" status="success" class="float-right m-1" (click)="submit()"
+            [disabled]="model.invalid">Submit
+    </button>
+    <button nbButton hero size="small" status="danger" class="float-right m-1" (click)="cancel()">Cancel</button>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="model">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          nbInput
+          fullWidth
+          formControlName="name"
+          id="name"
+          placeholder="name"
+          type="text"
+          [status]="name.invalid && name.touched ? 'danger' : ''"
+          required>
+      </div>
+      <div class="form-group">
+        <label for="detail">Details</label>
+        <input
+          nbInput
+          fullWidth
+          formControlName="detail"
+          id="detail"
+          placeholder="Details"
+          type="text"
+          [status]="detail.invalid && detail.touched ? 'danger' : ''"
+          required>
+      </div>
+      <div class="form-group">
+        <label for="period">Period</label>
+        <input
+          nbInput
+          fullWidth
+          formControlName="period"
+          id="period"
+          placeholder="Period"
+          type="text"
+          [status]="period.invalid && period.touched ? 'danger' : ''"
+          required>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

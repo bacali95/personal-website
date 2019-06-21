@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 /* GET home page. */
 router.post('/login', function (req, res, next) {
-  passport.authenticate('login', async (err, user, info) => {
+  passport.authenticate('login', async (err, user) => {
     try {
       if (err || !user) {
         return res.status(401).send(err.message);
@@ -24,7 +24,7 @@ router.post('/login', function (req, res, next) {
   })(req, res, next);
 });
 
-router.get('/logout', function (req, res, next) {
+router.get('/logout', function (req, res) {
   res.status(200).send({auth: false});
 });
 

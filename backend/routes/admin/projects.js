@@ -17,30 +17,33 @@ const Project = require('../../models/project');
 const compress = CompressTool();
 
 router.route('/')
-  .get(async function (req, res, next) {
+  .get(async function (req, res) {
     const projects = await Project.getAll();
     return res.send(projects);
   })
-  .post(async function (req, res, next) {
+  .post(async function (req, res) {
     const project = new Project(req.body);
 
-    await Project.create(project).catch(() => {
-      return res.status(409).send({message: 'Project is already used!'});
+    await Project.create(project).catch((error) => {
+      console.log(error.message);
+      return res.status(409).send({message: 'Adding project Failed!'});
     });
 
     return res.status(200).send({message: 'Project added successfully'});
   });
 
 router.route('/:id')
-  .get(async function (req, res, next) {
-    const project = await Project.getById(req.params.id).catch(() => {
+  .get(async function (req, res) {
+    const project = await Project.getById(req.params.id).catch((error) => {
+      console.log(error.message);
       return res.status(500).send({message: 'Project not found!'});
     });
 
     return res.send(project);
   })
-  .put(async function (req, res, next) {
-    const project = await Project.getById(req.params.id).catch(() => {
+  .put(async function (req, res) {
+    const project = await Project.getById(req.params.id).catch((error) => {
+      console.log(error.message);
       return res.status(500).send({message: 'Project not found!'});
     });
 
@@ -55,18 +58,21 @@ router.route('/:id')
       }
     });
 
-    await Project.update(newProject._id, newProject).catch(() => {
+    await Project.update(newProject._id, newProject).catch((error) => {
+      console.log(error.message);
       return res.status(500).send({message: 'Updating Project failed!'});
     });
 
     return res.status(200).send({message: 'Project updated successfully'});
   })
-  .delete(async function (req, res, next) {
-    const project = await Project.getById(req.params.id).catch(() => {
+  .delete(async function (req, res) {
+    const project = await Project.getById(req.params.id).catch((error) => {
+      console.log(error.message);
       return res.status(500).send({message: 'Project not found!'});
     });
 
-    await Project.remove(req.params.id).catch(() => {
+    await Project.remove(req.params.id).catch((error) => {
+      console.log(error.message);
       return res.status(500).send({message: 'Deleting Project failed!'});
     });
 
@@ -77,7 +83,7 @@ router.route('/:id')
     return res.status(200).send({message: 'Project deleted successfully'});
   });
 
-router.post('/postImage', multipartMiddleware, function (req, res, next) {
+router.post('/postImage', multipartMiddleware, function (req, res) {
   const file = req.files.uploads[0];
   compress.begin(file, {
     folder: `personal_website/${specs.ENV}`
@@ -89,7 +95,7 @@ router.post('/postImage', multipartMiddleware, function (req, res, next) {
   });
 });
 
-router.post('/postFile', multipartMiddleware, function (req, res, next) {
+router.post('/postFile', multipartMiddleware, function (req, res) {
   const file = req.files.uploads[0];
   uploadImage(file.path, {
     folder: `personal_website/${specs.ENV}`

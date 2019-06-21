@@ -13,19 +13,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/profile',
   },
   {
+    title: 'Resume',
+    icon: 'briefcase-outline',
+    link: '/pages/resume',
+  },
+  {
     title: 'Portfolio',
     icon: 'camera-outline',
-    children: [
-      {
-        title: 'Projects',
-        icon: 'list-outline',
-        link: '/pages/portfolio/project',
-      },
-      {
-        title: 'Categories',
-        icon: 'list-outline',
-        link: '/pages/portfolio/category',
-      },
-    ],
+    link: '/pages/portfolio',
   },
 ];

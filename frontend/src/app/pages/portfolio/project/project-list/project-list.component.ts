@@ -4,7 +4,7 @@ import {NbDialogService} from '@nebular/theme';
 import {ToastService} from '../../../../services/toast.service';
 import {ConfirmDialogComponent} from '../../../../@theme/components';
 import {ProjectService} from '../../../../services/project.service';
-import {Router} from '@angular/router';
+import {ProjectFormComponent} from '../project-form/project-form.component';
 
 @Component({
   selector: 'project-list',
@@ -37,14 +37,14 @@ export class ProjectListComponent implements OnInit {
       categories: {
         title: 'Categories',
         type: 'string',
-        valuePrepareFunction: (cell, row) => {
+        valuePrepareFunction: (cell) => {
           return cell.map(item => item.name).join(', ');
         },
       },
       startDate: {
         title: 'Type',
         type: 'string',
-        valuePrepareFunction: (cell, row) => {
+        valuePrepareFunction: (cell) => {
           const date = new Date(cell);
           return `${date.getMonth() + 1} - ${date.getFullYear()}`;
         },
@@ -52,7 +52,7 @@ export class ProjectListComponent implements OnInit {
       endDate: {
         title: 'Type',
         type: 'string',
-        valuePrepareFunction: (cell, row) => {
+        valuePrepareFunction: (cell) => {
           const date = new Date(cell);
           return `${date.getMonth() + 1} - ${date.getFullYear()}`;
         },
@@ -63,7 +63,6 @@ export class ProjectListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
 
   constructor(private projectService: ProjectService,
-              private router: Router,
               private dialogService: NbDialogService,
               private toastService: ToastService) {
     this.refresh();
@@ -80,12 +79,21 @@ export class ProjectListComponent implements OnInit {
   }
 
   openAddForm() {
-    this.router.navigate(['pages/portfolio/project/add']);
+    this.dialogService.open(ProjectFormComponent).onClose
+      .subscribe((res) => {
+        this.refresh();
+      });
   }
 
   onCustomActions(event: any) {
     if (event.action === 'edit') {
-      this.router.navigate([`pages/portfolio/project/edit/${event.data._id}`]);
+      this.dialogService.open(ProjectFormComponent, {
+        context: {
+          value: event.data,
+        },
+      }).onClose.subscribe(() => {
+        this.refresh();
+      });
     } else {
       this.dialogService.open(ConfirmDialogComponent, {
         context: {

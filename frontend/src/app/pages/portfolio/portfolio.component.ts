@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'portfolio',
-  template: '<router-outlet></router-outlet>',
+  templateUrl: 'portfolio.component.html',
 })
 export class PortfolioComponent {
 

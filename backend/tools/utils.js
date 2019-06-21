@@ -31,3 +31,7 @@ module.exports.sortProjects = async (projects) => {
     return (x === y) ? 0 : (x > y) ? -1 : 1;
   });
 };
+
+module.exports.sortList = async (list, dir = 'desc') => {
+  await list.sort((a, b) => dir === 'asc' ? a.rank - b.rank : b.rank - a.rank);
+};

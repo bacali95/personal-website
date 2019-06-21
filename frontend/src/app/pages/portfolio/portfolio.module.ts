@@ -1,17 +1,37 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CategoryModule} from './category/category.module';
 import {PortfolioComponent} from './portfolio.component';
-import {PortfolioRoutingModule} from './portfolio-routing.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ThemeModule} from '../../@theme/theme.module';
+import {NbDatepickerModule, NbDialogModule} from '@nebular/theme';
+import {Ng2SmartTableModule} from '@bacali/ng2-smart-table';
+import {ProjectListComponent} from './project/project-list/project-list.component';
+import {ProjectFormComponent} from './project/project-form/project-form.component';
+import {CategoryFormComponent} from './category/category-form/category-form.component';
+import {CategoryListComponent} from './category/category-list/category-list.component';
 
 @NgModule({
   declarations: [
     PortfolioComponent,
+
+    ProjectListComponent,
+    ProjectFormComponent,
+
+    CategoryListComponent,
+    CategoryFormComponent,
   ],
   imports: [
     CommonModule,
-    CategoryModule,
-    PortfolioRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ThemeModule,
+    NbDialogModule.forChild(),
+    Ng2SmartTableModule,
+    NbDatepickerModule,
+  ],
+  entryComponents: [
+    CategoryFormComponent,
+    ProjectFormComponent,
   ],
 })
 export class PortfolioModule {

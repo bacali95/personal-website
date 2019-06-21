@@ -5,8 +5,8 @@ import {DashboardModule} from './dashboard/dashboard.module';
 import {PagesRoutingModule} from './pages-routing.module';
 import {ThemeModule} from '../@theme/theme.module';
 import {ProfileModule} from './profile/profile.module';
-import {CategoryModule} from './portfolio/category/category.module';
-import {ProjectModule} from './portfolio/project/project.module';
+import {ResumeModule} from './resume/resume.module';
+import {PortfolioModule} from './portfolio/portfolio.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -19,8 +19,8 @@ const PAGES_COMPONENTS = [
     DashboardModule,
 
     ProfileModule,
-    CategoryModule,
-    ProjectModule,
+    ResumeModule,
+    PortfolioModule,
   ],
   declarations: [
     ...PAGES_COMPONENTS,

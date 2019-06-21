@@ -8,14 +8,12 @@ import {NbDatepickerModule, NbDialogModule, NbIconModule} from '@nebular/theme';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {LoginDetailsComponent} from './login-details/login-details.component';
 import {GeneralDetailsComponent} from './general-details/general-details.component';
-import { EducationDetailsComponent } from './education-details/education-details.component';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     LoginDetailsComponent,
     GeneralDetailsComponent,
-    EducationDetailsComponent,
   ],
   imports: [
     CommonModule,

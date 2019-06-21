@@ -14,7 +14,7 @@ import {
   NbCheckboxModule,
   NbContextMenuModule,
   NbDatepickerModule,
-  NbDialogModule,
+  NbDialogModule, NbIconModule,
   NbInputModule,
   NbLayoutModule,
   NbListModule,
@@ -38,8 +38,8 @@ import {
 
 import {NbSecurityModule} from '@nebular/security';
 
-import {ConfirmDialogComponent, FooterComponent, HeaderComponent, ImageUploaderComponent} from './components';
-import {CapitalizePipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe} from './pipes';
+import {ConfirmDialogComponent, FooterComponent, HeaderComponent, ImageUploaderComponent, CustomActionItemComponent} from './components';
+import {CapitalizePipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe, StringifyPipe} from './pipes';
 import {SampleLayoutComponent} from './layouts';
 import {DEFAULT_THEME} from './styles/theme.default';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
@@ -48,6 +48,7 @@ const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 const NB_MODULES = [
   NbEvaIconsModule,
+  NbIconModule,
   NbCardModule,
   NbLayoutModule,
   NbTabsetModule,
@@ -87,10 +88,12 @@ const COMPONENTS = [
   ConfirmDialogComponent,
   SampleLayoutComponent,
   ImageUploaderComponent,
+  CustomActionItemComponent,
 ];
 
 const ENTRY_COMPONENTS = [
   ConfirmDialogComponent,
+  CustomActionItemComponent,
 ];
 
 const PIPES = [
@@ -98,6 +101,7 @@ const PIPES = [
   PluralPipe,
   RoundPipe,
   TimingPipe,
+  StringifyPipe,
   NumberWithCommasPipe,
 ];
 

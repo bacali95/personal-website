@@ -1,15 +1,15 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastService} from '../../../../services/toast.service';
 import {Project} from '../../../../model/project';
 import {ProjectService} from '../../../../services/project.service';
 import {CategoryService} from '../../../../services/category.service';
 import {Category} from '../../../../model/category';
-import {ActivatedRoute, Router} from '@angular/router';
 import {UploadService} from '../../../../services/upload.service';
 import {HttpEventType} from '@angular/common/http';
 import {Subject} from 'rxjs';
 import {LocalImage} from '../../../../model/image';
+import {NbDialogRef} from '@nebular/theme';
 
 @Component({
   selector: 'project-form',
@@ -18,6 +18,7 @@ import {LocalImage} from '../../../../model/image';
 })
 export class ProjectFormComponent implements OnInit, AfterViewInit {
 
+  @Input() value: Project;
   @ViewChild('categoriesSelect', {static: false}) categoriesSelect;
 
   categoriesList: Category[] = [];
@@ -38,34 +39,8 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   constructor(private projectService: ProjectService,
               private categoryService: CategoryService,
               private uploadService: UploadService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router,
+              private dialogRef: NbDialogRef<ProjectFormComponent>,
               private toastService: ToastService) {
-    this._id = this.activatedRoute.snapshot.paramMap.get('id');
-    if (this._id) {
-      this.projectService.get(this._id)
-        .then(project => {
-          this.title.setValue(project.title);
-          this.description.setValue(project.description);
-          this.type.setValue(project.type);
-          this.categories.setValue([...project.categories]);
-          this.startDate.setValue(new Date(project.startDate));
-          this.endDate.setValue(new Date(project.endDate));
-          this.githubLink.setValue(project.githubLink);
-          this.images = [...project.images];
-        });
-    }
-    this.categoryService.getAll()
-      .then((categories) => {
-        this.categoriesList = [...categories];
-        setTimeout(() => {
-          const options = this.categoriesSelect.nativeElement.options;
-          for (let i = 0; i < options.length; i++) {
-            const value = options[i].value.replace(`${i}: `, '').replace(new RegExp('\'', 'g'), '');
-            options[i].selected = this.categories.value.map(c => c._id).indexOf(value) > -1;
-          }
-        }, 100);
-      });
   }
 
   ngOnInit() {
@@ -78,6 +53,27 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
       endDate: this.endDate,
       githubLink: this.githubLink,
     });
+    if (this.value) {
+      this.title.setValue(this.value.title);
+      this.description.setValue(this.value.description);
+      this.type.setValue(this.value.type);
+      this.categories.setValue([...this.value.categories]);
+      this.startDate.setValue(new Date(this.value.startDate));
+      this.endDate.setValue(new Date(this.value.endDate));
+      this.githubLink.setValue(this.value.githubLink);
+      this.images = [...this.value.images];
+    }
+    this.categoryService.getAll()
+      .then((categories) => {
+        this.categoriesList = [...categories];
+        setTimeout(() => {
+          const options = this.categoriesSelect.nativeElement.options;
+          for (let i = 0; i < options.length; i++) {
+            const value = options[i].skill.replace(`${i}: `, '').replace(new RegExp('\'', 'g'), '');
+            options[i].selected = this.categories.value.map(c => c._id).indexOf(value) > -1;
+          }
+        }, 100);
+      });
   }
 
   ngAfterViewInit(): void {
@@ -110,6 +106,9 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
 
   submit() {
     if (this.model.valid && this.images.length > 0) {
+      this.categories
+        .setValue(this.categoriesList
+          .filter(value => this.model.value.categories.indexOf(value._id) > -1));
       this.submittedImagesNumber.asObservable()
         .subscribe(value => {
           if (value === this.images.length) {
@@ -119,7 +118,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
               this.projectService.update(this.model.value)
                 .then((data: { message: string }) => {
                   this.toastService.success(data.message);
-                  this.router.navigate(['pages/portfolio/project']);
+                  this.dialogRef.close('success');
                 }).catch((data) => {
                 this.submitting = false;
                 this.toastService.error(data.error.message);
@@ -129,7 +128,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
               this.projectService.create(project)
                 .then((data: { message: string }) => {
                   this.toastService.success(data.message);
-                  this.router.navigate(['pages/portfolio/project']);
+                  this.dialogRef.close('success');
                 }).catch((data) => {
                 this.submitting = false;
                 this.toastService.error(data.error.message);
@@ -145,6 +144,6 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   }
 
   cancel() {
-    this.router.navigate(['pages/portfolio/project']);
+    this.dialogRef.close('cancel');
   }
 }

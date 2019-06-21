@@ -4,6 +4,8 @@ import {NgModule} from '@angular/core';
 import {PagesComponent} from './pages.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {ProfileComponent} from './profile/profile.component';
+import {ResumeComponent} from './resume/resume.component';
+import {PortfolioComponent} from './portfolio/portfolio.component';
 
 const routes: Routes = [{
   path: '',
@@ -11,7 +13,8 @@ const routes: Routes = [{
   children: [
     {path: 'dashboard', component: DashboardComponent},
     {path: 'profile', component: ProfileComponent},
-    {path: 'portfolio', loadChildren: () => import('./portfolio/portfolio.module').then(m => m.PortfolioModule)},
+    {path: 'resume', component: ResumeComponent},
+    {path: 'portfolio', component: PortfolioComponent},
     {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
     {path: '**', redirectTo: 'dashboard'},
   ],

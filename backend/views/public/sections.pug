@@ -134,7 +134,7 @@ block sections
                     .row
                         .col-md-12
                             .timeline
-                                each stage, index in user.education
+                                each stage, index in educations
                                     .timeline-inner
                                         if index % 2
                                             .name.switched
@@ -161,163 +161,15 @@ block sections
                                 .listing-large-inner
                                     .listing-event
                                         ul.data.left.clearfix
-                                            li
-                                                h5 Java
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                            li
-                                                h5 JEE
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                            li
-                                                h5 C
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                            li
-                                                h5 C++
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                            li
-                                                h5 .Net
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                            li
-                                                h5 C#
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                            li
-                                                h5 Python
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                            li
-                                                h5 NodeJS
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                            li
-                                                h5 HTML
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-
-                                            li
-                                                h5 CSS
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                            li
-                                                h5 Photoshop
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
-                                            li
-                                                h5 LaTeX
-                                                .rating
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span
-                                                    span.transparent
-                                                    span.transparent
-                                                    span.transparent
+                                            each skill, index in skills
+                                                li
+                                                    h5= skill.name
+                                                    .rating
+                                                        each i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                                                            if i <= skill.value
+                                                                span
+                                                            else
+                                                                span.transparent
                                         ul.data.right.clearfix
                                             li
                                                 h5 Assests

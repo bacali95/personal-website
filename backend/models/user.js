@@ -53,18 +53,7 @@ const UserSchema = mongoose.Schema({
   },
   skype: {
     type: String
-  },
-  education: [{
-    name: {
-      type: String
-    },
-    detail: {
-      type: String
-    },
-    period: {
-      type: String
-    },
-  }]
+  }
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
