@@ -67,7 +67,7 @@ router.get('/next/:index', async function (req, res) {
   return res.redirect('/project/' + _id + '?index=' + index);
 });
 
-router.get('/*', function (req, res) {
+router.get('/*', function (req, res, next) {
   const regex = /^((\/next)|(\/project)|(\/images)|(\/api))/g;
   if (!String(req.url).match(regex)) {
     return res.redirect('/');

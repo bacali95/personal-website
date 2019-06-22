@@ -2,8 +2,10 @@
   "name": "personal-website",
   "version": "3.0.0",
   "scripts": {
-    "start": "node ./bin/www",
-    "server": "nodemon ./bin/www"
+    "start": "node src/bin/www",
+    "server": "nodemon src/bin/www",
+    "lint": "eslint src/",
+    "lint:ci": "npm run lint"
   },
   "keywords": [
     "CV",
@@ -42,9 +44,10 @@
     "cors": "^2.8.5"
   },
   "devDependencies": {
-    "mocha": "^6.0.2",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
+    "eslint": "^5.16.0",
+    "mocha": "^6.0.2",
     "nodemon": "^1.19.0"
   }
 }

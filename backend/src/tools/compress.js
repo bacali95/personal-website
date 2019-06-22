@@ -1,7 +1,7 @@
 const specs = require('./specs');
 const uploadImage = require('./utils').uploadImage;
 const fs = require('fs');
-const tinify = require('tinify');
+const tinify = require('tinify/lib/index');
 
 tinify.key = specs.TINIFY_API_KEY;
 

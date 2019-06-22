@@ -1,13 +1,13 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
-const expressValidator = require('express-validator');
+const expressValidator = require('express-validator/index');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
-const passport = require('passport');
+const passport = require('passport/lib');
 const helmet = require('helmet');
-const flash = require('connect-flash');
+const flash = require('connect-flash/lib');
 const mongoose = require('mongoose');
 const initAdmin = require('./tools/initAdmin');
 const specs = require('./tools/specs');
@@ -34,7 +34,7 @@ const categoryRouter = require('./routes/admin/category');
 const projectRouter = require('./routes/admin/projects');
 const app = express();
 
-app.locals.moment = require('moment');
+app.locals.moment = require('moment/moment');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -76,7 +76,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.png')));
 
 app.use(flash());
-app.use(function (req, res) {
+app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);
   next();
 });
@@ -91,7 +91,7 @@ app.use('/api/category', passport.authenticate('jwt', {session: false}), categor
 app.use('/api/project', passport.authenticate('jwt', {session: false}), projectRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
