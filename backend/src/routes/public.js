@@ -9,11 +9,13 @@ const Project = require('../models/project');
 const Category = require('../models/category');
 const Education = require('../models/education');
 const Skill = require('../models/skill');
+const Asset = require('../models/asset');
 
 /* GET home page. */
 router.get('/', async function (req, res) {
   const educations = await Education.getAll();
   const skills = await Skill.getAll();
+  const assets = await Asset.getAll();
   const categories = await Category.getAll();
   const projects = await Project.getAll();
 
@@ -30,7 +32,8 @@ router.get('/', async function (req, res) {
     projects,
     categories,
     educations,
-    skills
+    skills,
+    assets
   });
 });
 

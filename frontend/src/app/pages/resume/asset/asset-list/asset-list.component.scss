@@ -1,4 +1,4 @@
-@import '../../@theme/styles/themes';
+@import '../../../../@theme/styles/themes';
 
 @include nb-install-component() {
 
@@ -12,7 +12,7 @@
 
     ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
       display: inline-block;
-      width: 50%;
+      width: 25%;
       text-align: center;
       font-size: 1.1em;
 

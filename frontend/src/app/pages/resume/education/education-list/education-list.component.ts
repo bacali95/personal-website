@@ -17,9 +17,7 @@ export class EducationListComponent implements OnInit {
   educations: Education[] = [];
 
   settings = {
-    hideSubHeader: true,
     actions: {
-      add: false,
       edit: false,
       delete: false,
       custom: [
@@ -29,6 +27,10 @@ export class EducationListComponent implements OnInit {
         {name: 'delete', icon: 'trash-2-outline', renderComponent: CustomActionItemComponent},
       ],
       position: 'right',
+    },
+    mode: 'external',
+    add: {
+      addButtonContent: '<i class="nb-plus"/>',
     },
     columns: {
       rank: {

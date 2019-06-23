@@ -174,9 +174,10 @@ block sections
                                             li
                                                 h5 Assests
                                                 p.emph-3
-                                                    | Responsible, Diligence, Labour
-                                                    br
-                                                    | Rigor, Creative, Funny, Flexible
+                                                    each asset, index in assets
+                                                        if index > 0
+                                                            | #{', '}
+                                                        | #{asset.name}
                                             li
                                                 h5 Languages
                                                 ul

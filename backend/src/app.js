@@ -30,6 +30,7 @@ const authRouter = require('./routes/auth');
 const userRouter = require('./routes/admin/user');
 const educationRouter = require('./routes/admin/education');
 const skillRouter = require('./routes/admin/skill');
+const assetRouter = require('./routes/admin/asset');
 const categoryRouter = require('./routes/admin/category');
 const projectRouter = require('./routes/admin/projects');
 const app = express();
@@ -87,6 +88,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', passport.authenticate('jwt', {session: false}), userRouter);
 app.use('/api/education', passport.authenticate('jwt', {session: false}), educationRouter);
 app.use('/api/skill', passport.authenticate('jwt', {session: false}), skillRouter);
+app.use('/api/asset', passport.authenticate('jwt', {session: false}), assetRouter);
 app.use('/api/category', passport.authenticate('jwt', {session: false}), categoryRouter);
 app.use('/api/project', passport.authenticate('jwt', {session: false}), projectRouter);
 

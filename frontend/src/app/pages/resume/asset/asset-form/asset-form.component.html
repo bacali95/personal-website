@@ -1,6 +1,6 @@
 <nb-card>
   <nb-card-header>
-    Add Education
+    Add Asset
     <button nbButton hero size="small" status="success" class="float-right m-1" (click)="submit()"
             [disabled]="model.invalid">Submit
     </button>
@@ -18,30 +18,6 @@
           placeholder="name"
           type="text"
           [status]="name.invalid && name.touched ? 'danger' : ''"
-          required>
-      </div>
-      <div class="form-group">
-        <label for="detail">Details</label>
-        <input
-          nbInput
-          fullWidth
-          formControlName="detail"
-          id="detail"
-          placeholder="Details"
-          type="text"
-          [status]="detail.invalid && detail.touched ? 'danger' : ''"
-          required>
-      </div>
-      <div class="form-group">
-        <label for="period">Period</label>
-        <input
-          nbInput
-          fullWidth
-          formControlName="period"
-          id="period"
-          placeholder="Period"
-          type="text"
-          [status]="period.invalid && period.touched ? 'danger' : ''"
           required>
       </div>
     </form>

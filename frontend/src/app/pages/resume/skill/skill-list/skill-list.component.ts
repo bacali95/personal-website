@@ -6,6 +6,7 @@ import {ToastService} from '../../../../services/toast.service';
 import {ConfirmDialogComponent, CustomActionItemComponent} from '../../../../@theme/components';
 import {SkillService} from '../../../../services/skill.service';
 import {Skill} from '../../../../model/skill';
+import {SkillValueComponent} from './skill-value/skill-value.component';
 
 @Component({
   selector: 'skill-list',
@@ -30,6 +31,10 @@ export class SkillListComponent implements OnInit {
       ],
       position: 'right',
     },
+    mode: 'external',
+    add: {
+      addButtonContent: '<i class="nb-plus"/>',
+    },
     columns: {
       rank: {
         title: '#',
@@ -40,8 +45,15 @@ export class SkillListComponent implements OnInit {
         type: 'string',
       },
       value: {
-        title: 'Period',
-        type: 'number',
+        title: 'Value',
+        type: 'custom',
+        valuePrepareFunction: (cell) => {
+          return {
+            parent: this,
+            value: cell,
+          };
+        },
+        renderComponent: SkillValueComponent,
       },
     },
   };

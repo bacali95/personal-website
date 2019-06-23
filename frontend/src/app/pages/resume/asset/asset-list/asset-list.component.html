@@ -1,0 +1,19 @@
+<button nbButton shape="round" class="mr-2"
+        *ngFor="let asset of assets"
+        [nbPopover]="popOverMenu"
+        nbPopoverTrigger="hover"
+        nbPopoverPlacement="bottom">
+  {{asset.name}}
+  <ng-template #popOverMenu>
+    <button nbButton shape="round" status="info" size="tiny" class="m-1"
+            (click)="openEditForm(asset)">edit
+    </button>
+    <button nbButton shape="round" status="danger" size="tiny" class="m-1"
+            (click)="delete(asset._id)">delete
+    </button>
+  </ng-template>
+</button>
+<button nbButton shape="round" size="small" outline
+        (click)="openAddForm()">
+  <nb-icon icon="plus"></nb-icon>
+</button>
