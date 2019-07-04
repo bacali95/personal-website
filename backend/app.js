@@ -1,7 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
-const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
@@ -48,23 +47,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(passport.initialize());
-
-//Validator
-app.use(expressValidator({
-  errorFormatter(param, msg, value) {
-    let namespace = param.split('.')
-      , root = namespace.shift()
-      , formParam = root;
-    while (namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return {
-      param: formParam,
-      msg,
-      value
-    };
-  }
-}));
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
