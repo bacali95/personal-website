@@ -3,7 +3,9 @@
   "version": "3.0.0",
   "scripts": {
     "start": "node ./bin/www",
-    "server": "nodemon ./bin/www"
+    "server": "nodemon ./bin/www",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [
     "CV",
@@ -39,12 +41,14 @@
     "serve-favicon": "^2.5.0",
     "tinify": "^1.6.0-beta.2",
     "cloudinary": "^1.14.0",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "mocha": "^6.0.2",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
     "nodemon": "^1.19.0"
-  }
+  },
+  "snyk": true
 }
