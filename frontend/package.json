@@ -62,7 +62,7 @@
     "rxjs": "^6.5.2",
     "typeface-exo": "^0.0.61",
     "web-animations-js": "^2.3.2",
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.9.1",
     "snyk": "^1.192.3"
   },
   "devDependencies": {

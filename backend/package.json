@@ -5,7 +5,7 @@
     "start": "node src/bin/www",
     "server": "nodemon src/bin/www",
     "lint": "eslint src/",
-    "lint:ci": "npm run lint"
+    "lint:ci": "npm run lint",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
@@ -51,6 +51,6 @@
     "eslint": "^6.0.1",
     "mocha": "^6.1.4",
     "nodemon": "^1.19.1"
-  }
+  },
   "snyk": true
 }
