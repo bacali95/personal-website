@@ -1,10 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {User} from '../../model/user';
 import {HttpEventType} from '@angular/common/http';
 import {UploadService} from '../../services/upload.service';
 import {ToastService} from '../../services/toast.service';
-import {APP_BASE_HREF} from '@angular/common';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'profile',
@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
 
   imageEvent: Event;
   showCropper: boolean = false;
+  baseHref = '';
 
   user: User = new User();
   private croppedImage: any = '';
@@ -21,8 +22,10 @@ export class ProfileComponent implements OnInit {
 
   constructor(private userService: UserService,
               private uploadService: UploadService,
-              private toastService: ToastService,
-              @Inject(APP_BASE_HREF) private baseHref) {
+              private toastService: ToastService) {
+    if (environment.production) {
+      this.baseHref = 'admin/';
+    }
     this.refresh();
   }
 
