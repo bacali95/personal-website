@@ -70,7 +70,7 @@
     "typeface-exo": "^0.0.61",
     "web-animations-js": "^2.3.1",
     "zone.js": "^0.9.1",
-    "snyk": "^1.189.0"
+    "snyk": "^1.192.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.800.2",
