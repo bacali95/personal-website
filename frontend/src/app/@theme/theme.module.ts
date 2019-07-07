@@ -14,7 +14,7 @@ import {
   NbCheckboxModule,
   NbContextMenuModule,
   NbDatepickerModule,
-  NbDialogModule,
+  NbDialogModule, NbIconModule,
   NbInputModule,
   NbLayoutModule,
   NbListModule,
@@ -38,16 +38,20 @@ import {
 
 import {NbSecurityModule} from '@nebular/security';
 
-import {ConfirmDialogComponent, FooterComponent, HeaderComponent, ImageUploaderComponent} from './components';
-import {CapitalizePipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe} from './pipes';
+import {ConfirmDialogComponent, FooterComponent, HeaderComponent, ImageUploaderComponent, CustomActionItemComponent} from './components';
+import {CapitalizePipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe, StringifyPipe} from './pipes';
 import {SampleLayoutComponent} from './layouts';
 import {DEFAULT_THEME} from './styles/theme.default';
+import {DARK_THEME} from './styles/theme.dark';
+import {COSMIC_THEME} from './styles/theme.cosmic';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
+import {WindowModeBlockScrollService} from './services/window-mode-block-scroll.service';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 const NB_MODULES = [
   NbEvaIconsModule,
+  NbIconModule,
   NbCardModule,
   NbLayoutModule,
   NbTabsetModule,
@@ -87,10 +91,12 @@ const COMPONENTS = [
   ConfirmDialogComponent,
   SampleLayoutComponent,
   ImageUploaderComponent,
+  CustomActionItemComponent,
 ];
 
 const ENTRY_COMPONENTS = [
   ConfirmDialogComponent,
+  CustomActionItemComponent,
 ];
 
 const PIPES = [
@@ -98,6 +104,7 @@ const PIPES = [
   PluralPipe,
   RoundPipe,
   TimingPipe,
+  StringifyPipe,
   NumberWithCommasPipe,
 ];
 
@@ -106,7 +113,7 @@ const NB_THEME_PROVIDERS = [
     {
       name: 'default',
     },
-    [DEFAULT_THEME],
+    [DEFAULT_THEME, DARK_THEME, COSMIC_THEME],
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
@@ -126,7 +133,10 @@ export class ThemeModule {
   static forRoot(): ModuleWithProviders {
     return <ModuleWithProviders>{
       ngModule: ThemeModule,
-      providers: [...NB_THEME_PROVIDERS],
+      providers: [
+        ...NB_THEME_PROVIDERS,
+        WindowModeBlockScrollService,
+      ],
     };
   }
 }

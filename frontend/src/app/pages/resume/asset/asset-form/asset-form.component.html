@@ -1,0 +1,33 @@
+<nb-card>
+  <nb-card-header>
+    Add Asset
+    <button nbButton ghost size="tiny" status="success" class="float-right m-1"
+            (click)="submit()" [disabled]="model.invalid">
+      <nb-icon icon="checkmark" pack="eva"></nb-icon>
+    </button>
+    <button nbButton ghost size="tiny" status="danger" class="float-right m-1"
+            (click)="delete(asset._id)" *ngIf="asset">
+      <nb-icon icon="trash-2-outline" pack="eva"></nb-icon>
+    </button>
+    <button nbButton ghost size="tiny" status="danger" class="float-right m-1"
+            (click)="cancel()">
+      <nb-icon icon="close" pack="eva"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="model">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          nbInput
+          fullWidth
+          formControlName="name"
+          id="name"
+          placeholder="name"
+          type="text"
+          [status]="name.invalid && name.touched ? 'danger' : ''"
+          required>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

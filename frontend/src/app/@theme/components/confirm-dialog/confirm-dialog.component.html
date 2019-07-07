@@ -3,8 +3,20 @@
     {{title}}
   </nb-card-header>
   <nb-card-body>
-    {{message}}
-    <button nbButton hero (click)="close(false)" status="danger" class="align-content-center">No</button>
-    <button nbButton hero (click)="close(true)" status="success" class="align-content-center">Yes</button>
+    <div class="row d-flex justify-content-center m-3">
+      {{message}}
+    </div>
+    <div class="row m-3">
+      <div class="col-sm-6">
+        <button nbButton outline status="danger" class="align-content-center" fullWidth
+                (click)="close(false)">No
+        </button>
+      </div>
+      <div class="col-sm-6">
+        <button nbButton outline status="success" class="align-content-center" fullWidth
+                (click)="close(true)">Yes
+        </button>
+      </div>
+    </div>
   </nb-card-body>
 </nb-card>

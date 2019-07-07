@@ -10,23 +10,32 @@ services:
   - docker:dind
 
 stages:
+  - lint
   - build
   - deploy
 
-before_script:
-  - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-  - apk update
-  - apk add bash
-  - 'which ssh-agent || apk add openssh'
-  - eval $(ssh-agent -s)
-  - bash -c "ssh-add <(echo '$SSH_PRIVATE_KEY')"
-  - mkdir -p ~/.ssh
-  - ssh-keyscan -H $VPS_IP >> ~/.ssh/known_hosts
-  - ssh-keyscan $VPS_IP | sort -u - ~/.ssh/known_hosts -o ~/.ssh/known_hosts
+lint-backend:
+  stage: lint
+  before_script:
+    - apk add --update nodejs nodejs-npm
+  script:
+    - cd backend
+    - npm install
+    - npm run lint:ci
 
+lint-frontend:
+  stage: lint
+  before_script:
+    - apk add --update nodejs nodejs-npm
+  script:
+    - cd frontend
+    - npm install
+    - npm run lint:ci
 
 build-entrypoint:
   stage: build
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
     - cd entrypoint
     - docker build -t "$CI_DOCKER_REPOSITORY/entrypoint-$CI_COMMIT_REF_NAME:latest" .
@@ -34,6 +43,8 @@ build-entrypoint:
 
 build-backend:
   stage: build
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
     - cd backend
     - docker build -t "$CI_DOCKER_REPOSITORY/backend-$CI_COMMIT_REF_NAME:latest" .
@@ -41,6 +52,8 @@ build-backend:
 
 build-frontend:
   stage: build
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
     - cd frontend
     - docker build -t "$CI_DOCKER_REPOSITORY/frontend-$CI_COMMIT_REF_NAME:latest" .
@@ -51,6 +64,15 @@ deploy-acc:
   environment:
     name: Acceptance
     url: https://acc.nasreddinebacali.info
+  before_script:
+    - apk update
+    - apk add bash
+    - 'which ssh-agent || apk add openssh'
+    - eval $(ssh-agent -s)
+    - bash -c "ssh-add <(echo '$SSH_PRIVATE_KEY')"
+    - mkdir -p ~/.ssh
+    - ssh-keyscan -H '$VPS_IP' >> ~/.ssh/known_hosts
+    - ssh-keyscan $VPS_IP | sort -u - ~/.ssh/known_hosts -o ~/.ssh/known_hosts
   script:
     - |
       ssh root@$VPS_IP /bin/bash -s << EOT
@@ -68,6 +90,15 @@ deploy-prod:
   environment:
     name: Production
     url: https://www.nasreddinebacali.info
+  before_script:
+    - apk update
+    - apk add bash
+    - 'which ssh-agent || apk add openssh'
+    - eval $(ssh-agent -s)
+    - bash -c "ssh-add <(echo '$SSH_PRIVATE_KEY')"
+    - mkdir -p ~/.ssh
+    - ssh-keyscan -H '$VPS_IP' >> ~/.ssh/known_hosts
+    - ssh-keyscan $VPS_IP | sort -u - ~/.ssh/known_hosts -o ~/.ssh/known_hosts
   script:
     - |
       ssh root@$VPS_IP /bin/bash -s << EOT

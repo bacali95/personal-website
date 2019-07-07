@@ -1,0 +1,110 @@
+<nb-card>
+  <nb-card-header>
+    Add Project
+    <button nbButton ghost size="tiny" status="success" class="float-right m-1"
+            (click)="submit()" [disabled]="model.invalid">
+      <nb-icon icon="checkmark" pack="eva"></nb-icon>
+    </button>
+    <button nbButton ghost size="tiny" status="danger" class="float-right m-1"
+            (click)="cancel()">
+      <nb-icon icon="close" pack="eva"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="model">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          nbInput
+          fullWidth
+          formControlName="title"
+          id="title"
+          placeholder="Title"
+          type="text"
+          [status]="title.invalid && title.touched ? 'danger' : ''"
+          required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          nbInput
+          fullWidth
+          formControlName="description"
+          id="description"
+          placeholder="Description"
+          [status]="description.invalid && description.touched ? 'danger' : ''"
+          required>
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label for="type">Type</label>
+        <input
+          nbInput
+          fullWidth
+          formControlName="type"
+          id="type"
+          placeholder="Type"
+          type="text"
+          [status]="type.invalid && type.touched ? 'danger' : ''"
+          required>
+      </div>
+      <div class="form-group">
+        <label for="categories">Categories</label>
+        <select
+          #categoriesSelect
+          nbInput
+          multiple
+          formControlName="categories"
+          id="categories"
+          required>
+          <option *ngFor="let category of categoriesList"
+                  [value]="category._id">
+            {{category.name}}
+          </option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input
+              nbInput
+              fullWidth
+              formControlName="startDate"
+              id="startDate"
+              [nbDatepicker]="stDate"
+              [status]="startDate.invalid && startDate.touched ? 'danger' : ''"
+              required>
+            <nb-datepicker #stDate></nb-datepicker>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input
+              nbInput
+              fullWidth
+              formControlName="endDate"
+              id="endDate"
+              [nbDatepicker]="enDate"
+              [status]="endDate.invalid && endDate.touched ? 'danger' : ''"
+              required>
+            <nb-datepicker #enDate></nb-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="githubLink">Source Link</label>
+        <input
+          nbInput
+          fullWidth
+          formControlName="githubLink"
+          id="githubLink"
+          placeholder="Source Link"
+          type="text"
+          required>
+      </div>
+    </form>
+    <image-uploader [(images)]="images" [uploading]="submitting"></image-uploader>
+  </nb-card-body>
+</nb-card>

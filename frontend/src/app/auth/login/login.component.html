@@ -19,6 +19,7 @@
            id="input-username"
            placeholder="Username"
            autofocus
+           autocomplete="username"
            [status]="username.dirty ? (username.invalid  ? 'danger' : 'primary') : ''"
            [required]="getConfigValue('forms.validation.title.required')"
            [attr.aria-invalid]="username.invalid && username.touched ? true : null">
@@ -39,6 +40,7 @@
            type="password"
            id="input-password"
            placeholder="Password"
+           autocomplete="current-password"
            [status]="password.dirty ? (password.invalid  ? 'danger' : 'primary') : ''"
            [required]="getConfigValue('forms.validation.password.required')"
            [attr.aria-invalid]="password.invalid && password.touched ? true : null">
