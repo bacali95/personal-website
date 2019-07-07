@@ -71,7 +71,7 @@ deploy-acc:
     - eval $(ssh-agent -s)
     - bash -c "ssh-add <(echo '$SSH_PRIVATE_KEY')"
     - mkdir -p ~/.ssh
-    - ssh-keyscan -H '$VPS_IP' >> ~/.ssh/known_hosts
+    - ssh-keyscan -H $VPS_IP >> ~/.ssh/known_hosts
     - ssh-keyscan $VPS_IP | sort -u - ~/.ssh/known_hosts -o ~/.ssh/known_hosts
   script:
     - |
@@ -97,7 +97,7 @@ deploy-prod:
     - eval $(ssh-agent -s)
     - bash -c "ssh-add <(echo '$SSH_PRIVATE_KEY')"
     - mkdir -p ~/.ssh
-    - ssh-keyscan -H '$VPS_IP' >> ~/.ssh/known_hosts
+    - ssh-keyscan -H $VPS_IP >> ~/.ssh/known_hosts
     - ssh-keyscan $VPS_IP | sort -u - ~/.ssh/known_hosts -o ~/.ssh/known_hosts
   script:
     - |
