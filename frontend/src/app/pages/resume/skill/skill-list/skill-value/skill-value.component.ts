@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ViewCell} from '@bacali/ng2-smart-table';
 import {SkillService} from '../../../../../services/skill.service';
 import {Skill} from '../../../../../model/skill';
 import {SkillListComponent} from '../skill-list.component';

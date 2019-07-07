@@ -82,12 +82,13 @@ module.exports.getById = async function (id) {
 
 module.exports.update = async function (user) {
   const oldUser = await User.findById(user._id);
-  if (user.password !== null) {
-    user.password = encrypt(user.password);
+  let newUser = user;
+  if (newUser.password !== null) {
+    newUser.password = encrypt(newUser.password);
   } else {
-    user.password = oldUser.password;
+    newUser.password = oldUser.password;
   }
-  return User.findOneAndUpdate({_id: user._id}, user);
+  return User.findOneAndUpdate({_id: newUser._id}, newUser);
 };
 
 module.exports.remove = async function (id) {

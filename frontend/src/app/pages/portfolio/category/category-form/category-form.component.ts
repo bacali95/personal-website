@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NbDialogRef} from '@nebular/theme';
 import {ToastService} from '../../../../services/toast.service';
 import {Category} from '../../../../model/category';
