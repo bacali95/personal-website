@@ -1,5 +1,5 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { coerceCssPixelValue } from '@angular/cdk/coercion';
+import {Inject, Injectable, OnDestroy} from '@angular/core';
+import {coerceCssPixelValue} from '@angular/cdk/coercion';
 import {
   NB_WINDOW,
   NbLayoutComponent,
@@ -8,8 +8,8 @@ import {
   NbLayoutScrollService,
   NbViewportRulerAdapter,
 } from '@nebular/theme';
-import { filter, map, take, takeUntil } from 'rxjs/operators';
-import { fromEvent as observableFromEvent, merge, Subject } from 'rxjs';
+import {filter, map, take, takeUntil} from 'rxjs/operators';
+import {fromEvent as observableFromEvent, merge, Subject} from 'rxjs';
 
 @Injectable()
 export class WindowModeBlockScrollService implements OnDestroy {
@@ -26,12 +26,11 @@ export class WindowModeBlockScrollService implements OnDestroy {
   private previousContainerStyles: { overflowY: string };
   private previousContentStyles: { left: string, top: string, width: string, overflow: string, position: string };
 
-  constructor(
-    private scrollService: NbLayoutScrollService,
-    private viewportRuler: NbViewportRulerAdapter,
-    private layout: NbLayoutRulerService,
-    @Inject(NB_WINDOW) private window,
-  ) {}
+  constructor(private scrollService: NbLayoutScrollService,
+              private viewportRuler: NbViewportRulerAdapter,
+              private layout: NbLayoutRulerService,
+              @Inject(NB_WINDOW) private window) {
+  }
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -94,24 +93,24 @@ export class WindowModeBlockScrollService implements OnDestroy {
       return false;
     }
 
-    const { height: containerHeight } = this.viewportRuler.getViewportSize();
+    const {height: containerHeight} = this.viewportRuler.getViewportSize();
     return this.content.scrollHeight > containerHeight;
   }
 
   private updateContentSizeAndPosition() {
-    const { top, left } = this.container.getBoundingClientRect();
+    const {top, left} = this.container.getBoundingClientRect();
     this.content.style.left = coerceCssPixelValue(-this.previousScrollPosition.left + left);
     this.content.style.top = coerceCssPixelValue(-this.previousScrollPosition.top + top);
     this.layout.getDimensions()
       .pipe(
-        map(({ clientWidth }: NbLayoutDimensions) => coerceCssPixelValue(clientWidth)),
+        map(({clientWidth}: NbLayoutDimensions) => coerceCssPixelValue(clientWidth)),
         take(1),
       )
       .subscribe((clientWidth: string) => this.content.style.width = clientWidth);
   }
 
   private backupStyles() {
-    this.previousContainerStyles = { overflowY: this.container.style.overflowY };
+    this.previousContainerStyles = {overflowY: this.container.style.overflowY};
     this.previousContentStyles = {
       overflow: this.content.style.overflow,
       position: this.content.style.position,

@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {User} from '../../model/user';
 import {HttpEventType} from '@angular/common/http';
 import {UploadService} from '../../services/upload.service';
 import {ToastService} from '../../services/toast.service';
+import {APP_BASE_HREF} from '@angular/common';
 
 @Component({
   selector: 'profile',
@@ -20,7 +21,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(private userService: UserService,
               private uploadService: UploadService,
-              private toastService: ToastService) {
+              private toastService: ToastService,
+              @Inject(APP_BASE_HREF) private baseHref) {
     this.refresh();
   }
 
