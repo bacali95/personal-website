@@ -1,23 +1,11 @@
-@import '../../styles/themes';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/breakpoints';
+@import '../../styles/themes';
 
 @include nb-install-component() {
   display: flex;
   justify-content: space-between;
   width: 100%;
-
-  .left {
-    display: flex;
-    width: 100%;
-    order: 0;
-    flex-direction: row;
-  }
-
-  .right {
-    order: 1;
-    flex-direction: row-reverse;
-  }
 
   .logo-container {
     display: flex;
@@ -25,14 +13,10 @@
     width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
   }
 
-  .control-item {
-    display: block;
-  }
-
   nb-action {
-    a {
-      color: white;
-    }
+    height: auto;
+    display: flex;
+    align-content: center;
   }
 
   .header-container {
@@ -40,79 +24,23 @@
     align-items: center;
     width: auto;
 
-    .navigation {
-      @include nb-ltr(padding-right);
-      @include nb-rtl(padding-left);
-      font-size: 2.5rem;
+    .sidebar-toggle {
+      @include nb-ltr(padding-right, 1.25rem);
+      @include nb-rtl(padding-left, 1.25rem);
       text-decoration: none;
-
-      i {
-        display: block;
+      color: nb-theme(text-hint-color);
+      nb-icon {
+        font-size: 1.75rem;
       }
-
     }
 
     .logo {
-      padding: 2vh;
+      padding: 0 1.25rem;
       font-size: 1.75rem;
-      font-weight: nb-theme(text-heading-4-font-weight);
       @include nb-ltr(border-left, 1px solid nb-theme(divider-color));
       @include nb-rtl(border-right, 1px solid nb-theme(divider-color));
       white-space: nowrap;
-
-      span {
-        font-weight: nb-theme(text-heading-4-font-weight);
-      }
-    }
-  }
-
-  @include keyframes(pulse) {
-    0% {
-      box-shadow: 0 0 1px 0 rgba(nb-theme(text-hint-color), 0);
-    }
-    20% {
-      box-shadow: 0 0 3px 10px rgba(nb-theme(text-hint-color), 0.4);
-    }
-    100% {
-      box-shadow: 0 0 5px 20px rgba(nb-theme(text-hint-color), 0);
-    }
-  }
-
-  @include keyframes(pulse-light) {
-    0% {
-      box-shadow: 0 0 1px 0 rgba(115, 255, 208, 0);
-    }
-    20% {
-      box-shadow: 0 0 3px 10px rgba(115, 255, 208, 0.4);
-    }
-    100% {
-      box-shadow: 0 0 5px 20px rgba(115, 255, 208, 0);
-    }
-  }
-
-  @include media-breakpoint-down(md) {
-
-    nb-action:not(.toggle-settings) {
-      border: none;
-    }
-  }
-
-  @include media-breakpoint-down(is) {
-
-    .header-container {
-      .logo {
-        font-size: 1.25rem;
-      }
-    }
-
-    nb-action:not(.toggle-settings) {
-      padding: 0;
-    }
-  }
-
-  @include media-breakpoint-down(xs) {
-     ::ng-deep .right {
-      display: none;
+      text-decoration: none;
     }
   }
 }

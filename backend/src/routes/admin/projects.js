@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({
-  uploadDir: './public/images/for_compress'
+  uploadDir: './src/public/images/for_compress'
 });
 
 const CompressTool = require('../../tools/compress');

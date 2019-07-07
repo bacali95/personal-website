@@ -40,9 +40,10 @@ export class AssetFormComponent implements OnInit {
           .then((data: { message: string }) => {
             this.toastService.success(data.message);
             this.dialogRef.close('success');
-          }).catch((data) => {
-          this.toastService.error(data.error.message);
-        });
+          })
+          .catch((data) => {
+            this.toastService.error(data.error.message);
+          });
       } else {
         const asset: Asset = {
           name: this.name.value,
@@ -51,14 +52,27 @@ export class AssetFormComponent implements OnInit {
           .then((data: { message: string }) => {
             this.toastService.success(data.message);
             this.dialogRef.close('success');
-          }).catch((data) => {
-          this.toastService.error(data.error.message);
-        });
+          })
+          .catch((data) => {
+            this.toastService.error(data.error.message);
+          });
       }
     }
   }
 
   cancel() {
     this.dialogRef.close('cancel');
+  }
+
+
+  delete(id: string) {
+    this.assetService.delete(id)
+      .then((data: { message: string }) => {
+        this.toastService.success(data.message);
+        this.dialogRef.close('success');
+      })
+      .catch((data) => {
+        this.toastService.error(data.error.message);
+      });
   }
 }

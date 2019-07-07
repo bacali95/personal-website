@@ -54,6 +54,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
       githubLink: this.githubLink,
     });
     if (this.value) {
+      this._id = this.value._id;
       this.title.setValue(this.value.title);
       this.description.setValue(this.value.description);
       this.type.setValue(this.value.type);
@@ -119,20 +120,22 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
                 .then((data: { message: string }) => {
                   this.toastService.success(data.message);
                   this.dialogRef.close('success');
-                }).catch((data) => {
-                this.submitting = false;
-                this.toastService.error(data.error.message);
-              });
+                })
+                .catch((data) => {
+                  this.submitting = false;
+                  this.toastService.error(data.error.message);
+                });
             } else {
               const project: Project = this.model.value;
               this.projectService.create(project)
                 .then((data: { message: string }) => {
                   this.toastService.success(data.message);
                   this.dialogRef.close('success');
-                }).catch((data) => {
-                this.submitting = false;
-                this.toastService.error(data.error.message);
-              });
+                })
+                .catch((data) => {
+                  this.submitting = false;
+                  this.toastService.error(data.error.message);
+                });
             }
           }
         });

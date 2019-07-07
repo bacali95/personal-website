@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NbDialogService} from '@nebular/theme';
 import {AssetFormComponent} from '../asset-form/asset-form.component';
-import {ToastService} from '../../../../services/toast.service';
 import {AssetService} from '../../../../services/asset.service';
 import {Asset} from '../../../../model/asset';
-import {SkillFormComponent} from '../../skill/skill-form/skill-form.component';
 
 @Component({
   selector: 'asset-list',
@@ -16,8 +14,7 @@ export class AssetListComponent implements OnInit {
   assets: Asset[] = [];
 
   constructor(private assetService: AssetService,
-              private dialogService: NbDialogService,
-              private toastService: ToastService) {
+              private dialogService: NbDialogService) {
     this.refresh();
   }
 
@@ -50,13 +47,5 @@ export class AssetListComponent implements OnInit {
     }).onClose.subscribe(() => {
       this.refresh();
     });
-  }
-
-  delete(id: string) {
-    this.assetService.delete(id)
-      .then((data: { message: string }) => {
-        this.toastService.success(data.message);
-        this.refresh();
-      });
   }
 }

@@ -2,22 +2,70 @@
 
 @include nb-install-component() {
 
-  ::ng-deep ng2-smart-table .ng2-smart-actions {
-    width: 15% !important;
+  ng2-smart-table ::ng-deep {
+    .ng2-smart-actions {
+      width: 15% !important;
 
-    ng2-st-tbody-edit-delete {
-      display: flex !important;
-      height: 0 !important;
+      ng2-st-tbody-edit-delete {
+        display: flex !important;
+        height: 0 !important;
+      }
+
+      ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
+        display: inline-block;
+        width: 25%;
+        text-align: center;
+        font-size: 1.1em;
+
+        &:hover {
+          color: #5dcfe3;
+        }
+      }
     }
 
-    ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
-      display: inline-block;
-      width: 25%;
-      text-align: center;
-      font-size: 1.1em;
+    .ng2-smart-action-add-add {
+      background-color: nb-theme(button-filled-primary-background-color);
+      border-color: nb-theme(button-filled-primary-border-color);
+      color: nb-theme(button-filled-primary-text-color);
+
+      &:focus {
+        border-color: nb-theme(button-filled-primary-focus-border-color);
+      }
 
       &:hover {
-        color: #5dcfe3;
+        background-color: nb-theme(button-filled-primary-hover-background-color);
+        border-color: nb-theme(button-filled-primary-hover-border-color);
+      }
+
+      &:active {
+        background-color: nb-theme(button-filled-primary-active-background-color);
+        border-color: nb-theme(button-filled-primary-active-border-color);
+      }
+    }
+
+    nav.ng2-smart-pagination-nav .pagination li {
+      a, > span {
+        background-color: transparent;
+        color: nb-theme(button-outline-primary-text-color);
+
+        &:focus {
+          border-color: nb-theme(button-outline-primary-focus-border-color);
+          color: nb-theme(button-outline-primary-focus-text-color);
+        }
+
+        &:hover {
+          border-color: nb-theme(button-outline-primary-hover-border-color);
+          color: nb-theme(button-outline-primary-hover-text-color);
+        }
+      }
+    }
+
+    .ng2-smart-pagination .page-item.disabled {
+      .page-link,
+      .page-link:focus,
+      .page-link:hover {
+        background-color: transparent;
+        color: nb-theme(button-outline-primary-disabled-text-color);
       }
     }
   }

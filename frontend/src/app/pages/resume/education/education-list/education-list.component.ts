@@ -30,7 +30,7 @@ export class EducationListComponent implements OnInit {
     },
     mode: 'external',
     add: {
-      addButtonContent: '<i class="nb-plus"/>',
+      addButtonContent: '+',
     },
     columns: {
       rank: {

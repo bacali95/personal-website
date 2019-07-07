@@ -16,7 +16,7 @@ function CompressTool() {
 
 CompressTool.prototype.begin = (file, options, callback) => {
   const fileIN = file.path;
-  const fileOUT = `public/images/uploads/${file.name}`;
+  const fileOUT = `./src/public/images/uploads/${file.name}`;
   const result = tinify.fromFile(fileIN);
   result.toFile(fileOUT, function (error) {
     if (error) {

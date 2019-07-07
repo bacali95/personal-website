@@ -14,12 +14,12 @@
         </label>
       </div>
     </div>
-    <div [style.display]="showCropper ? null : 'none'">
+    <div [style.display]="showCropper ? null : 'none'"
+         [nbSpinner]="imageUploading"
+         nbSpinnerStatus="info">
       <div class="d-flex justify-content-center" [style.maxHeight]="'50vh'">
         <image-cropper
           #imageCropper
-          [nbSpinner]="imageUploading"
-          nbSpinnerStatus="info"
           [imageChangedEvent]="imageEvent"
           (imageLoaded)="imageLoaded()"
           (imageCroppedFile)="imageCropped($event)"

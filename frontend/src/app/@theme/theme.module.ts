@@ -42,7 +42,10 @@ import {ConfirmDialogComponent, FooterComponent, HeaderComponent, ImageUploaderC
 import {CapitalizePipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe, StringifyPipe} from './pipes';
 import {SampleLayoutComponent} from './layouts';
 import {DEFAULT_THEME} from './styles/theme.default';
+import {DARK_THEME} from './styles/theme.dark';
+import {COSMIC_THEME} from './styles/theme.cosmic';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
+import {WindowModeBlockScrollService} from './services/window-mode-block-scroll.service';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -110,7 +113,7 @@ const NB_THEME_PROVIDERS = [
     {
       name: 'default',
     },
-    [DEFAULT_THEME],
+    [DEFAULT_THEME, DARK_THEME, COSMIC_THEME],
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
@@ -130,7 +133,10 @@ export class ThemeModule {
   static forRoot(): ModuleWithProviders {
     return <ModuleWithProviders>{
       ngModule: ThemeModule,
-      providers: [...NB_THEME_PROVIDERS],
+      providers: [
+        ...NB_THEME_PROVIDERS,
+        WindowModeBlockScrollService,
+      ],
     };
   }
 }

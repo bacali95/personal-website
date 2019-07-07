@@ -18,9 +18,7 @@ export class SkillListComponent implements OnInit {
   skills: Skill[] = [];
 
   settings = {
-    hideSubHeader: true,
     actions: {
-      add: false,
       edit: false,
       delete: false,
       custom: [
@@ -33,7 +31,7 @@ export class SkillListComponent implements OnInit {
     },
     mode: 'external',
     add: {
-      addButtonContent: '<i class="nb-plus"/>',
+      addButtonContent: '+',
     },
     columns: {
       rank: {

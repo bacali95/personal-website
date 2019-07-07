@@ -1,10 +1,14 @@
 <nb-card>
   <nb-card-header>
     Add User
-    <button nbButton hero size="small" status="success" class="float-right m-1" (click)="submit()"
-            [disabled]="model.invalid">Submit
+    <button nbButton ghost size="tiny" status="success" class="float-right m-1"
+            (click)="submit()" [disabled]="model.invalid">
+      <nb-icon icon="checkmark" pack="eva"></nb-icon>
     </button>
-    <button nbButton hero size="small" status="danger" class="float-right m-1" (click)="cancel()">Cancel</button>
+    <button nbButton ghost size="tiny" status="danger" class="float-right m-1"
+            (click)="cancel()">
+      <nb-icon icon="close" pack="eva"></nb-icon>
+    </button>
   </nb-card-header>
   <nb-card-body>
     <form [formGroup]="model">

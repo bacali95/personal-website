@@ -3,7 +3,7 @@ import {LocalDataSource} from '@bacali/ng2-smart-table';
 import {NbDialogService} from '@nebular/theme';
 import {CategoryFormComponent} from '../category-form/category-form.component';
 import {ToastService} from '../../../../services/toast.service';
-import {ConfirmDialogComponent} from '../../../../@theme/components';
+import {ConfirmDialogComponent, CustomActionItemComponent} from '../../../../@theme/components';
 import {CategoryService} from '../../../../services/category.service';
 
 @Component({
@@ -14,16 +14,18 @@ import {CategoryService} from '../../../../services/category.service';
 export class CategoryListComponent implements OnInit {
 
   settings = {
-    hideSubHeader: true,
     actions: {
-      add: false,
       edit: false,
       delete: false,
       custom: [
-        {name: 'edit', title: `<i class="nb-edit">`},
-        {name: 'delete', title: `<i class="nb-trash">`},
+        {name: 'edit', icon: 'edit-2-outline', renderComponent: CustomActionItemComponent},
+        {name: 'delete', icon: 'trash-2-outline', renderComponent: CustomActionItemComponent},
       ],
       position: 'right',
+    },
+    mode: 'external',
+    add: {
+      addButtonContent: '+',
     },
     columns: {
       name: {

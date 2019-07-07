@@ -1,6 +1,7 @@
-import {Component, OnDestroy} from '@angular/core';
-import {delay, takeWhile, withLatestFrom} from 'rxjs/operators';
-import {NbMediaBreakpoint, NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
+import {AfterViewInit, Component, Inject, PLATFORM_ID, ViewChild} from '@angular/core';
+import {NbLayoutComponent} from '@nebular/theme';
+import {isPlatformBrowser} from '@angular/common';
+import {WindowModeBlockScrollService} from '../../services/window-mode-block-scroll.service';
 
 // TODO: move layouts into the framework
 @Component({
@@ -14,8 +15,7 @@ import {NbMediaBreakpoint, NbMediaBreakpointsService, NbMenuItem, NbMenuService,
 
       <nb-sidebar class="menu-sidebar"
                   tag="menu-sidebar"
-                  responsive
-                  end="false">
+                  responsive>
         <ng-content select="nb-menu"></ng-content>
       </nb-sidebar>
 
@@ -29,46 +29,17 @@ import {NbMediaBreakpoint, NbMediaBreakpointsService, NbMenuItem, NbMenuService,
     </nb-layout>
   `,
 })
-export class SampleLayoutComponent implements OnDestroy {
+export class SampleLayoutComponent implements AfterViewInit {
 
-  subMenu: NbMenuItem[] = [
-    {
-      title: 'PAGE LEVEL MENU',
-    },
-  ];
-  layout: any = {};
-  sidebar: any = {};
+  @ViewChild(NbLayoutComponent, {static: false}) layout: NbLayoutComponent;
 
-  private alive = true;
-
-  currentTheme: string;
-
-  constructor(protected menuService: NbMenuService,
-              protected themeService: NbThemeService,
-              protected bpService: NbMediaBreakpointsService,
-              protected sidebarService: NbSidebarService) {
-    const isBp = this.bpService.getByName('is');
-    this.menuService.onItemSelect()
-      .pipe(
-        takeWhile(() => this.alive),
-        withLatestFrom(this.themeService.onMediaQueryChange()),
-        delay(20),
-      )
-      .subscribe(([item, [bpFrom, bpTo]]: [any, [NbMediaBreakpoint, NbMediaBreakpoint]]) => {
-
-        if (bpTo.width <= isBp.width) {
-          this.sidebarService.collapse('menu-sidebar');
-        }
-      });
-
-    this.themeService.getJsTheme()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(theme => {
-        this.currentTheme = theme.name;
-      });
+  constructor(@Inject(PLATFORM_ID) private platformId,
+              private windowModeBlockScrollService: WindowModeBlockScrollService) {
   }
 
-  ngOnDestroy() {
-    this.alive = false;
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.windowModeBlockScrollService.register(this.layout);
+    }
   }
 }

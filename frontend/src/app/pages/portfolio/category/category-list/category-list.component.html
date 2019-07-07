@@ -1,14 +1,6 @@
-<nb-card>
-  <nb-card-header>
-    Categories
-    <a nbButton hero size="small" class="float-right" (click)="openAddForm()">Add</a>
-  </nb-card-header>
-  <nb-card-body>
-    <ng2-smart-table
-      [settings]="settings"
-      [source]="source"
-      (custom)="onCustomActions($event)">
-    </ng2-smart-table>
-  </nb-card-body>
-</nb-card>
-
+<ng2-smart-table
+  [settings]="settings"
+  [source]="source"
+  (create)="openAddForm()"
+  (custom)="onCustomActions($event)">
+</ng2-smart-table>
