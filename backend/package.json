@@ -42,7 +42,7 @@
     "passport-local": "^1.0.0",
     "pug": "^2.0.4",
     "serve-favicon": "^2.5.0",
-    "snyk": "^1.217.3",
+    "snyk": "^1.230.5",
     "tinify": "^1.6.0-beta.2"
   },
   "devDependencies": {
