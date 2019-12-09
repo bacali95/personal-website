@@ -5,9 +5,7 @@
     "start": "node src/bin/www",
     "server": "nodemon src/bin/www",
     "lint": "eslint src/",
-    "lint:ci": "npm run lint",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "lint:ci": "npm run lint"
   },
   "keywords": [
     "CV",
@@ -21,7 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "cloudinary": "^1.14.0",
+    "cloudinary": "^1.18.0",
     "connect-flash": "^0.1.1",
     "connect-multiparty": "^2.2.0",
     "cookie-parser": "^1.4.4",
@@ -29,28 +27,26 @@
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-messages": "^1.0.1",
-    "express-session": "^1.16.2",
-    "helmet": "^3.20.0",
+    "express-session": "^1.17.0",
+    "helmet": "^3.21.2",
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
-    "mongodb": "^3.3.0",
-    "mongoose": "^5.6.10",
+    "mongodb": "^3.3.5",
+    "mongoose": "^5.8.0",
     "morgan": "^1.9.1",
-    "passport": "^0.4.0",
+    "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pug": "^2.0.4",
     "serve-favicon": "^2.5.0",
-    "snyk": "^1.217.3",
     "tinify": "^1.6.0-beta.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "eslint": "^6.2.1",
-    "mocha": "^6.2.0",
-    "nodemon": "^1.19.1"
-  },
-  "snyk": true
+    "eslint": "^6.7.2",
+    "mocha": "^6.2.2",
+    "nodemon": "^2.0.1"
+  }
 }

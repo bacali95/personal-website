@@ -21,7 +21,8 @@ mongoose.Promise = global.Promise;
 mongoose.connect(specs.DATABASE_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useUnifiedTopology: true
 }, initAdmin);
 
 const publicRouter = require('./routes/public');
