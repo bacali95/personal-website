@@ -2,8 +2,7 @@ version: "3"
 
 services:
   personal-website:
-    build:
-      context: .
+    image: bacali95/personal-website:latest
     ports:
       - 4000:80
     environment:

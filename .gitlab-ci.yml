@@ -30,7 +30,8 @@ build-image:
   before_script:
     - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USER" --password-stdin
   script:
-    - docker build -t personal-website:latest .
-    - docker push personal-website:latest
+    - docker build -t bacali95/personal-website:latest .
+    - docker push bacali95/personal-website:latest
   only:
     - master
+  when: manual
