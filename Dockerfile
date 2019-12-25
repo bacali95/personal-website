@@ -9,13 +9,14 @@ WORKDIR /frontend
 COPY ./frontend .
 RUN npm install
 RUN npm run build:prod
-COPY /frontend/dist /var/www/portal
+RUN mkdir -p /var/www/admin/
+RUN cp -r /frontend/dist/ /var/www/admin/
 EXPOSE 80
-RUN nginx -g "daemon off;"
 
 WORKDIR /backend
 COPY ./backend .
-RUN mkdir src/public/images/for_compress
-RUN mkdir src/public/images/uploads
+RUN mkdir -p /backend/src/public/images/for_compress
+RUN mkdir -p /backend/src/public/images/uploads
 RUN npm install
-CMD [ "npm", "start" ]
+
+CMD nginx -g "daemon off;" & npm start
