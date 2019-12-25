@@ -4,26 +4,7 @@ services:
   - docker:dind
 
 stages:
-  - lint
   - build
-
-lint-backend:
-  stage: lint
-  before_script:
-    - apk add --update nodejs nodejs-npm
-  script:
-    - cd backend
-    - npm install
-    - npm run lint:ci
-
-lint-frontend:
-  stage: lint
-  before_script:
-    - apk add --update nodejs nodejs-npm
-  script:
-    - cd frontend
-    - npm install
-    - npm run lint:ci
 
 build-image:
   stage: build
