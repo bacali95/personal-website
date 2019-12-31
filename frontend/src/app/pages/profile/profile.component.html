@@ -22,7 +22,8 @@
           #imageCropper
           [imageChangedEvent]="imageEvent"
           (imageLoaded)="imageLoaded()"
-          (imageCroppedFile)="imageCropped($event)"
+          outputType="file"
+          (imageCropped)="imageCropped($event)"
           resizeToWidth="982">
         </image-cropper>
       </div>

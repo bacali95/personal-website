@@ -5,6 +5,7 @@ import {HttpEventType} from '@angular/common/http';
 import {UploadService} from '../../services/upload.service';
 import {ToastService} from '../../services/toast.service';
 import {environment} from '../../../environments/environment';
+import {ImageCroppedEvent} from 'ngx-image-cropper';
 
 @Component({
   selector: 'profile',
@@ -68,8 +69,8 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  imageCropped(image: Blob) {
-    this.croppedImage = image;
+  imageCropped(image: ImageCroppedEvent) {
+    this.croppedImage = image.file;
   }
 
   updateUser(user: User) {
