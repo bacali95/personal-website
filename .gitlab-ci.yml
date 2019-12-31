@@ -15,4 +15,3 @@ build-image:
     - docker push bacali95/personal-website:latest
   only:
     - master
-  when: manual
