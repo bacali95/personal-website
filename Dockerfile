@@ -10,7 +10,7 @@ COPY ./frontend .
 RUN npm install
 RUN npm run build:prod
 RUN mkdir -p /var/www/admin/
-RUN cp -r /frontend/dist/ /var/www/admin/
+RUN cp -r /frontend/dist/* /var/www/admin/
 EXPOSE 80
 
 WORKDIR /backend
