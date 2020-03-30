@@ -1,4 +1,4 @@
-FROM node:10.16-alpine
+FROM node:12-alpine
 
 RUN apk update
 RUN apk add nginx
