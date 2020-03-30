@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "scripts": {
     "start": "node src/bin/www",
-    "server": "nodemon src/bin/www",
+    "serve": "nodemon src/bin/www",
     "lint": "eslint src/",
     "lint:ci": "npm run lint"
   },
@@ -19,22 +19,22 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "cloudinary": "^1.18.1",
+    "cloudinary": "^1.21.0",
     "connect-flash": "^0.1.1",
     "connect-multiparty": "^2.2.0",
-    "cookie-parser": "^1.4.4",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-messages": "^1.0.1",
     "express-session": "^1.17.0",
-    "helmet": "^3.21.2",
+    "helmet": "^3.22.0",
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
-    "mongodb": "^3.4.1",
-    "mongoose": "^5.8.3",
-    "morgan": "^1.9.1",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.6",
+    "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -45,8 +45,8 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "eslint": "^6.7.2",
-    "mocha": "^6.2.2",
-    "nodemon": "^2.0.1"
+    "eslint": "^6.8.0",
+    "mocha": "^7.1.1",
+    "nodemon": "^2.0.2"
   }
 }
