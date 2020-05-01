@@ -26,7 +26,9 @@
     "docs": "compodoc -p src/tsconfig.app.json -d docs",
     "docs:serve": "compodoc -p src/tsconfig.app.json -d docs -s",
     "prepush": "npm run lint:ci",
-    "release:changelog": "npm run conventional-changelog -- -p angular -i CHANGELOG.md -s"
+    "release:changelog": "npm run conventional-changelog -- -p angular -i CHANGELOG.md -s",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@angular/animations": "^8.2.14",
@@ -60,7 +62,8 @@
     "rxjs": "^6.5.4",
     "typeface-exo": "^0.0.61",
     "web-animations-js": "^2.3.2",
-    "zone.js": "^0.10.2"
+    "zone.js": "^0.10.2",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.25",
@@ -92,5 +95,6 @@
     "tslint": "^6.1.0",
     "tslint-language-service": "^0.9.9",
     "typescript": "3.5.3"
-  }
+  },
+  "snyk": true
 }
