@@ -1,15 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Category} from '../model/category';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Category } from '../model/category';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  private baseUrl: string = '/api/category';
+  private baseUrl: string = '/api/categories';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAll() {
     return this.http.get<Category[]>(this.baseUrl).toPromise();
@@ -24,7 +23,7 @@ export class CategoryService {
   }
 
   update(category: Category) {
-    return this.http.put(`${this.baseUrl}/${category._id}`, category).toPromise();
+    return this.http.put(`${this.baseUrl}/${category.id}`, category).toPromise();
   }
 
   delete(id: string) {

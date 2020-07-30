@@ -1,20 +1,14 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ThemeModule} from '../../@theme/theme.module';
-import {Ng2SmartTableModule} from '@bacali/ng2-smart-table';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ProfileComponent} from './profile.component';
-import {NbDatepickerModule, NbDialogModule, NbIconModule} from '@nebular/theme';
-import {ImageCropperModule} from 'ngx-image-cropper';
-import {LoginDetailsComponent} from './login-details/login-details.component';
-import {GeneralDetailsComponent} from './general-details/general-details.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ThemeModule } from '../../@theme/theme.module';
+import { Ng2SmartTableModule } from '@bacali/ng2-smart-table';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile.component';
+import { NbDatepickerModule, NbDialogModule, NbIconModule } from '@nebular/theme';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
-  declarations: [
-    ProfileComponent,
-    LoginDetailsComponent,
-    GeneralDetailsComponent,
-  ],
+  declarations: [ProfileComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -27,5 +21,4 @@ import {GeneralDetailsComponent} from './general-details/general-details.compone
     NbDatepickerModule,
   ],
 })
-export class ProfileModule {
-}
+export class ProfileModule {}

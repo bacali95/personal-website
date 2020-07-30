@@ -2,7 +2,8 @@
   <nb-card-body>
     <div *ngIf="!showCropper">
       <div class="d-flex justify-content-center">
-        <img [src]="user.image ? user.image.secure_url : baseHref + 'assets/images/noimage.png'" alt="profile image"
+        <img [src]="profile.image ? profile.image : baseHref + '/assets/images/noimage.png'"
+             alt="profile image"
              height="200vh">
       </div>
       <div class="d-flex justify-content-center mt-3">
@@ -22,7 +23,7 @@
           #imageCropper
           [imageChangedEvent]="imageEvent"
           (imageLoaded)="imageLoaded()"
-          outputType="file"
+          outputType="base64"
           (imageCropped)="imageCropped($event)"
           resizeToWidth="982">
         </image-cropper>
@@ -48,21 +49,201 @@
     </div>
   </nb-card-body>
 </nb-card>
-<nb-accordion>
-  <nb-accordion-item>
-    <nb-accordion-item-header>
-      Credentials
-    </nb-accordion-item-header>
-    <nb-accordion-item-body>
-      <login-details [user]="user" (userUpdated)="updateUser($event)"></login-details>
-    </nb-accordion-item-body>
-  </nb-accordion-item>
-  <nb-accordion-item>
-    <nb-accordion-item-header>
-      General
-    </nb-accordion-item-header>
-    <nb-accordion-item-body>
-      <general-details [user]="user" (userUpdated)="updateUser($event)"></general-details>
-    </nb-accordion-item-body>
-  </nb-accordion-item>
-</nb-accordion>
+<nb-card>
+  <nb-card-body>
+    <form #model="ngForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              nbInput
+              fullWidth
+              id="firstName"
+              name="firstName"
+              placeholder="First Name"
+              type="text"
+              required
+              [(ngModel)]="profile.firstName"
+              #firstName="ngModel"
+              [status]="firstName.invalid && firstName.touched ? 'danger' : 'basic'">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              nbInput
+              fullWidth
+              id="lastName"
+              name="lastName"
+              placeholder="Last Name"
+              type="text"
+              required
+              [(ngModel)]="profile.lastName"
+              #lastName="ngModel"
+              [status]="lastName.invalid && lastName.touched ? 'danger' : 'basic'">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="birthdayDate">Birthday Date</label>
+            <input
+              nbInput
+              fullWidth
+              id="birthdayDate"
+              name="birthdayDate"
+              [nbDatepicker]="birthdayDatePicker"
+              required
+              [(ngModel)]="profile.birthdayDate"
+              #birthdayDate="ngModel"
+              [status]="birthdayDate.invalid && birthdayDate.touched ? 'danger' : 'basic'">
+            <nb-datepicker #birthdayDatePicker></nb-datepicker>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="birthdayPlace">Birthday Place</label>
+            <input
+              nbInput
+              fullWidth
+              id="birthdayPlace"
+              name="birthdayPlace"
+              placeholder="Birthday Place"
+              type="text"
+              required
+              [(ngModel)]="profile.birthdayPlace"
+              #birthdayPlace="ngModel"
+              [status]="birthdayPlace.invalid && birthdayPlace.touched ? 'danger' : 'basic'">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="nationality">Nationality</label>
+            <input
+              nbInput
+              fullWidth
+              id="nationality"
+              name="nationality"
+              placeholder="Nationality"
+              type="text"
+              [(ngModel)]="profile.nationality">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="profession">Profession</label>
+            <input
+              nbInput
+              fullWidth
+              id="profession"
+              name="profession"
+              placeholder="Profession"
+              type="text"
+              [(ngModel)]="profile.profession">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="maritalStatus">Marital Status</label>
+            <input
+              nbInput
+              fullWidth
+              id="maritalStatus"
+              name="maritalStatus"
+              placeholder="Marital Status"
+              type="text"
+              [(ngModel)]="profile.maritalStatus">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="skype">Skype</label>
+            <input
+              nbInput
+              fullWidth
+              id="skype"
+              name="skype"
+              placeholder="Skype"
+              type="text"
+              [(ngModel)]="profile.skype">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="intro">Summary</label>
+        <textarea
+          nbInput
+          fullWidth
+          id="intro"
+          name="intro"
+          placeholder="Summary"
+          [(ngModel)]="profile.intro">
+    </textarea>
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input
+          nbInput
+          fullWidth
+          id="address"
+          name="address"
+          placeholder="Address"
+          type="text"
+          [(ngModel)]="profile.address">
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input
+              nbInput
+              fullWidth
+              id="email"
+              name="email"
+              placeholder="E-mail"
+              type="email"
+              [(ngModel)]="profile.email">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input
+              nbInput
+              fullWidth
+              id="phone"
+              name="phone"
+              placeholder="Phone"
+              type="text"
+              [(ngModel)]="profile.phone">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="website">Website</label>
+            <input
+              nbInput
+              fullWidth
+              id="website"
+              name="website"
+              placeholder="Website"
+              type="text"
+              [(ngModel)]="profile.website">
+          </div>
+        </div>
+      </div>
+
+    </form>
+    <div class="mt-3 mr-3">
+      <button nbButton outline size="medium" class="float-right" status="success"
+              (click)="submit()" [disabled]="!model.valid">Save
+      </button>
+    </div>
+
+  </nb-card-body>
+</nb-card>

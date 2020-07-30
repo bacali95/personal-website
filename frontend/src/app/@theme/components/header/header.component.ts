@@ -1,10 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import {NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
-import {Subject} from 'rxjs';
-import {map, takeUntil} from 'rxjs/operators';
-import {NbAuthService} from '@nebular/auth';
-import {Router} from '@angular/router';
+import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { NbAuthService } from '@nebular/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'header',
@@ -12,8 +12,6 @@ import {Router} from '@angular/router';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
-
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
 
@@ -34,32 +32,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [{title: 'Profile'}, {title: 'Log out'}];
+  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
-  constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private authService: NbAuthService,
-              private router: Router,
-              private breakpointService: NbMediaBreakpointsService) {
-  }
+  constructor(
+    private sidebarService: NbSidebarService,
+    private menuService: NbMenuService,
+    private themeService: NbThemeService,
+    private authService: NbAuthService,
+    private router: Router,
+    private breakpointService: NbMediaBreakpointsService,
+  ) {}
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
-    const {xl} = this.breakpointService.getBreakpointsMap();
-    this.themeService.onMediaQueryChange()
+    const { xl } = this.breakpointService.getBreakpointsMap();
+    this.themeService
+      .onMediaQueryChange()
       .pipe(
         map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
         takeUntil(this.destroy$),
       )
-      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
+      .subscribe((isLessThanXl: boolean) => (this.userPictureOnly = isLessThanXl));
 
-    this.themeService.onThemeChange()
+    this.themeService
+      .onThemeChange()
       .pipe(
-        map(({name}) => name),
+        map(({ name }) => name),
         takeUntil(this.destroy$),
       )
-      .subscribe(themeName => this.currentTheme = themeName);
+      .subscribe((themeName) => (this.currentTheme = themeName));
   }
 
   changeTheme(themeName: string) {
@@ -77,7 +78,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.authService.logout('title').subscribe(() => {
+    this.authService.logout('firebase').subscribe(() => {
       this.router.navigate(['auth/login']);
     });
   }

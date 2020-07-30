@@ -21,7 +21,7 @@
           id="name"
           placeholder="name"
           type="text"
-          [status]="name.invalid && name.touched ? 'danger' : ''"
+          [status]="name.invalid && name.touched ? 'danger' : 'basic'"
           required>
       </div>
       <div class="form-group">
@@ -33,7 +33,7 @@
           id="detail"
           placeholder="Details"
           type="text"
-          [status]="detail.invalid && detail.touched ? 'danger' : ''"
+          [status]="detail.invalid && detail.touched ? 'danger' : 'basic'"
           required>
       </div>
       <div class="form-group">
@@ -45,7 +45,7 @@
           id="period"
           placeholder="Period"
           type="text"
-          [status]="period.invalid && period.touched ? 'danger' : ''"
+          [status]="period.invalid && period.touched ? 'danger' : 'basic'"
           required>
       </div>
     </form>

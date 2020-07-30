@@ -1,15 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Project} from '../model/project';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Project } from '../model/project';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectService {
-  private baseUrl: string = '/api/project';
+  private baseUrl: string = '/api/projects';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAll() {
     return this.http.get<Project[]>(this.baseUrl).toPromise();
@@ -24,7 +23,7 @@ export class ProjectService {
   }
 
   update(project: Project) {
-    return this.http.put(`${this.baseUrl}/${project._id}`, project).toPromise();
+    return this.http.put(`${this.baseUrl}/${project.id}`, project).toPromise();
   }
 
   delete(id: string) {

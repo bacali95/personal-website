@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {NbDialogRef} from '@nebular/theme';
-import {ToastService} from '../../../../services/toast.service';
-import {Category} from '../../../../model/category';
-import {CategoryService} from '../../../../services/category.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NbDialogRef } from '@nebular/theme';
+import { ToastService } from '../../../../services/toast.service';
+import { Category } from '../../../../model/category';
+import { CategoryService } from '../../../../services/category.service';
 
 @Component({
   selector: 'category-form',
@@ -11,16 +11,16 @@ import {CategoryService} from '../../../../services/category.service';
   styleUrls: ['./category-form.component.scss'],
 })
 export class CategoryFormComponent implements OnInit {
-
   @Input() value: Category;
 
   model: FormGroup;
-  name: FormControl = new FormControl('', [Validators.required]);
+  name: FormControl = new FormControl(null, [Validators.required]);
 
-  constructor(private categoryService: CategoryService,
-              private dialogRef: NbDialogRef<CategoryFormComponent>,
-              private toastService: ToastService) {
-  }
+  constructor(
+    private categoryService: CategoryService,
+    private dialogRef: NbDialogRef<CategoryFormComponent>,
+    private toastService: ToastService,
+  ) {}
 
   ngOnInit() {
     this.model = new FormGroup({
@@ -33,26 +33,30 @@ export class CategoryFormComponent implements OnInit {
 
   submit() {
     if (this.model.valid) {
-      if (this.value && this.value._id) {
+      if (this.value && this.value.id) {
         this.value.name = this.name.value;
-        this.categoryService.update(this.value)
-          .then((data: { message: string }) => {
-            this.toastService.success(data.message);
+        this.categoryService
+          .update(this.value)
+          .then(() => {
+            this.toastService.success();
             this.dialogRef.close('success');
-          }).catch((data) => {
-          this.toastService.error(data.error.message);
-        });
+          })
+          .catch((data) => {
+            this.toastService.error(data.error.message);
+          });
       } else {
         const category: Category = {
           name: this.name.value,
         };
-        this.categoryService.create(category)
-          .then((data: { message: string }) => {
-            this.toastService.success(data.message);
+        this.categoryService
+          .create(category)
+          .then(() => {
+            this.toastService.success();
             this.dialogRef.close('success');
-          }).catch((data) => {
-          this.toastService.error(data.error.message);
-        });
+          })
+          .catch((data) => {
+            this.toastService.error(data.error.message);
+          });
       }
     }
   }

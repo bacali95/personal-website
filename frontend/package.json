@@ -13,7 +13,7 @@
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
     "start": "ng serve --proxy-config proxy.conf.json",
-    "build": "ng build",
+    "build": "ng build --baseHref=/admin/",
     "build:prod": "npm run build -- --prod --aot",
     "test": "ng test",
     "test:coverage": "rimraf coverage && npm run test -- --code-coverage",
@@ -53,6 +53,7 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.6.1",
     "eva-icons": "^1.1.2",
+    "firebase": "^7.14.2",
     "intl": "^1.2.5",
     "ng2-completer": "^3.0.3",
     "ngx-image-cropper": "^2.0.2",
@@ -60,10 +61,10 @@
     "pace-js": "^1.0.2",
     "roboto-fontface": "^0.10.0",
     "rxjs": "^6.5.4",
+    "snyk": "^1.316.1",
     "typeface-exo": "^0.0.61",
     "web-animations-js": "^2.3.2",
-    "zone.js": "^0.10.2",
-    "snyk": "^1.316.1"
+    "zone.js": "^0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.25",

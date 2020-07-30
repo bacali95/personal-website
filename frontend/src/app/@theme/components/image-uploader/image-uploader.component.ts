@@ -1,6 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Image, LocalImage} from '../../../model/image';
-import {isNullOrUndefined} from 'util';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
+import 'firebase/auth';
+
+const firebaseStorage = firebase.storage().ref();
 
 @Component({
   selector: 'image-uploader',
@@ -8,16 +11,20 @@ import {isNullOrUndefined} from 'util';
   styleUrls: ['./image-uploader.component.scss'],
 })
 export class ImageUploaderComponent implements OnInit {
-
-  @Output() imagesChange: EventEmitter<(Image | LocalImage)[]> = new EventEmitter<(Image | LocalImage)[]>();
-  @Input() images: (Image | LocalImage)[];
+  @Output() imagesChange: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Input() images: string[];
   @Input() uploading: boolean;
 
-  constructor() {
-  }
+  uploadingFiles: {
+    [key: string]: {
+      local: string;
+      progress: number;
+    };
+  } = {};
 
-  ngOnInit() {
-  }
+  constructor() {}
+
+  ngOnInit() {}
 
   addImages(files) {
     for (const file of files) {
@@ -26,32 +33,51 @@ export class ImageUploaderComponent implements OnInit {
         continue;
       }
 
-      const image = new LocalImage();
-      image.public_id = file.name;
-      image.format = mimeType.replace(/image\//, '');
-
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (_event) => {
-        if (!this.images.find((value => (value instanceof LocalImage) ? value.secure_url === reader.result : value.bytes === file.size))) {
-          image.secure_url = reader.result;
-          image.payload = file;
-          this.images.push(image);
-          this.imagesChange.emit(this.images);
-        }
+        const uploadTask = firebaseStorage
+          .child(`projects/${Date.now()}-${file.name}`)
+          .putString(reader.result as string, firebase.storage.StringFormat.DATA_URL);
+        uploadTask.on(
+          firebase.storage.TaskEvent.STATE_CHANGED,
+          (snapshot) => {
+            if (!this.uploadingFiles[snapshot.ref.fullPath]) {
+              this.uploadingFiles[snapshot.ref.fullPath] = {
+                local: reader.result as string,
+                progress: 0,
+              };
+            }
+            this.uploadingFiles[snapshot.ref.fullPath].progress = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+            );
+            console.log(this.uploadingFiles[snapshot.ref.fullPath].progress, '%');
+          },
+          (error) => {
+            console.log(error);
+            delete this.uploadingFiles[uploadTask.snapshot.ref.fullPath];
+          },
+          async () => {
+            console.log('done', uploadTask.snapshot.ref.fullPath);
+            delete this.uploadingFiles[uploadTask.snapshot.ref.fullPath];
+            this.images.push(await uploadTask.snapshot.ref.getDownloadURL());
+            this.imagesChange.emit(this.images);
+          },
+        );
       };
     }
   }
 
-  delete(image: Image | LocalImage) {
+  async delete(image: string) {
+    console.log(image);
+    await firebaseStorage
+      .child('projects')
+      .child(decodeURIComponent(image.replace(/.*\/o\//g, '').replace(/\?.*/g, '')).replace('projects/', ''))
+      .delete();
     const index = this.images.indexOf(image);
     if (index >= 0) {
       this.images.splice(index, 1);
       this.imagesChange.emit(this.images);
     }
-  }
-
-  isFromServer(image) {
-    return !isNullOrUndefined(image.signature);
   }
 }

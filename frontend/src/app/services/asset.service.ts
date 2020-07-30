@@ -1,15 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Asset} from '../model/asset';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Asset } from '../model/asset';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AssetService {
-  private baseUrl: string = '/api/asset';
+  private baseUrl: string = '/api/assets';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAll() {
     return this.http.get<Asset[]>(this.baseUrl).toPromise();
@@ -24,7 +23,7 @@ export class AssetService {
   }
 
   update(asset: Asset) {
-    return this.http.put(`${this.baseUrl}/${asset._id}`, asset).toPromise();
+    return this.http.put(`${this.baseUrl}/${asset.id}`, asset).toPromise();
   }
 
   delete(id: string) {

@@ -1,43 +1,39 @@
-import {Component, OnInit} from '@angular/core';
-import {UserService} from '../../services/user.service';
-import {User} from '../../model/user';
-import {HttpEventType} from '@angular/common/http';
-import {UploadService} from '../../services/upload.service';
-import {ToastService} from '../../services/toast.service';
-import {environment} from '../../../environments/environment';
-import {ImageCroppedEvent} from 'ngx-image-cropper';
+import { Component, OnInit } from '@angular/core';
+import { ProfileService } from '../../services/profile.service';
+import { Profile } from '../../model/profile';
+import { ToastService } from '../../services/toast.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/storage';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'profile',
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
-
   imageEvent: Event;
   showCropper: boolean = false;
   baseHref = '';
 
-  user: User = new User();
+  profile: Profile = new Profile();
   private croppedImage: any = '';
   imageUploading: boolean = false;
 
-  constructor(private userService: UserService,
-              private uploadService: UploadService,
-              private toastService: ToastService) {
+  constructor(private profileService: ProfileService, private toastService: ToastService) {
     if (environment.production) {
-      this.baseHref = 'admin/';
+      this.baseHref = '/admin';
     }
-    this.refresh();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.refresh();
+    this.profile.birthdayDate = new Date(this.profile.birthdayDate);
   }
 
-  private refresh() {
-    this.userService.getCurrent()
-      .then(user => {
-        this.user = user;
-      });
+  async refresh() {
+    this.profile = await this.profileService.getCurrent();
   }
 
   fileChangeEvent(event) {
@@ -55,29 +51,34 @@ export class ProfileComponent implements OnInit {
 
   validCropping() {
     this.imageUploading = true;
-    const formData = new FormData();
-    formData.append('uploads[]', this.croppedImage, this.croppedImage.name);
-    this.uploadService.uploadFile(formData)
-      .subscribe(response => {
-        if (response.status === HttpEventType.Response) {
-          this.user.image = response.body;
-          this.userService.update(this.user);
+    const firebaseStorage = firebase.storage().ref();
+    firebaseStorage
+      .child('profile.png')
+      .putString(this.croppedImage, firebase.storage.StringFormat.DATA_URL)
+      .then(
+        async (snapshot) => {
+          this.profile.image = await snapshot.ref.getDownloadURL();
+          await this.profileService.update(this.profile);
           this.imageEvent = null;
           this.showCropper = false;
           this.imageUploading = false;
-        }
-      });
+        },
+        () => {
+          this.imageEvent = null;
+          this.showCropper = false;
+          this.imageUploading = false;
+        },
+      );
   }
 
   imageCropped(image: ImageCroppedEvent) {
-    this.croppedImage = image.file;
+    this.croppedImage = image.base64;
   }
 
-  updateUser(user: User) {
-    this.userService.update(user)
-      .then((data: { message: string }) => {
-        this.refresh();
-        this.toastService.success(data.message);
-      });
+  submit() {
+    this.profileService.update(this.profile).then(() => {
+      this.toastService.success();
+      return this.refresh();
+    });
   }
 }

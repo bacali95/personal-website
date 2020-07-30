@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import {NbDialogRef} from '@nebular/theme';
-import {ToastService} from '../../../../services/toast.service';
-import {Asset} from '../../../../model/asset';
-import {AssetService} from '../../../../services/asset.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NbDialogRef } from '@nebular/theme';
+import { ToastService } from '../../../../services/toast.service';
+import { Asset } from '../../../../model/asset';
+import { AssetService } from '../../../../services/asset.service';
 
 @Component({
   selector: 'asset-form',
@@ -11,17 +11,17 @@ import {AssetService} from '../../../../services/asset.service';
   styleUrls: ['./asset-form.component.scss'],
 })
 export class AssetFormComponent implements OnInit {
-
   @Input() asset: Asset;
   @Input() rank: number;
 
   model: FormGroup;
-  name: FormControl = new FormControl();
+  name: FormControl = new FormControl(null, [Validators.required]);
 
-  constructor(private assetService: AssetService,
-              private dialogRef: NbDialogRef<AssetFormComponent>,
-              private toastService: ToastService) {
-  }
+  constructor(
+    private assetService: AssetService,
+    private dialogRef: NbDialogRef<AssetFormComponent>,
+    private toastService: ToastService,
+  ) {}
 
   ngOnInit() {
     this.model = new FormGroup({
@@ -34,11 +34,12 @@ export class AssetFormComponent implements OnInit {
 
   submit() {
     if (this.model.valid) {
-      if (this.asset && this.asset._id) {
+      if (this.asset && this.asset.id) {
         this.asset.name = this.name.value;
-        this.assetService.update(this.asset)
-          .then((data: { message: string }) => {
-            this.toastService.success(data.message);
+        this.assetService
+          .update(this.asset)
+          .then(() => {
+            this.toastService.success();
             this.dialogRef.close('success');
           })
           .catch((data) => {
@@ -48,9 +49,10 @@ export class AssetFormComponent implements OnInit {
         const asset: Asset = {
           name: this.name.value,
         };
-        this.assetService.create(asset)
-          .then((data: { message: string }) => {
-            this.toastService.success(data.message);
+        this.assetService
+          .create(asset)
+          .then(() => {
+            this.toastService.success();
             this.dialogRef.close('success');
           })
           .catch((data) => {
@@ -64,11 +66,11 @@ export class AssetFormComponent implements OnInit {
     this.dialogRef.close('cancel');
   }
 
-
   delete(id: string) {
-    this.assetService.delete(id)
-      .then((data: { message: string }) => {
-        this.toastService.success(data.message);
+    this.assetService
+      .delete(id)
+      .then(() => {
+        this.toastService.success();
         this.dialogRef.close('success');
       })
       .catch((data) => {

@@ -1,14 +1,16 @@
-import {Category} from './category';
-import {Image} from './image';
+import { Category } from './category';
 
 export class Project {
-  _id?: string;
+  id?: string;
   title: string;
   description: string;
   type: string;
-  categories: Category[];
+  categories: Category[] = [];
   startDate: Date;
   endDate: Date;
-  githubLink: string;
-  images: Image[];
+  sourceCodeLink: string;
+  demoLink: string;
+  images: string[] = [];
+  clicks: number = 0;
+  rank: number;
 }

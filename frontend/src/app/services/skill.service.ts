@@ -1,15 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Skill} from '../model/skill';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Skill } from '../model/skill';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SkillService {
-  private baseUrl: string = '/api/skill';
+  private baseUrl: string = '/api/skills';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAll() {
     return this.http.get<Skill[]>(this.baseUrl).toPromise();
@@ -24,7 +23,7 @@ export class SkillService {
   }
 
   update(skill: Skill) {
-    return this.http.put(`${this.baseUrl}/${skill._id}`, skill).toPromise();
+    return this.http.put(`${this.baseUrl}/${skill.id}`, skill).toPromise();
   }
 
   delete(id: string) {

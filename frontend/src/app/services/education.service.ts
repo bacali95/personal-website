@@ -1,15 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Education} from '../model/education';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Education } from '../model/education';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EducationService {
-  private baseUrl: string = '/api/education';
+  private baseUrl: string = '/api/educations';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAll() {
     return this.http.get<Education[]>(this.baseUrl).toPromise();
@@ -24,7 +23,7 @@ export class EducationService {
   }
 
   update(education: Education) {
-    return this.http.put(`${this.baseUrl}/${education._id}`, education).toPromise();
+    return this.http.put(`${this.baseUrl}/${education.id}`, education).toPromise();
   }
 
   delete(id: string) {

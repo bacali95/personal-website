@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import {NbDialogRef} from '@nebular/theme';
-import {ToastService} from '../../../../services/toast.service';
-import {Education} from '../../../../model/education';
-import {EducationService} from '../../../../services/education.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NbDialogRef } from '@nebular/theme';
+import { ToastService } from '../../../../services/toast.service';
+import { Education } from '../../../../model/education';
+import { EducationService } from '../../../../services/education.service';
 
 @Component({
   selector: 'education-form',
@@ -11,19 +11,19 @@ import {EducationService} from '../../../../services/education.service';
   styleUrls: ['./education-form.component.scss'],
 })
 export class EducationFormComponent implements OnInit {
-
   @Input() value: Education;
   @Input() rank: number;
 
   model: FormGroup;
-  name: FormControl = new FormControl();
-  detail: FormControl = new FormControl();
-  period: FormControl = new FormControl();
+  name: FormControl = new FormControl(null, [Validators.required]);
+  detail: FormControl = new FormControl(null, [Validators.required]);
+  period: FormControl = new FormControl(null, [Validators.required]);
 
-  constructor(private educationService: EducationService,
-              private dialogRef: NbDialogRef<EducationFormComponent>,
-              private toastService: ToastService) {
-  }
+  constructor(
+    private educationService: EducationService,
+    private dialogRef: NbDialogRef<EducationFormComponent>,
+    private toastService: ToastService,
+  ) {}
 
   ngOnInit() {
     this.model = new FormGroup({
@@ -40,17 +40,19 @@ export class EducationFormComponent implements OnInit {
 
   submit() {
     if (this.model.valid) {
-      if (this.value && this.value._id) {
+      if (this.value && this.value.id) {
         this.value.name = this.name.value;
         this.value.detail = this.detail.value;
         this.value.period = this.period.value;
-        this.educationService.update(this.value)
-          .then((data: { message: string }) => {
-            this.toastService.success(data.message);
+        this.educationService
+          .update(this.value)
+          .then(() => {
+            this.toastService.success();
             this.dialogRef.close('success');
-          }).catch((data) => {
-          this.toastService.error(data.error.message);
-        });
+          })
+          .catch((data) => {
+            this.toastService.error(data.error.message);
+          });
       } else {
         const education: Education = {
           name: this.name.value,
@@ -58,13 +60,15 @@ export class EducationFormComponent implements OnInit {
           period: this.period.value,
           rank: this.rank,
         };
-        this.educationService.create(education)
-          .then((data: { message: string }) => {
-            this.toastService.success(data.message);
+        this.educationService
+          .create(education)
+          .then(() => {
+            this.toastService.success();
             this.dialogRef.close('success');
-          }).catch((data) => {
-          this.toastService.error(data.error.message);
-        });
+          })
+          .catch((data) => {
+            this.toastService.error(data.error.message);
+          });
       }
     }
   }
