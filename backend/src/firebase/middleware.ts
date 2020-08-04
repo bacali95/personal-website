@@ -5,7 +5,7 @@ import firebase from './initilize';
 
 @Injectable()
 export class FirebaseAuthMiddleware implements NestMiddleware {
-  async use(req: Request, _: Response, next: Function) {
+  async use(req: Request, _: Response, next: () => any): Promise<void> {
     const { authorization } = req.headers;
     const token = authorization?.slice(7);
 
@@ -25,6 +25,12 @@ export class FirebaseAuthMiddleware implements NestMiddleware {
           HttpStatus.UNAUTHORIZED,
         );
       });
+    if (req.firebaseUser.email !== 'nasreddine.bacali95@gmail.com') {
+      throw new HttpException(
+        { message: 'Unauthorized' },
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
     next();
   }
 }

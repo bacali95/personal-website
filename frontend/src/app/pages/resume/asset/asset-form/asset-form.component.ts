@@ -34,7 +34,7 @@ export class AssetFormComponent implements OnInit {
 
   submit() {
     if (this.model.valid) {
-      if (this.asset && this.asset.id) {
+      if (this.asset && this.asset._id) {
         this.asset.name = this.name.value;
         this.assetService
           .update(this.asset)

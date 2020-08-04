@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
-import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-import { NbAuthService } from '@nebular/auth';
-import { Router } from '@angular/router';
+import {NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
+import {Subject} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
+import {NbAuthService} from '@nebular/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'header',
@@ -30,9 +30,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
   ];
 
-  currentTheme = 'default';
+  currentTheme = 'dark';
 
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
+  userMenu = [{title: 'Profile'}, {title: 'Log out'}];
 
   constructor(
     private sidebarService: NbSidebarService,
@@ -41,11 +41,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: NbAuthService,
     private router: Router,
     private breakpointService: NbMediaBreakpointsService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
-    this.currentTheme = this.themeService.currentTheme;
-    const { xl } = this.breakpointService.getBreakpointsMap();
+    this.changeTheme('dark');
+    const {xl} = this.breakpointService.getBreakpointsMap();
     this.themeService
       .onMediaQueryChange()
       .pipe(
@@ -57,7 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.themeService
       .onThemeChange()
       .pipe(
-        map(({ name }) => name),
+        map(({name}) => name),
         takeUntil(this.destroy$),
       )
       .subscribe((themeName) => (this.currentTheme = themeName));

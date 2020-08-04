@@ -23,7 +23,7 @@ export class AssetService {
   }
 
   update(asset: Asset) {
-    return this.http.put(`${this.baseUrl}/${asset.id}`, asset).toPromise();
+    return this.http.put(`${this.baseUrl}/${asset._id}`, asset).toPromise();
   }
 
   delete(id: string) {

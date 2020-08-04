@@ -1,12 +1,7 @@
 import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
-import * as fireorm from 'fireorm';
+import config from '../config';
 
-export default admin.initializeApp(functions.config().firebase);
-const firestore = admin.firestore();
-fireorm.initialize(firestore, {
-  validateModels: true,
-});
+export default admin.initializeApp(config.firebase);
 
 declare global {
   namespace Express {

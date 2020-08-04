@@ -4,12 +4,18 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { FirebaseAuthMiddleware } from './firebase';
 import { ApiModule } from './api/api.module';
 import { PublicModule } from './public/public.module';
+import config from './config';
 
 @Module({
-  imports: [ApiModule, PublicModule],
+  imports: [
+    ApiModule,
+    PublicModule,
+    MongooseModule.forRoot(config.mongoose.uri),
+  ],
   providers: [],
 })
 export class AppModule implements NestModule {

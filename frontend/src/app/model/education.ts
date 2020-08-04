@@ -1,5 +1,5 @@
 export class Education {
-  id?: string;
+  _id?: string;
   name: string;
   detail: string;
   period: string;

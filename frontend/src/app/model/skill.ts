@@ -1,5 +1,5 @@
 export class Skill {
-  id?: string;
+  _id?: string;
   name: string;
   value: number;
   rank?: number;

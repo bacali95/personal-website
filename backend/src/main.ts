@@ -4,11 +4,11 @@ import {
   NestExpressApplication,
 } from '@nestjs/platform-express';
 import { join } from 'path';
-import * as functions from 'firebase-functions';
 import * as express from 'express';
-import * as helmet from 'helmet';
 import { AppModule } from './app.module';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const helmet = require('helmet');
 const server = express();
 
 NestFactory.create<NestExpressApplication>(
@@ -19,9 +19,6 @@ NestFactory.create<NestExpressApplication>(
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('pug');
   app.enableCors();
-  app.enableCors();
-  app.use(helmet());
-  app.init();
+  app.use(helmet({ contentSecurityPolicy: false }));
+  app.init().then(() => app.listen(3000));
 });
-
-export const main = functions.https.onRequest(server);

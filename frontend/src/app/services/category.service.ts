@@ -23,7 +23,7 @@ export class CategoryService {
   }
 
   update(category: Category) {
-    return this.http.put(`${this.baseUrl}/${category.id}`, category).toPromise();
+    return this.http.put(`${this.baseUrl}/${category._id}`, category).toPromise();
   }
 
   delete(id: string) {

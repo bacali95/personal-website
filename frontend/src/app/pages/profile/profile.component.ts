@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit {
       .putString(this.croppedImage, firebase.storage.StringFormat.DATA_URL)
       .then(
         async (snapshot) => {
-          this.profile.image = await snapshot.ref.getDownloadURL();
+          this.profile.imageURL = await snapshot.ref.getDownloadURL();
           await this.profileService.update(this.profile);
           this.imageEvent = null;
           this.showCropper = false;

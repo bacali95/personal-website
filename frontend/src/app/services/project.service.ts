@@ -23,7 +23,7 @@ export class ProjectService {
   }
 
   update(project: Project) {
-    return this.http.put(`${this.baseUrl}/${project.id}`, project).toPromise();
+    return this.http.put(`${this.baseUrl}/${project._id}`, project).toPromise();
   }
 
   delete(id: string) {

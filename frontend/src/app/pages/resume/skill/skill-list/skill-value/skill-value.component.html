@@ -1,13 +1,13 @@
 <div class="d-flex justify-content-center">
   <button nbButton outline shape="round" size="tiny" class="m-1"
-          (click)="minus()">
+          (click)="minus()" status="primary">
     <nb-icon icon="minus"></nb-icon>
   </button>
-  <button nbButton [disabled]="!i" shape="round" size="small" class="m-1"
-          *ngFor="let i of renderValue">
+  <button nbButton [disabled]="!i" shape="round" size="tiny" class="m-1"
+          *ngFor="let i of renderValue" status="primary">
   </button>
   <button nbButton outline shape="round" size="tiny" class="m-1"
-          (click)="plus()">
+          (click)="plus()" status="primary">
     <nb-icon icon="plus"></nb-icon>
   </button>
 </div>

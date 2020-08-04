@@ -1,17 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AssetsController } from './assets.controller';
-import { getRepository } from 'fireorm';
 import { AssetsRepository } from './assets.repository';
-import { Asset } from './assets.model';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Asset, AssetSchema } from './assets.schema';
 
 @Module({
-  controllers: [AssetsController],
-  providers: [
-    {
-      provide: AssetsRepository,
-      useFactory: () => getRepository<Asset>(Asset) as AssetsRepository,
-    },
+  imports: [
+    MongooseModule.forFeature([{ name: Asset.name, schema: AssetSchema }]),
   ],
+  controllers: [AssetsController],
+  providers: [AssetsRepository],
   exports: [AssetsRepository],
 })
 export class AssetsModule {}

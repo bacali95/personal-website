@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AssetsRepository } from './assets.repository';
 import { sortComparator } from '../../utils';
-import { Asset } from './assets.model';
+import { Asset, AssetDTO } from './assets.schema';
 
 @Controller()
 export class AssetsController {
@@ -17,13 +17,13 @@ export class AssetsController {
 
   @Get()
   async getAll(): Promise<Asset[]> {
-    return (await this.assetsRepository.find()).sort(
+    return (await this.assetsRepository.findAll()).sort(
       sortComparator('asc', 'rank'),
     );
   }
 
   @Post()
-  create(@Body() asset: Asset): Promise<Asset> {
+  create(@Body() asset: AssetDTO): Promise<Asset> {
     return this.assetsRepository.create(asset);
   }
 
@@ -33,12 +33,12 @@ export class AssetsController {
   }
 
   @Put(':id')
-  update(@Body() asset: Asset): Promise<Asset> {
+  update(@Body() asset: AssetDTO): Promise<Asset> {
     return this.assetsRepository.update(asset);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string): Promise<void> {
+  delete(@Param('id') id: string): Promise<any> {
     return this.assetsRepository.delete(id);
   }
 }

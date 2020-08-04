@@ -106,7 +106,7 @@ export class ProjectListComponent implements OnInit {
         })
         .onClose.subscribe((result) => {
           if (result) {
-            this.projectService.delete(event.data.id).then(() => {
+            this.projectService.delete(event.data._id).then(() => {
               this.toastService.success();
               this.refresh();
             });

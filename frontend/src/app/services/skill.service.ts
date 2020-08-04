@@ -23,7 +23,7 @@ export class SkillService {
   }
 
   update(skill: Skill) {
-    return this.http.put(`${this.baseUrl}/${skill.id}`, skill).toPromise();
+    return this.http.put(`${this.baseUrl}/${skill._id}`, skill).toPromise();
   }
 
   delete(id: string) {

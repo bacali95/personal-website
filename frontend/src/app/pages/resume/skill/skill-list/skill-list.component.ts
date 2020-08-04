@@ -134,7 +134,7 @@ export class SkillListComponent implements OnInit {
                 this.skills[i].rank--;
                 await this.skillService.update(this.skills[i]);
               }
-              await this.skillService.delete(skill.id);
+              await this.skillService.delete(skill._id);
               this.toastService.success('Success');
               this.refresh();
             }

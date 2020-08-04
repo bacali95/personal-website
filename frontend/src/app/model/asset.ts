@@ -1,4 +1,4 @@
 export class Asset {
-  id?: string;
+  _id?: string;
   name: string;
 }

@@ -1,17 +1,15 @@
 import { Module } from '@nestjs/common';
 import { SkillsController } from './skills.controller';
-import { getRepository } from 'fireorm';
 import { SkillsRepository } from './skills.repository';
-import { Skill } from './skills.model';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Skill, SkillSchema } from './skills.schema';
 
 @Module({
-  controllers: [SkillsController],
-  providers: [
-    {
-      provide: SkillsRepository,
-      useFactory: () => getRepository<Skill>(Skill) as SkillsRepository,
-    },
+  imports: [
+    MongooseModule.forFeature([{ name: Skill.name, schema: SkillSchema }]),
   ],
+  controllers: [SkillsController],
+  providers: [SkillsRepository],
   exports: [SkillsRepository],
 })
 export class SkillsModule {}

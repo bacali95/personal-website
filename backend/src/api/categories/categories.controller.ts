@@ -7,9 +7,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { Category } from './categories.model';
-import { sortComparator } from '../../utils';
 import { CategoriesRepository } from './categories.repository';
+import { sortComparator } from '../../utils';
+import { Category, CategoryDTO } from './categories.schema';
 
 @Controller()
 export class CategoriesController {
@@ -17,13 +17,13 @@ export class CategoriesController {
 
   @Get()
   async getAll(): Promise<Category[]> {
-    return (await this.categoriesRepository.find()).sort(
+    return (await this.categoriesRepository.findAll()).sort(
       sortComparator('asc', 'rank'),
     );
   }
 
   @Post()
-  create(@Body() asset: Category): Promise<Category> {
+  create(@Body() asset: CategoryDTO): Promise<Category> {
     return this.categoriesRepository.create(asset);
   }
 
@@ -33,12 +33,12 @@ export class CategoriesController {
   }
 
   @Put(':id')
-  update(@Body() asset: Category): Promise<Category> {
+  update(@Body() asset: CategoryDTO): Promise<Category> {
     return this.categoriesRepository.update(asset);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string): Promise<void> {
+  delete(@Param('id') id: string): Promise<any> {
     return this.categoriesRepository.delete(id);
   }
 }

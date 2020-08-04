@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
-import { Profile } from './profile.model';
+import { Profile } from './profile.schema';
 import { ProfileRepository } from './profile.repository';
 
 @Controller()

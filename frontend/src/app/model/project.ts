@@ -1,7 +1,7 @@
 import { Category } from './category';
 
 export class Project {
-  id?: string;
+  _id?: string;
   title: string;
   description: string;
   type: string;

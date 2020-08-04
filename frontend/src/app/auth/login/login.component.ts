@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { NbAuthJWTToken, NbAuthService, NbAuthSimpleToken, NbTokenStorage } from '@nebular/auth';
+import {Component} from '@angular/core';
+import {NbAuthJWTToken, NbAuthService, NbTokenStorage} from '@nebular/auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -22,9 +22,11 @@ export class LoginComponent {
       .signInWithPopup(provider)
       .then(async (result) => {
         const { user } = result;
-        const token = await user.getIdToken(true);
-        this.tokenStorage.set(new NbAuthJWTToken(token, 'firebase', new Date()));
-        return this.router.navigate(['pages']);
+        if (user.email === 'nasreddine.bacali95@gmail.com') {
+          const token = await user.getIdToken(true);
+          this.tokenStorage.set(new NbAuthJWTToken(token, 'firebase', new Date()));
+          return this.router.navigate(['pages']);
+        }
       });
   }
 }

@@ -37,7 +37,7 @@ export class SkillFormComponent implements OnInit {
 
   submit() {
     if (this.model.valid) {
-      if (this.skill && this.skill.id) {
+      if (this.skill && this.skill._id) {
         this.skill.name = this.name.value;
         this.skill.value = this.value.value;
         this.skillService

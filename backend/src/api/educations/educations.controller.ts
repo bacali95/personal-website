@@ -7,9 +7,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { Education } from './educations.model';
-import { sortComparator } from '../../utils';
 import { EducationsRepository } from './educations.repository';
+import { sortComparator } from '../../utils';
+import { Education, EducationDTO } from './educations.schema';
 
 @Controller()
 export class EducationsController {
@@ -17,14 +17,14 @@ export class EducationsController {
 
   @Get()
   async getAll(): Promise<Education[]> {
-    return (await this.educationsRepository.find()).sort(
+    return (await this.educationsRepository.findAll()).sort(
       sortComparator('asc', 'rank'),
     );
   }
 
   @Post()
-  create(@Body() asset: Education): Promise<Education> {
-    return this.educationsRepository.create(asset);
+  create(@Body() education: EducationDTO): Promise<Education> {
+    return this.educationsRepository.create(education);
   }
 
   @Get(':id')
@@ -33,12 +33,12 @@ export class EducationsController {
   }
 
   @Put(':id')
-  update(@Body() asset: Education): Promise<Education> {
-    return this.educationsRepository.update(asset);
+  update(@Body() education: EducationDTO): Promise<Education> {
+    return this.educationsRepository.update(education);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string): Promise<void> {
+  delete(@Param('id') id: string): Promise<any> {
     return this.educationsRepository.delete(id);
   }
 }

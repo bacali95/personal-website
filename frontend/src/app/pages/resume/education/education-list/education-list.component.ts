@@ -126,7 +126,7 @@ export class EducationListComponent implements OnInit {
                 this.educations[i].rank--;
                 await this.educationService.update(this.educations[i]);
               }
-              this.educationService.delete(education.id).then(() => {
+              this.educationService.delete(education._id).then(() => {
                 this.toastService.success();
                 this.refresh();
               });

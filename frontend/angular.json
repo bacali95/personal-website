@@ -32,6 +32,10 @@
             ],
             "scripts": [
               "node_modules/pace-js/pace.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "@firebase/app",
+              "firebase/app"
             ]
           },
           "configurations": {

@@ -1,8 +1,8 @@
 export class Profile {
-  id?: string;
+  _id?: string;
   username: string;
   password: string;
-  image: string;
+  imageURL: string;
   firstName: string;
   lastName: string;
   profession: string;

@@ -22,7 +22,6 @@ export class PublicController {
       if (!profile) {
         profileRepository
           .create({
-            id: '',
             firstName: 'Test',
             lastName: 'Account',
             address: 'Test, test',
@@ -45,23 +44,23 @@ export class PublicController {
 
   @Get()
   @Render('sections')
-  async getIndexView() {
+  async getIndexView(): Promise<any> {
     const profile = await this.profileRepository.findOne();
-    const projects = (await this.projectsRepository.find())
+    const projects = (await this.projectsRepository.findAll())
       .map((p) => {
         p.startDate = new Date(p.startDate);
         p.endDate = new Date(p.endDate);
         return p;
       })
       .sort(sortComparator('desc', 'startDate'));
-    const educations = (await this.educationsRepository.find()).sort(
+    const educations = (await this.educationsRepository.findAll()).sort(
       sortComparator('desc', 'rank'),
     );
-    const categories = await this.categoriesRepository.find();
-    const skills = (await this.skillsRepository.find()).sort(
+    const categories = await this.categoriesRepository.findAll();
+    const skills = (await this.skillsRepository.findAll()).sort(
       sortComparator('asc', 'rank'),
     );
-    const assets = await this.assetsRepository.find();
+    const assets = await this.assetsRepository.findAll();
     profile.birthdayDate = new Date(profile.birthdayDate);
     return { profile, projects, educations, categories, skills, assets };
   }
@@ -72,7 +71,7 @@ export class PublicController {
     @Param('id') id: string,
     @Query('index') index: number,
     @Res() res: Response,
-  ) {
+  ): Promise<any> {
     const project = await this.projectsRepository.findById(id);
     if (!project) {
       return res.redirect('/');
@@ -88,8 +87,8 @@ export class PublicController {
   async getNextProjectView(
     @Param('index') index: number,
     @Res() res: Response,
-  ) {
-    const projects = (await this.projectsRepository.find())
+  ): Promise<void> {
+    const projects = (await this.projectsRepository.findAll())
       .map((p) => {
         p.startDate = new Date(p.startDate);
         p.endDate = new Date(p.endDate);
@@ -105,10 +104,5 @@ export class PublicController {
     index %= projects.length;
     const id = projects[index].id;
     return res.redirect(`/project/${id}?index=${index}`);
-  }
-
-  @Get('awake')
-  checkAwake() {
-    return true;
   }
 }

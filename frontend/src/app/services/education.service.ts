@@ -23,7 +23,7 @@ export class EducationService {
   }
 
   update(education: Education) {
-    return this.http.put(`${this.baseUrl}/${education.id}`, education).toPromise();
+    return this.http.put(`${this.baseUrl}/${education._id}`, education).toPromise();
   }
 
   delete(id: string) {

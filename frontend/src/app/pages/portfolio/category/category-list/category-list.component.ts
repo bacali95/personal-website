@@ -79,7 +79,7 @@ export class CategoryListComponent implements OnInit {
         })
         .onClose.subscribe((result) => {
           if (result) {
-            this.categoryService.delete(event.data.id).then(() => {
+            this.categoryService.delete(event.data._id).then(() => {
               this.toastService.success();
               this.refresh();
             });

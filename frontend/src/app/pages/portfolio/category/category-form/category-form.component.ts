@@ -33,7 +33,7 @@ export class CategoryFormComponent implements OnInit {
 
   submit() {
     if (this.model.valid) {
-      if (this.value && this.value.id) {
+      if (this.value && this.value._id) {
         this.value.name = this.name.value;
         this.categoryService
           .update(this.value)

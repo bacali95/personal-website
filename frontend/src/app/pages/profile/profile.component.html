@@ -2,7 +2,7 @@
   <nb-card-body>
     <div *ngIf="!showCropper">
       <div class="d-flex justify-content-center">
-        <img [src]="profile.image ? profile.image : baseHref + '/assets/images/noimage.png'"
+        <img [src]="profile.imageURL ? profile.imageURL : baseHref + '/assets/images/noimage.png'"
              alt="profile image"
              height="200vh">
       </div>
@@ -10,7 +10,7 @@
         <label>
           <input type="file" (change)="fileChangeEvent($event)" hidden>
           <span>
-            <a nbButton hero shape="round" size="small">Select image</a>
+            <a nbButton hero shape="round" size="small" status="primary">Select image</a>
           </span>
         </label>
       </div>

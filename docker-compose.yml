@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  personal-website:
+    image: bacali95/personal-website:latest
+    ports:
+      - 4000:80
+    environment:
+      - ENV=test
+      - ADMIN_USERNAME=username
+      - ADMIN_PASSWORD=password
+      - DATABASE_HOST=mongodb_hostname
+      - DATABASE_USER=mongodb_username
+      - DATABASE_PASS=mongodb_password
+      - DATABASE_NAME=mongodb_database_name
+      - IMAGE_API_KEY=cloudinary_api_key
+      - IMAGE_API_SECRET=cloudinary_api_secret
+      - IMAGE_CLOUD_NAME=cloudinary_cloud_name
+      - TINIFY_API_KEY=tinify_api_key

@@ -32,7 +32,7 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.categoryService.getAll().then((categories) => {
       this.categoriesList = [...categories];
-      this.selectedCategories = [...this.project.categories.map((value) => value.id)];
+      this.selectedCategories = [...this.project.categories.map((value) => value._id)];
     });
   }
 
@@ -41,8 +41,8 @@ export class ProjectFormComponent implements OnInit, AfterViewInit {
   async submit() {
     if (this.project.images && this.project.images.length > 0) {
       this.submitting = true;
-      this.project.categories = [...this.categoriesList.filter((value) => this.selectedCategories.includes(value.id))];
-      if (this.project.id) {
+      this.project.categories = [...this.categoriesList.filter((value) => this.selectedCategories.includes(value._id))];
+      if (this.project._id) {
         this.projectService
           .update(this.project)
           .then(() => {

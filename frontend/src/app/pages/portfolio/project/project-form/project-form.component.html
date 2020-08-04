@@ -64,7 +64,7 @@
           required
           [(ngModel)]="selectedCategories">
           <nb-option *ngFor="let category of categoriesList"
-                     [value]="category.id">
+                     [value]="category._id">
             {{category.name}}
           </nb-option>
         </nb-select>

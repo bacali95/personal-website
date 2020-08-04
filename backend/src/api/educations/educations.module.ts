@@ -1,18 +1,17 @@
 import { Module } from '@nestjs/common';
 import { EducationsController } from './educations.controller';
-import { getRepository } from 'fireorm';
 import { EducationsRepository } from './educations.repository';
-import { Education } from './educations.model';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Education, EducationSchema } from './educations.schema';
 
 @Module({
-  controllers: [EducationsController],
-  providers: [
-    {
-      provide: EducationsRepository,
-      useFactory: () =>
-        getRepository<Education>(Education) as EducationsRepository,
-    },
+  imports: [
+    MongooseModule.forFeature([
+      { name: Education.name, schema: EducationSchema },
+    ]),
   ],
+  controllers: [EducationsController],
+  providers: [EducationsRepository],
   exports: [EducationsRepository],
 })
 export class EducationsModule {}
