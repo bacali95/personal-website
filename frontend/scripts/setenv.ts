@@ -8,9 +8,8 @@ require('dotenv').config();
 const environment = argv.environment;
 const isProduction = environment === 'prod';
 const folderPath = `./src/environments`;
-const targetPath = isProduction
-  ? `${folderPath}/environment.prod.ts`
-  : `${folderPath}/environment.ts`;
+const targetPath = `${folderPath}/environment.ts`;
+const prodTargetPath = `${folderPath}/environment.prod.ts`;
 
 // we have access to our environment variables
 // in the process.env object thanks to dotenv
@@ -33,3 +32,4 @@ export const environment = {
 !existsSync(folderPath) && mkdirSync(folderPath);
 // write the content to the respective file
 writeFileSync(targetPath, environmentFileContent);
+writeFileSync(prodTargetPath, environmentFileContent);
