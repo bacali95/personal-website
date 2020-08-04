@@ -14,7 +14,7 @@ import config from './config';
   imports: [
     ApiModule,
     PublicModule,
-    MongooseModule.forRoot(config.mongoose.uri),
+    MongooseModule.forRoot(config.mongoose.uri, { useNewUrlParser: true }),
   ],
   providers: [],
 })
