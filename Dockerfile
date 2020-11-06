@@ -1,4 +1,4 @@
-FROM node:12-alpine as buildstage
+FROM node:12-alpine as build-statge
 
 ARG FIREBASE_API_KEY
 ARG FIREBASE_AUTH_DOMAIN
@@ -20,10 +20,16 @@ ENV FIREBASE_MEASUREMENT_ID=$FIREBASE_MEASUREMENT_ID
 
 WORKDIR /frontend
 COPY ./frontend .
-RUN yarn install
+RUN yarn
 RUN yarn build:prod
 
-FROM node:12-alpine as finalstage
+WORKDIR /backend
+COPY ./backend .
+RUN yarn
+RUN yarn build
+RUN yarn --prod
+
+FROM node:12-alpine as final-stage
 
 RUN apk update
 RUN apk add nginx
@@ -32,13 +38,13 @@ COPY ./entrypoint/default.conf /etc/nginx/conf.d/default.conf
 COPY ./entrypoint/nginx.conf  /etc/nginx/nginx.conf
 
 RUN mkdir -p /var/www/
-COPY --from=buildstage /frontend/dist/ /var/www/
+COPY --from=build-statge /frontend/build/ /var/www/
 EXPOSE 80
 
 WORKDIR /backend
-COPY ./backend .
-
-RUN yarn install
-RUN yarn build
+COPY --from=build-statge /backend/node_modules ./node_modules
+COPY --from=build-statge /backend/nest-cli.json ./nest-cli.json
+COPY --from=build-statge /backend/package.json ./package.json
+COPY --from=build-statge /backend/dist ./dist
 
 CMD nginx -g "daemon off;" & yarn start:prod
