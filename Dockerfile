@@ -20,8 +20,8 @@ ENV FIREBASE_MEASUREMENT_ID=$FIREBASE_MEASUREMENT_ID
 
 WORKDIR /frontend
 COPY ./frontend .
-RUN npm install
-RUN npm run build:prod
+RUN yarn install
+RUN yarn build:prod
 
 FROM node:12-alpine as finalstage
 
@@ -38,7 +38,7 @@ EXPOSE 80
 WORKDIR /backend
 COPY ./backend .
 
-RUN npm install
-RUN npm run build
+RUN yarn install
+RUN yarn build
 
-CMD nginx -g "daemon off;" & npm run start:prod
+CMD nginx -g "daemon off;" & yarn start:prod
