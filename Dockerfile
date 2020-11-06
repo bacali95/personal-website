@@ -45,6 +45,8 @@ WORKDIR /backend
 COPY --from=build-statge /backend/node_modules ./node_modules
 COPY --from=build-statge /backend/nest-cli.json ./nest-cli.json
 COPY --from=build-statge /backend/package.json ./package.json
+COPY --from=build-statge /backend/public ./public
+COPY --from=build-statge /backend/views ./views
 COPY --from=build-statge /backend/dist ./dist
 
 CMD nginx -g "daemon off;" & yarn start:prod
