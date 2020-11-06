@@ -1,5 +1,5 @@
 backend/dist
 backend/node_modules
 
-frontend/build
+frontend/dist
 frontend/node_modules

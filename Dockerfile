@@ -38,7 +38,7 @@ COPY ./entrypoint/default.conf /etc/nginx/conf.d/default.conf
 COPY ./entrypoint/nginx.conf  /etc/nginx/nginx.conf
 
 RUN mkdir -p /var/www/
-COPY --from=build-statge /frontend/build/ /var/www/
+COPY --from=build-statge /frontend/dist/ /var/www/
 EXPOSE 80
 
 WORKDIR /backend
