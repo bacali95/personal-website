@@ -5,7 +5,10 @@ import {
 } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as express from 'express';
+import * as dotenv from 'dotenv';
 import { AppModule } from './app.module';
+
+dotenv.config();
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const helmet = require('helmet');

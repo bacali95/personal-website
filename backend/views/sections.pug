@@ -61,7 +61,7 @@ block sections
                                                 span.emph-1 Address
                                                 |  :
                                                 br
-                                                | #{profile.address ? profile.address : '--'}
+                                                | !{profile.address ? profile.address : '--'}
                                         ul.data.right
                                             li
                                                 span.emph-1 E-Mail
@@ -161,15 +161,15 @@ block sections
                                 .listing-large-inner
                                     .listing-event
                                         ul.data.left.clearfix
-                                            each skill, index in skills
+                                            each skill in skills
                                                 li
-                                                    h5= skill.name
                                                     .rating
                                                         each i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                                                             if i <= skill.value
                                                                 span
                                                             else
                                                                 span.transparent
+                                                    h5= skill.name
                                         ul.data.right.clearfix
                                             li
                                                 h5 Assests
@@ -284,7 +284,7 @@ block sections
                         .col-md-12
                             .main-title
                                 h1.mb-20 Portfolio
-                                h5.uppercase My Works
+                                h5.uppercase My Projects
                 .block-content.mb-100
                     .works
                         .row
@@ -341,19 +341,18 @@ block sections
                                         i.icon-location-7
                                     h5.mb-20 Drop on in
                                     p
-                                        | Nasreddine Bac Ali
+                                        | #{profile.firstName} #{profile.lastName}
                                         br
-                                        |  St. Sidi Abdallah, Qt. N°17
-                                        br
-                                        |  Chebba, Mahdia, Tunisia
+                                        | !{profile.address}
                             .col-md-3
                                 .info
                                     .ico.mb-20
                                         i.icon-mobile-6
                                     h5.mb-20 Give me a call
-                                    p +216 95 253 834
-                                    br
-                                    br
+                                    p
+                                        a(href='tel:' + profile.phone) #{profile.phone}
+                                        br
+                                        br
                             .col-md-5
                                 .info
                                     .ico.mb-20
@@ -361,13 +360,10 @@ block sections
                                     h5.mb-20 Let's connect
                                     p
                                         | Email :
-                                        a(href='mailto:nasreddine.bacali95@gmail.com') nasreddine.bacali95@gmail.com
+                                        a(href='mailto:' + profile.email, target='_blank') #{profile.email}
                                         br
-                                        |  Facebook :
-                                        a(href='fb.me/nasreddine.bacali') Naseddine Bac Ali
-                                        br
-                                        |  Skype :
-                                        a(href='#') bac_ali3
+                                        |  LinkedIn :
+                                        a(href='https://linkedin.com/in/bacali', target='_blank') #{profile.firstName} #{profile.lastName}
                 .block-content.mb-100
                     .row
                         .col-md-12

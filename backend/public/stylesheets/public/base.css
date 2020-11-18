@@ -118,6 +118,7 @@ small {
 
 
 .main-title h1 {
+    line-height: 50px;
     font-size: 55px;
     font-weight: 400;
 }
