@@ -24,7 +24,7 @@
     "@nestjs/platform-express": "^7.4.2",
     "class-validator": "^0.12.2",
     "dotenv": "^8.2.0",
-    "firebase-admin": "^9.0.0",
+    "firebase-admin": "^9.4.2",
     "helmet": "^4.0.0",
     "mongoose": "^5.9.27",
     "nest-router": "^1.0.9",
