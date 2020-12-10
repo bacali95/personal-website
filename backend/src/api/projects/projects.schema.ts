@@ -35,17 +35,17 @@ export class Project extends Document {
 }
 
 export class ProjectDTO {
-  readonly _id: string;
-  readonly title: string;
-  readonly description: string;
-  readonly type: string;
-  readonly categories: string[];
-  readonly startDate: Date;
-  readonly endDate: Date;
-  readonly sourceCodeLink: string;
-  readonly demoLink: string;
-  readonly images: string[];
-  readonly clicks: number;
+  _id: string;
+  title: string;
+  description: string;
+  type: string;
+  categories: string[];
+  startDate: Date;
+  endDate: Date;
+  sourceCodeLink: string;
+  demoLink: string;
+  images: string[];
+  clicks: number;
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);

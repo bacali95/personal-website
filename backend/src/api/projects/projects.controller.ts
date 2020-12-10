@@ -28,7 +28,7 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  get(@Param('id') id: string): Promise<Project> {
+  get(@Param('id') id: string): Promise<ProjectDTO> {
     return this.projectsRepository.findById(id);
   }
 

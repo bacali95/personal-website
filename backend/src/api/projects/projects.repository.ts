@@ -27,7 +27,10 @@ export class ProjectsRepository {
     return this.projectModel.find().exec();
   }
 
-  findById(id: string): Promise<Project> {
-    return this.projectModel.findById(id).exec();
+  findById(id: string): Promise<ProjectDTO> {
+    return this.projectModel
+      .findById(id)
+      .exec()
+      .then((p) => p as ProjectDTO);
   }
 }
