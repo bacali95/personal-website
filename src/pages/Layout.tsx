@@ -1,6 +1,7 @@
 import { profile } from '@data/profile';
 import { socials } from '@data/socials';
-import React from 'react';
+import classNames from 'classnames';
+import React, { useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
 import { HiBriefcase, HiPhone, HiPresentationChartLine, HiUser } from 'react-icons/all';
 import { Route, Switch, useHistory } from 'react-router-dom';
@@ -18,6 +19,11 @@ type Tab = {
 
 const Layout: React.FC = () => {
   const history = useHistory();
+  const [currentPath, setCurrentPath] = useState(history.location.pathname);
+
+  useEffect(() => {
+    history.listen(() => setCurrentPath(history.location.pathname));
+  }, [history]);
 
   const tabs: Tab[] = [
     {
@@ -51,12 +57,18 @@ const Layout: React.FC = () => {
       <div className="flex container w-full gap-2 py-16">
         <div className="flex flex-col gap-2">
           <div className="flex h-36 w-36 rounded-lg shadow-xl bg-white items-center justify-center">
-            <img src={`images/${profile.image}`} className="rounded-lg" />
+            <img className="rounded-lg" src={`images/${profile.image}`} alt="Profile Image" />
           </div>
           {tabs.map(({ Icon, label, subLabel, link }, index) => (
             <div
               key={index}
-              className="group flex flex-col h-36 w-36 rounded-lg shadow-md bg-white items-center justify-center cursor-pointer hover:bg-yellow-400 transition duration-500"
+              className={classNames(
+                'group flex flex-col h-36 w-36 rounded-lg shadow-md bg-white items-center ' +
+                  'justify-center cursor-pointer hover:bg-yellow-400 transition duration-500',
+                {
+                  'bg-yellow-400': currentPath === link,
+                }
+              )}
               onClick={() => history.push(link)}
             >
               <Icon className="mb-2 h-6 w-6" />
