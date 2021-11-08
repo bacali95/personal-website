@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  font-family: "Roboto Slab", "Helvetica", "Arial", sans-serif;
+}
+
+button,
+input {
+  @apply focus:outline-none;
+}
+
+::-webkit-scrollbar {
+  @apply h-2 w-2 bg-gray-50 dark:bg-gray-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply border-2 border-solid bg-gray-200 border-gray-200 hover:bg-gray-500 dark:border-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}

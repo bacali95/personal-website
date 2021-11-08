@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  push:
+    branches-ignore:
+      - 'chore(release): *'
+    tags-ignore:
+      - 'v*'
+  pull_request:
+    tags-ignore:
+      - 'v*'
+
+concurrency: ${{ github.ref }}
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install NodeJs 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Prettier
+        run: yarn prettier
+
+      - name: Build
+        run: yarn build
