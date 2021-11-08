@@ -16,29 +16,29 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - name: Check out code
+      - name: Check out the code 🗄
         uses: actions/checkout@v2
 
-      - name: Install NodeJs 14
+      - name: Install NodeJs 14 💿
         uses: actions/setup-node@v1
         with:
           node-version: 14
 
-      - name: Yarn Install
+      - name: Install Packages 🏭
         run: yarn install
 
-      - name: Lint
+      - name: Lint the code 🕵
         run: yarn lint
 
-      - name: Prettier
+      - name: Check the prettiness of the code 💅
         run: yarn prettier
 
-      - name: Build
+      - name: Build the website 🛠
         env:
           PUBLIC_URL: /personal-website
         run: yarn build
         
-      - name: Deploy 🚀
+      - name: Deploy the website 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         if: github.ref == 'refs/heads/main'
         with:
