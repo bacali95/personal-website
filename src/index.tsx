@@ -8,7 +8,7 @@ import Layout from './pages/Layout';
 
 ReactDOM.render(
   <Suspense fallback={<Spinner fullScreen />}>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Layout />
     </BrowserRouter>
   </Suspense>,
