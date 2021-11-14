@@ -34,9 +34,7 @@ jobs:
         run: yarn prettier
 
       - name: Build the website 🛠
-        env:
-          PUBLIC_URL: /personal-website
-        run: yarn build
+        run: yarn build --base=/personal-website/
         
       - name: Deploy the website 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5

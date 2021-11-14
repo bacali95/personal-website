@@ -6,9 +6,8 @@ import { IconType } from 'react-icons';
 import { HiBriefcase, HiPhone, HiPresentationChartLine, HiUser } from 'react-icons/all';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
-import Resume from './Resume';
-
-const About = React.lazy(() => import('./About'));
+import About from './pages/About';
+import Resume from './pages/Resume';
 
 type Tab = {
   Icon: IconType;

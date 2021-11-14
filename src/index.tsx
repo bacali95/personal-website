@@ -3,8 +3,8 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 
+import Layout from './Layout';
 import './index.scss';
-import Layout from './pages/Layout';
 
 ReactDOM.render(
   <Suspense fallback={<Spinner fullScreen />}>
