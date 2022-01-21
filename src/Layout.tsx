@@ -53,7 +53,14 @@ const Layout: React.FC = () => {
   ];
 
   return (
-    <div className="bg-gray-50 h-full w-full">
+    <div className="relative h-full w-full">
+      <div
+        className="absolute h-full w-full filter blur-2xl"
+        style={{
+          zIndex: -1,
+          backgroundImage: 'url("images/background.png")',
+        }}
+      />
       <div className="flex container w-full gap-2 py-16">
         <div className="flex flex-col gap-2">
           <div className="flex h-36 w-36 rounded-lg shadow-xl bg-white items-center justify-center">
