@@ -1,4 +1,5 @@
-import { BiCode, BiGlobe, BiSwim, MdLocalPizza } from 'react-icons/all';
+import { BiCode, BiGlobe, BiSwim } from 'react-icons/bi';
+import { MdLocalPizza } from 'react-icons/md';
 
 import { Hobby } from '@core/types';
 

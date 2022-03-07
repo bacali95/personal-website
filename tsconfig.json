@@ -24,7 +24,6 @@
     "baseUrl": "src"
   },
   "include": [
-    "src",
-    "data"
+    "src"
   ]
 }

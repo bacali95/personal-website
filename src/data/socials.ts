@@ -1,4 +1,4 @@
-import { SiFacebook, SiGithub, SiGmail, SiLinkedin, SiTwitter } from 'react-icons/all';
+import { SiFacebook, SiGithub, SiGmail, SiLinkedin, SiTwitter } from 'react-icons/si';
 
 import { Social } from '@core/types';
 

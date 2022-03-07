@@ -3,8 +3,8 @@ import { socials } from '@data/socials';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
-import { HiBriefcase, HiPhone, HiPresentationChartLine, HiUser } from 'react-icons/all';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { HiBriefcase, HiPhone, HiPresentationChartLine, HiUser } from 'react-icons/hi';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import About from './pages/About';
 import Resume from './pages/Resume';
@@ -17,12 +17,13 @@ type Tab = {
 };
 
 const Layout: React.FC = () => {
-  const history = useHistory();
-  const [currentPath, setCurrentPath] = useState(history.location.pathname);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [currentPath, setCurrentPath] = useState(location.pathname);
 
   useEffect(() => {
-    history.listen(() => setCurrentPath(history.location.pathname));
-  }, [history]);
+    setCurrentPath(location.pathname);
+  }, [location.pathname]);
 
   const tabs: Tab[] = [
     {
@@ -68,7 +69,7 @@ const Layout: React.FC = () => {
                   'bg-yellow-400': currentPath === link,
                 }
               )}
-              onClick={() => history.push(link)}
+              onClick={() => navigate(link)}
             >
               <Icon className="mb-2 h-6 w-6" />
               <div className="text-md uppercase">{label}</div>
@@ -79,10 +80,10 @@ const Layout: React.FC = () => {
           ))}
         </div>
         <div className="relative py-20 w-full shadow-xl bg-white rounded-lg">
-          <Switch>
-            <Route path="/resume" component={Resume} />
-            <Route path="/" component={About} />
-          </Switch>
+          <Routes>
+            <Route path="/resume" element={<Resume />} />
+            <Route path="/" element={<About />} />
+          </Routes>
           <div className="absolute -bottom-4 w-full">
             <div className="mx-2 h-4 bg-yellow-400 rounded-b-lg shadow-lg" />
             <div className="-mt-7 mx-1 h-4 bg-yellow-400 rounded-b-lg shadow-lg" />
