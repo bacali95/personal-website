@@ -34,11 +34,11 @@ jobs:
         run: yarn prettier
 
       - name: Build the website 🛠
-        run: yarn build --base=/personal-website/
+        run: yarn build
         
       - name: Deploy the website 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         if: github.ref == 'refs/heads/main'
         with:
           branch: gh-pages
-          folder: dist
+          folder: build
